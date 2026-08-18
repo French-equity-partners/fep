@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Deal — French Equity Partners (Private)</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root{
+    --cream:#F1ECDD; --cream-card:#FAF7EE; --cream-line:#E1D8BF;
+    --navy:#1B3143; --navy-deep:#0F2029; --navy-soft:#445A6B;
+    --gold:#A9803F; --gold-deep:#8A6A34;
+    --display:'Cormorant Garamond',serif; --utility:'Inter',sans-serif;
+  }
+  *{ box-sizing:border-box; }
+  body{ background:var(--cream); color:var(--navy); font-family:var(--utility); margin:0; padding:40px 20px; }
+  .wrap{ max-width:640px; margin:0 auto; }
+  h1{ font-family:var(--display); font-size:30px; margin-bottom:4px; }
+  .sub{ color:var(--navy-soft); font-size:13px; margin-bottom:28px; }
+  .card{ background:var(--cream-card); border:1px solid var(--cream-line); border-radius:6px; padding:28px; }
+  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  label{ display:block; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.04em; color:var(--navy-soft); margin-bottom:5px; }
+  input, select, textarea{ width:100%; font-family:var(--utility); font-size:14px; padding:10px 12px; border:1px solid var(--cream-line); border-radius:4px; margin-bottom:14px; background:#fff; color:var(--navy); }
+  textarea{ resize:vertical; min-height:70px; }
+  .btn{ width:100%; padding:13px; background:var(--navy); color:#fff; border:none; border-radius:4px; font-family:var(--utility); font-weight:600; font-size:14px; cursor:pointer; }
+  .btn:hover{ background:var(--navy-deep); }
+  #status{ margin-top:14px; text-align:center; font-size:13.5px; }
+  .ok{ color:#3E7A4E; } .err{ color:#B23B3B; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Add a Deal</h1>
+  <div class="sub">Private — not linked from the public site. Adds directly to the live deal database.</div>
+  <div class="card">
+    <form id="dealForm">
+      <div class="grid">
+        <div style="grid-column:1/-1"><label>Address</label><input name="address" required></div>
+        <div><label>ZIP</label><input name="zip" required></div>
+        <div><label>Property Type</label>
+          <select name="property_type">
+            <option>Single Family</option><option>Townhome</option><option>Condo</option><option>Multi-Family</option><option>Land</option>
+          </select>
+        </div>
+        <div><label>Beds</label><input name="beds" type="number" step="0.5"></div>
+        <div><label>Baths</label><input name="baths" type="number" step="0.5"></div>
+        <div><label>Sq Ft</label><input name="sqft" type="number"></div>
+        <div><label>Asking Price</label><input name="asking_price" type="number" required></div>
+        <div><label>Estimated ARV</label><input name="arv" type="number"></div>
+        <div><label>Repair Estimate</label><input name="repair_estimate" type="number"></div>
+        <div><label>Your Assignment Fee</label><input name="assignment_fee" type="number"></div>
+      </div>
+      <label>Notes</label>
+      <textarea name="notes" placeholder="Condition, access, timeline, anything a buyer should know"></textarea>
+      <button class="btn" type="submit">Add Deal</button>
+      <div id="status"></div>
+    </form>
+  </div>
+</div>
+
+<script>
+  const supabase = window.supabase.createClient(
+    'https://wvuaqdoijqdyxncpviet.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind2dWFxZG9panFkeXhuY3B2aWV0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQzMDE2MjcsImV4cCI6MjA5OTg3NzYyN30.nCQlBMrtkoWRCiXJZUAsTgX2meXXaLOatayPjIem0Dg'
+  );
+
+  document.getElementById('dealForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const statusEl = document.getElementById('status');
+    const btn = form.querySelector('.btn');
+    btn.disabled = true; btn.textContent = 'Saving...';
+
+    const data = Object.fromEntries(new FormData(form));
+    ['beds','baths','sqft','asking_price','arv','repair_estimate','assignment_fee'].forEach(k => {
+      data[k] = data[k] ? parseFloat(data[k]) : null;
+    });
+
+    const { error } = await supabase.from('fep_deals').insert([data]);
+
+    if (error) {
+      statusEl.textContent = 'Error: ' + error.message;
+      statusEl.className = 'err';
+      btn.disabled = false; btn.textContent = 'Add Deal';
+    } else {
+      statusEl.textContent = 'Deal added successfully.';
+      statusEl.className = 'ok';
+      form.reset();
+      btn.disabled = false; btn.textContent = 'Add Deal';
+    }
+  });
+</script>
+</body>
+</html>
