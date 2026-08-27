@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Off-Market Land for Builders &amp; Developers — French Equity Partners</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+
+  :root{
+    --cream:        #F1ECDD;
+    --cream-card:   #FAF7EE;
+    --cream-line:   #E1D8BF;
+    --navy:         #1B3143;
+    --navy-deep:    #0F2029;
+    --navy-soft:    #445A6B;
+    --gold:         #A9803F;
+    --gold-deep:    #8A6A34;
+    --gold-light:   #D9C08B;
+    --gold-pale:    #F3E9CE;
+
+    --display: 'Cormorant Garamond', serif;
+    --body:    'EB Garamond', serif;
+    --utility: 'Inter', sans-serif;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--cream);
+    color:var(--navy);
+    font-family:var(--body);
+    font-size:18px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color:inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 32px; }
+
+  /* header — same as index.html */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(15,32,41,0.96);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--gold-deep);
+  }
+  .header-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 32px; max-width:1120px; margin:0 auto;
+  }
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .brand img{ height:52px; width:52px; object-fit:contain; background:var(--cream); border-radius:50%; padding:5px; }
+  .brand-name{ font-family:var(--display); font-size:22px; letter-spacing:0.02em; color:#fff; }
+  .header-right{ display:flex; align-items:center; gap:24px; }
+  .nav-link{
+    font-family:var(--utility); font-size:13px; font-weight:500;
+    color:var(--gold-light); letter-spacing:0.02em;
+  }
+  .nav-link:hover{ color:#fff; }
+  .header-phone{ font-family:var(--utility); font-size:14px; font-weight:600; letter-spacing:0.02em; color:#fff; }
+  .header-phone span{ display:block; font-size:11px; font-weight:500; color:var(--gold-light); letter-spacing:0.08em; text-transform:uppercase; }
+  .btn{
+    font-family:var(--utility); font-size:13px; font-weight:600; letter-spacing:0.04em;
+    text-transform:uppercase; padding:13px 26px; border-radius:2px;
+    border:1px solid var(--gold-deep); background:var(--navy); color:#F7F2E4;
+    cursor:pointer; transition:background 0.2s ease, transform 0.2s ease; white-space:nowrap;
+  }
+  .btn:hover{ background:var(--navy-deep); transform:translateY(-1px); }
+  .btn-gold{ background:var(--gold); border-color:var(--gold); color:var(--navy-deep); }
+  .btn-gold:hover{ background:var(--gold-deep); }
+  @media (max-width:760px){ .header-phone{ display:none; } }
+  @media (max-width:560px){ .nav-link{ display:none; } }
+
+  /* hero */
+  .hero{ padding:80px 0 64px; position:relative; overflow:hidden; }
+  .hero::before{
+    content:""; position:absolute; top:-200px; right:-160px; width:520px; height:520px;
+    border:1px solid var(--gold-light); border-radius:50%; opacity:0.35;
+  }
+  .eyebrow{
+    font-family:var(--utility); font-size:12px; font-weight:600; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold-deep); margin-bottom:18px;
+  }
+  h1{ font-family:var(--display); font-weight:500; font-size:48px; line-height:1.1; color:var(--navy); margin-bottom:22px; max-width:820px; }
+  .hero-sub{ font-size:19px; color:var(--navy-soft); max-width:680px; margin-bottom:0; }
+  @media (max-width:700px){ h1{ font-size:34px; } }
+
+  /* section shared */
+  section{ padding:72px 0; }
+  .section-head{ max-width:720px; margin:0 auto 44px; }
+  .section-head.center{ text-align:center; }
+  .section-eyebrow{
+    font-family:var(--utility); font-size:12px; font-weight:600; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold-deep); margin-bottom:14px;
+  }
+  h2{ font-family:var(--display); font-weight:500; font-size:32px; color:var(--navy); margin-bottom:14px; }
+  .section-sub{ color:var(--navy-soft); font-size:17px; }
+
+  /* what we source — chip strip */
+  .situations{ background:var(--gold-pale); border-top:1px solid var(--cream-line); border-bottom:1px solid var(--cream-line); padding:40px 0; }
+  .situations .wrap{ display:flex; flex-wrap:wrap; justify-content:center; gap:14px; }
+  .chip{
+    font-family:var(--utility); font-size:13.5px; font-weight:500; color:var(--navy);
+    background:var(--cream-card); border:1px solid var(--gold-light); padding:10px 20px; border-radius:999px;
+  }
+
+  /* buy box form */
+  .form-card{
+    background:var(--cream-card); border:1px solid var(--cream-line); border-radius:4px;
+    padding:44px; box-shadow:0 24px 60px -30px rgba(15,32,41,0.35); max-width:760px; margin:0 auto;
+    position:relative;
+  }
+  .form-card::before{
+    content:""; position:absolute; top:8px; left:8px; right:8px; bottom:8px;
+    border:1px solid var(--gold-light); border-radius:2px; pointer-events:none;
+  }
+  .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:0 20px; }
+  .field{ margin-bottom:18px; }
+  .field.full{ grid-column:1/-1; }
+  .field label{
+    display:block; font-family:var(--utility); font-size:11px; font-weight:600;
+    letter-spacing:0.06em; text-transform:uppercase; color:var(--navy-soft); margin-bottom:7px;
+  }
+  .field input, .field select, .field textarea{
+    width:100%; font-family:var(--utility); font-size:15px; padding:12px 14px;
+    border:1px solid var(--cream-line); background:#fff; border-radius:2px; color:var(--navy);
+  }
+  .field textarea{ resize:vertical; min-height:80px; }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:2px solid var(--gold); outline-offset:1px; border-color:var(--gold);
+  }
+  .form-card .btn{ width:100%; padding:15px; margin-top:6px; }
+  #formStatus{ font-family:var(--utility); font-size:13px; margin-top:14px; text-align:center; }
+  @media (max-width:700px){
+    .form-grid{ grid-template-columns:1fr; }
+    .form-card{ padding:30px 24px; }
+  }
+
+  /* how it works */
+  .process-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:36px; }
+  .step{ text-align:center; padding:0 12px; }
+  .step-num{
+    width:48px; height:48px; margin:0 auto 20px; background:var(--cream);
+    border:1px solid var(--gold-deep); border-radius:50%; display:flex; align-items:center;
+    justify-content:center; font-family:var(--display); font-size:20px; color:var(--gold-deep);
+  }
+  .step h3{ font-family:var(--display); font-size:21px; font-weight:500; margin-bottom:8px; }
+  .step p{ color:var(--navy-soft); font-size:15.5px; }
+  @media (max-width:800px){ .process-grid{ grid-template-columns:1fr; gap:36px; } }
+
+  /* disclosure */
+  .disclosure{ background:var(--navy); color:#C7D2D9; }
+  .disclosure .section-head{ margin-bottom:0; }
+  .disclosure p{ font-family:var(--utility); font-size:13px; line-height:1.7; color:#9BAAB4; max-width:900px; margin:0 auto; }
+  .disclosure strong{ color:#C7D2D9; }
+
+  /* footer — same as index.html */
+  footer{ background:var(--navy); color:#C7D2D9; padding:56px 0 32px; }
+  .footer-grid{ display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:48px; margin-bottom:40px; }
+  .footer-brand{ display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+  .footer-brand img{ height:52px; width:52px; object-fit:contain; }
+  .footer-brand-name{ font-family:var(--display); font-size:22px; color:#fff; }
+  .footer-desc{ font-size:15px; color:#9BAAB4; max-width:280px; }
+  .footer-col h4{ font-family:var(--utility); font-size:12px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-light); margin-bottom:18px; }
+  .footer-col p, .footer-col a{ display:block; font-size:15px; color:#C7D2D9; margin-bottom:10px; }
+  .footer-col a:hover{ color:var(--gold-light); }
+  .footer-bottom{ border-top:1px solid rgba(255,255,255,0.1); padding-top:24px; font-family:var(--utility); font-size:12.5px; color:#7E8E97; display:flex; flex-direction:column; gap:12px; }
+  .footer-bottom .row{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+  .footer-legal{ font-size:12px; color:#6B7B84; line-height:1.5; max-width:920px; }
+  @media (max-width:760px){ .footer-grid{ grid-template-columns:1fr; gap:32px; } }
+
+  @media (prefers-reduced-motion: reduce){ *{ scroll-behavior:auto !important; transition:none !important; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="brand">
+      <img src="FEP.png" alt="French Equity Partners crest">
+      <span class="brand-name">French Equity Partners</span>
+    </a>
+    <div class="header-right">
+      <a href="index.html#agents" class="nav-link">For Agents</a>
+      <a href="investors.html" class="nav-link">Investors</a>
+      <a href="tel:+18138500168" class="header-phone">
+        <span>Call us</span>
+        (813) 850-0168
+      </a>
+      <a href="#criteria" class="btn btn-gold">Submit Criteria</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow">Tampa Bay &amp; Central Florida</div>
+      <h1>Off-market land opportunities for builders and developers.</h1>
+      <p class="hero-sub">French Equity Partners sources vacant land, infill lots, and underutilized parcels directly from owners across Tampa Bay and Central Florida. We work directly with landowners to identify off-market opportunities that may fit your acquisition criteria — before they ever reach the open market.</p>
+    </div>
+  </section>
+
+  <!-- WHAT WE SOURCE -->
+  <section class="situations">
+    <div class="wrap">
+      <div class="chip">Residential infill lots</div>
+      <div class="chip">Subdividable acreage</div>
+      <div class="chip">Assemblage opportunities</div>
+      <div class="chip">Build-to-rent sites</div>
+      <div class="chip">Multifamily development land</div>
+      <div class="chip">Estate-owned parcels</div>
+      <div class="chip">Off-market development sites</div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section>
+    <div class="wrap">
+      <div class="section-head center">
+        <div class="section-eyebrow">How It Works</div>
+        <h2>Tell us what you're looking for once</h2>
+        <p class="section-sub">Submit your acquisition criteria below. When we secure a parcel or contract that fits your markets and product type, you'll hear from us directly — before it's marketed more broadly.</p>
+      </div>
+      <div class="process-grid">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>Share your buy box</h3>
+          <p>Markets, acreage range, price range, and product type — the more specific, the better the matches.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>We source off-market parcels</h3>
+          <p>We work directly with landowners across Tampa Bay and Central Florida to identify opportunities before they're listed.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>You hear from us on a match</h3>
+          <p>When something fits your criteria, we reach out directly with the details so you can move quickly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUY BOX FORM -->
+  <section id="criteria" style="background:var(--cream-card); border-top:1px solid var(--cream-line); border-bottom:1px solid var(--cream-line);">
+    <div class="wrap">
+      <div class="section-head center">
+        <div class="section-eyebrow">Acquisition Criteria</div>
+        <h2>Tell Us What You're Looking For</h2>
+        <p class="section-sub">No obligation. Confidential. We'll only reach out when something genuinely fits.</p>
+      </div>
+      <div class="form-card">
+        <form id="developerForm">
+          <div class="form-grid">
+            <div class="field"><label for="company">Company</label><input id="company" name="company" type="text" placeholder="Company name"></div>
+            <div class="field"><label for="contact">Contact Name</label><input id="contact" name="contact" type="text" required></div>
+            <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" required></div>
+            <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel"></div>
+            <div class="field full"><label for="markets">Target Markets / Counties</label><input id="markets" name="markets" type="text" placeholder="e.g. Hillsborough, Pasco, Polk"></div>
+            <div class="field"><label for="product_type">Product Type</label>
+              <select id="product_type" name="product_type">
+                <option>Single-family / subdivision</option>
+                <option>Residential infill lots</option>
+                <option>Multifamily</option>
+                <option>Build-to-rent</option>
+                <option>Mixed-use</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="field"><label for="unit_count">Target Unit / Lot Count</label><input id="unit_count" name="unit_count" type="text" placeholder="e.g. 50–200 units"></div>
+            <div class="field"><label for="min_acres">Min Acreage</label><input id="min_acres" name="min_acres" type="number" step="0.1"></div>
+            <div class="field"><label for="max_acres">Max Acreage</label><input id="max_acres" name="max_acres" type="number" step="0.1"></div>
+            <div class="field"><label for="min_price">Min Acquisition Price</label><input id="min_price" name="min_price" type="number"></div>
+            <div class="field"><label for="max_price">Max Acquisition Price</label><input id="max_price" name="max_price" type="number"></div>
+            <div class="field"><label for="zoning">Existing Zoning Required?</label>
+              <select id="zoning" name="zoning">
+                <option>Yes, must be entitled</option>
+                <option>Open to rezoning</option>
+                <option>Not sure / depends on the site</option>
+              </select>
+            </div>
+            <div class="field"><label for="utilities">Utilities on Site Required?</label>
+              <select id="utilities" name="utilities">
+                <option>Yes</option>
+                <option>Nearby is fine</option>
+                <option>Not required</option>
+              </select>
+            </div>
+            <div class="field full"><label for="notes">Additional Acquisition Criteria</label><textarea id="notes" name="notes" placeholder="Anything else about what you're looking for — topography, flood zone tolerance, timeline, etc."></textarea></div>
+          </div>
+          <button class="btn btn-gold" type="submit">Submit My Criteria</button>
+          <div id="formStatus"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- DISCLOSURE -->
+  <section class="disclosure">
+    <div class="wrap">
+      <div class="section-head" style="text-align:center;">
+        <p><strong>What this page is:</strong> French Equity Partners is not a licensed real estate broker or sales associate in the State of Florida. We source and acquire land directly, as a principal buyer, under the private-purchaser exemption in Florida Statute §475.011. When we notify you of a match, we may be presenting a parcel we intend to close on ourselves, or our contractual right to purchase a property under a purchase agreement — our equitable interest, available for assignment — rather than the property itself. We do not list, broker, or market real estate on behalf of any seller. This page does not constitute an offer to sell any interest in real estate, and any resulting transaction is subject to separate written agreements and independent due diligence. Buyers are encouraged to consult independent legal, financial, and land-use counsel before entering into any agreement.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="FEP.png" alt="French Equity Partners crest">
+          <span class="footer-brand-name">French Equity Partners</span>
+        </div>
+        <p class="footer-desc">A private buyer of vacant land and lots across Tampa Bay and Central Florida — and a sourcing partner for builders and developers looking for off-market opportunities.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+18138500168">(813) 850-0168</a>
+        <a href="mailto:julien@frenchequitypartners.com">julien@frenchequitypartners.com</a>
+        <p>Tampa Bay, Florida</p>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="index.html">Sell Your Land</a>
+        <a href="index.html#agents">For Agents</a>
+        <a href="investors.html">Investors &amp; Cash Buyers</a>
+        <a href="mailto:julien@frenchequitypartners.com">Contact Us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="row">
+        <span>© 2026 French Equity Partners. All rights reserved.</span>
+      </div>
+      <p class="footer-legal">French Equity Partners does not list, broker, or sell real estate on behalf of others. French Equity Partners is not a licensed real estate broker or sales associate in the State of Florida. All real estate is purchased directly and for the account of French Equity Partners (or assigned via our contractual rights under a purchase agreement) under the private-purchaser exemption in Florida Statute §475.011. This website does not constitute an offer to purchase or sell any specific property and does not constitute legal, financial, or real estate advice. Prospective buyers are encouraged to consult an independent Florida-licensed real estate attorney or agent before entering into any agreement.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const supabase = window.supabase.createClient(
+    'https://wvuaqdoijqdyxncpviet.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind2dWFxZG9panFkeXhuY3B2aWV0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQzMDE2MjcsImV4cCI6MjA5OTg3NzYyN30.nCQlBMrtkoWRCiXJZUAsTgX2meXXaLOatayPjIem0Dg'
+  );
+
+  document.getElementById('developerForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const statusEl = document.getElementById('formStatus');
+    const btn = form.querySelector('.btn');
+    btn.disabled = true; btn.textContent = 'Submitting...';
+
+    const data = Object.fromEntries(new FormData(form));
+    ['min_acres','max_acres','min_price','max_price'].forEach(k => {
+      data[k] = data[k] ? parseFloat(data[k]) : null;
+    });
+
+    const { error } = await supabase.from('fep_developers').insert([data]);
+
+    if (error) {
+      statusEl.style.color = '#B23B3B';
+      statusEl.textContent = 'Something went wrong — please try again or call (813) 850-0168.';
+      btn.disabled = false; btn.textContent = 'Submit My Criteria';
+    } else {
+      statusEl.style.color = 'var(--gold-deep)';
+      statusEl.textContent = "Thank you — we'll reach out when a matching opportunity is available.";
+      form.reset();
+      btn.disabled = false; btn.textContent = 'Submit My Criteria';
+    }
+  });
+</script>
+
+</body>
+</html>
