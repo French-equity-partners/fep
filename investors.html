@@ -97,7 +97,7 @@
 
 <footer>
   <div class="wrap">
-    © 2026 French Equity Partners · julien@frenchequitypartners.com · (813) 850-0168
+    © 2026 French Equity Partners · julien@frenchequitypartners.com · (813) 321-4497
   </div>
 </footer>
 
@@ -122,7 +122,7 @@
     const { error } = await supabase.from('fep_buyers').insert([data]);
 
     if (error) {
-      statusEl.textContent = 'Something went wrong — please try again or call (813) 850-0168.';
+      statusEl.textContent = 'Something went wrong — please try again or call (813) 321-4497.';
       statusEl.className = 'err';
       btn.disabled = false; btn.textContent = 'Submit My Buy Box';
     } else {
