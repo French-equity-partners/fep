@@ -463,6 +463,20 @@
     border-radius:999px;
   }
 
+  a.chip{ transition:background 0.2s ease, border-color 0.2s ease; }
+  a.chip:hover{ background:#fff; border-color:var(--gold-deep); }
+  .fh-note{
+    font-family:var(--utility);
+    font-size:13px;
+    line-height:1.5;
+    color:var(--navy);
+    background:var(--gold-pale);
+    border-left:2px solid var(--gold-deep);
+    padding:10px 14px;
+    margin-top:10px;
+  }
+  .fh-note a{ color:var(--gold-deep); font-weight:600; text-decoration:underline; }
+
   /* -------- FAQ -------- */
   .faq-item{
     border-bottom:1px solid var(--cream-line);
@@ -589,6 +603,7 @@
       <span class="brand-name">French Equity Partners</span>
     </div>
     <div class="header-right">
+      <a href="foreclosure-help.html" class="investors-link">Foreclosure Help</a>
       <a href="investors.html" class="investors-link">Investors</a>
       <a href="tel:+18133214497" class="header-phone">
         <span>Call for an offer</span>
@@ -647,6 +662,7 @@
               <option>Estate / probate sale</option>
               <option>Other</option>
             </select>
+            <p id="fhNote" class="fh-note" hidden>Behind on payments? Selling may not be your only choice. <a href="foreclosure-help.html">Read your options first</a>, or call us to talk them through, no obligation.</p>
           </div>
           <input type="hidden" name="_subject" value="New offer request — French Equity Partners">
           <button class="btn btn-gold" type="submit">Get My Cash Offer</button>
@@ -661,10 +677,10 @@
   <section class="situations" style="padding:40px 0;">
     <div class="wrap">
       <div class="chip">Inherited the house</div>
-      <div class="chip">Behind on mortgage payments</div>
+      <a href="foreclosure-help.html" class="chip">Behind on mortgage payments</a>
       <div class="chip">Tired landlord / problem tenant</div>
       <div class="chip">House needs repairs</div>
-      <div class="chip">Facing foreclosure</div>
+      <a href="foreclosure-help.html" class="chip">Facing foreclosure</a>
       <div class="chip">Relocating and need to sell fast</div>
       <div class="chip">Estate / probate sale</div>
       <div class="chip">Simply ready to sell</div>
@@ -840,6 +856,7 @@
         <h4>Company</h4>
         <a href="#process">How It Works</a>
         <a href="#offer">Request an Offer</a>
+        <a href="foreclosure-help.html">Foreclosure Help</a>
         <a href="#agents">For Agents</a>
         <a href="investors.html">Investors &amp; Cash Buyers</a>
         <a href="mailto:julien@frenchequitypartners.com">Contact Us</a>
@@ -901,6 +918,13 @@
       formStatus.textContent = 'Something went wrong — please call (813) 321-4497 instead.';
     }
   });
+
+  (function(){
+    var sel = document.getElementById('situation'), note = document.getElementById('fhNote');
+    if(!sel || !note) return;
+    function toggle(){ note.hidden = !/mortgage payments|foreclosure/i.test(sel.value); }
+    sel.addEventListener('change', toggle); toggle();
+  })();
 </script>
 
 </body>
