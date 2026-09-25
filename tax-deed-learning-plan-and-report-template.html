@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tax Deed Lien Research — Learning Plan &amp; Report Template</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBFBF8; --ink:#1C2B4A; --muted:#5B6576; --plat:#2F5D8A; --plat-soft:#E3ECF5;
+  --rule:#D5D9DE; --card:#FFFFFF; --field:#F4F6F9;
+  --serif:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans:"Public Sans", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#121826; --ink:#E6EAF2; --muted:#A3ACBC; --plat:#7FA8D6; --plat-soft:#1E2A3D;
+    --rule:#2C3648; --card:#18202F; --field:#1B2436;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#121826; --ink:#E6EAF2; --muted:#A3ACBC; --plat:#7FA8D6; --plat-soft:#1E2A3D;
+  --rule:#2C3648; --card:#18202F; --field:#1B2436;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1rem/1.6 var(--sans)}
+main{max-width:64rem;margin:0 auto;padding:3rem 1.25rem 4rem}
+h1,h2{font-family:var(--serif);font-weight:700;line-height:1.15;margin:0}
+h1{font-size:clamp(1.9rem,4.2vw,2.8rem);max-width:24ch}
+h2{font-size:1.45rem;margin-bottom:.75rem}
+h3{font-size:1.05rem;margin:1.75rem 0 .6rem}
+p{max-width:68ch}
+.lede{color:var(--muted);font-size:1.08rem;margin:.9rem 0 0}
+.note{color:var(--muted);font-size:.9rem}
+section{margin-top:3rem;padding-top:1.75rem;border-top:1px solid var(--rule)}
+a{color:var(--plat)}
+:focus-visible{outline:3px solid var(--plat);outline-offset:2px}
+nav.jump{margin-top:1.5rem;display:flex;gap:1rem;flex-wrap:wrap}
+nav.jump a{font-weight:600}
+
+.table-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:4px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:36rem;font-size:.95rem}
+th,td{text-align:left;padding:.65rem .85rem;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-weight:600;color:var(--muted);font-size:.85rem;background:var(--plat-soft)}
+tr:last-child td{border-bottom:0}
+td.wk{white-space:nowrap;font-weight:600;font-variant-numeric:tabular-nums}
+input[type=checkbox]{width:1.1rem;height:1.1rem;accent-color:var(--plat)}
+
+/* Report template */
+.report{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:1.5rem 1.25rem}
+.report-head{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;align-items:baseline}
+.report-head h2{margin:0}
+.verdict{margin-top:1.25rem;border:2px solid var(--plat);border-radius:4px;padding:1rem;background:var(--plat-soft);display:grid;gap:.9rem}
+.verdict fieldset{border:0;margin:0;padding:0;display:flex;gap:1.25rem;flex-wrap:wrap;align-items:center}
+.verdict legend{font-weight:700;float:left;margin-right:.5rem}
+.verdict label{display:flex;gap:.4rem;align-items:center;font-weight:600}
+label.f{display:grid;gap:.25rem;font-size:.9rem;font-weight:600}
+input[type=text],textarea{font:inherit;color:var(--ink);background:var(--field);border:1px solid var(--rule);border-radius:3px;padding:.45rem .55rem;width:100%}
+textarea{min-height:3.2rem;resize:vertical}
+.snap{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.8rem 1.25rem}
+.liens input{min-width:6rem;background:transparent;border:0;border-bottom:1px solid var(--rule);border-radius:0;padding:.3rem .1rem}
+.bid td:last-child{width:12rem}
+.bid tr.total td{font-weight:700;background:var(--plat-soft)}
+ul.checks{list-style:none;padding:0;margin:0;display:grid;gap:.4rem;grid-template-columns:repeat(auto-fit,minmax(18rem,1fr))}
+ul.checks label{display:flex;gap:.55rem;align-items:flex-start}
+.disclaimer{font-size:.88rem;color:var(--muted);margin-top:1.5rem;border-top:1px solid var(--rule);padding-top:1rem}
+button.print{font:600 .95rem var(--sans);color:var(--paper);background:var(--ink);border:0;border-radius:3px;padding:.55rem 1rem;cursor:pointer}
+footer{margin-top:3.5rem;color:var(--muted);font-size:.85rem;border-top:1px solid var(--rule);padding-top:1.1rem}
+
+@media print{
+  :root{--paper:#fff;--card:#fff;--field:#fff;--ink:#000;--muted:#333;--plat-soft:#eef2f6}
+  body{font-size:10.5pt}
+  main{padding:0;max-width:none}
+  nav.jump,button.print,footer{display:none}
+  #template{break-before:page;border-top:0;margin-top:0;padding-top:0}
+  .report{border:0;padding:0}
+  .table-wrap{overflow:visible}
+  table{min-width:0}
+  a{color:#000;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Tax deed lien research: learning plan and report template</h1>
+    <p class="lede">An 8-week plan to learn pre-auction lien research, plus the report template to practise on. Example county: Hillsborough, Florida. Swap in your own.</p>
+    <nav class="jump" aria-label="On this page">
+      <a href="#plan">8-week plan</a><a href="#resources">Learning resources</a><a href="#sources">Record sources</a><a href="#template">Report template</a>
+    </nav>
+  </header>
+
+  <section id="plan" aria-labelledby="plan-h">
+    <h2 id="plan-h">8-week plan</h2>
+    <p class="note">6–8 hours a week. Tick weeks off as you go.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Weeks</th><th scope="col">Focus</th><th scope="col">Done</th></tr></thead>
+        <tbody>
+          <tr><td class="wk">1–2</td><td>Read Florida Statutes chapter 197 and your county's tax deed rules; learn every record website below</td><td><input type="checkbox" aria-label="Weeks 1–2 done"></td></tr>
+          <tr><td class="wk">3–4</td><td>Title search course basics; full analyses of 5 past auction properties</td><td><input type="checkbox" aria-label="Weeks 3–4 done"></td></tr>
+          <tr><td class="wk">5–6</td><td>10 more past-auction analyses using the template; 1-hour attorney check of your lien logic</td><td><input type="checkbox" aria-label="Weeks 5–6 done"></td></tr>
+          <tr><td class="wk">7–8</td><td>Fix gaps; offer first free reports to real bidders for feedback and testimonials</td><td><input type="checkbox" aria-label="Weeks 7–8 done"></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="resources" aria-labelledby="res-h">
+    <h2 id="res-h">Learning resources</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Resource</th><th scope="col">Use it for</th><th scope="col">Link</th></tr></thead>
+        <tbody>
+          <tr><td>Florida Statutes ch. 197</td><td>Tax deed law: notices, surviving liens, surplus funds</td><td><a href="http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&amp;URL=0100-0199/0197/0197ContentsIndex.html">leg.state.fl.us</a></td></tr>
+          <tr><td>Clerk of Court (Hillsborough)</td><td>Tax deed files, auction rules, official records</td><td><a href="https://www.hillsclerk.com">hillsclerk.com</a></td></tr>
+          <tr><td>BiggerPockets forum</td><td>Real cases from Florida tax deed bidders</td><td><a href="https://www.biggerpockets.com/forums/70">biggerpockets.com/forums/70</a></td></tr>
+          <tr><td>Florida real estate pre-licensing (63 hr)</td><td>Florida deeds, titles and liens, for knowledge</td><td><a href="https://www2.myfloridalicense.com/real-estate-commission/">myfloridalicense.com</a></td></tr>
+          <tr><td>Title search course</td><td>Chain of title, defects, lien priority</td><td>Choose an online provider</td></tr>
+          <tr><td>Florida Bar lawyer referral</td><td>1-hour attorney check of your analyses</td><td><a href="https://www.floridabar.org/public/lrs/">floridabar.org</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="sources" aria-labelledby="src-h">
+    <h2 id="src-h">Record sources</h2>
+    <p class="note">Check every one on every report.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Source</th><th scope="col">What you check</th><th scope="col">Link</th></tr></thead>
+        <tbody>
+          <tr><td>Clerk official records</td><td>Deeds, mortgages, liens, judgments, lis pendens</td><td><a href="https://www.hillsclerk.com">hillsclerk.com</a></td></tr>
+          <tr><td>Property appraiser</td><td>Ownership, value, building details</td><td><a href="https://www.hcpafl.org">hcpafl.org</a></td></tr>
+          <tr><td>Tax collector</td><td>Other tax years, tax certificates</td><td><a href="https://www.hillstax.org">hillstax.org</a></td></tr>
+          <tr><td>Sunbiz</td><td>Florida company owners and officers</td><td><a href="https://www.sunbiz.org">sunbiz.org</a></td></tr>
+          <tr><td>PACER</td><td>Federal bankruptcy filings</td><td><a href="https://pacer.uscourts.gov">pacer.uscourts.gov</a></td></tr>
+          <tr><td>Code enforcement</td><td>City and county code liens</td><td>Via the city or county website</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Keep a log of every analysis, your call and the actual auction outcome, and review it quarterly. Avoid expensive tax deed "guru" seminars.</p>
+  </section>
+
+  <section id="template" aria-labelledby="tpl-h">
+    <div class="report">
+      <div class="report-head">
+        <h2 id="tpl-h">Pre-auction lien report</h2>
+        <button class="print" type="button" onclick="window.print()">Print report</button>
+      </div>
+      <p class="note">Research report, not legal advice, a title opinion or title insurance.</p>
+
+      <div class="verdict">
+        <fieldset>
+          <legend>Verdict</legend>
+          <label><input type="radio" name="verdict"> Bid</label>
+          <label><input type="radio" name="verdict"> Pass</label>
+          <label><input type="radio" name="verdict"> Caution</label>
+        </fieldset>
+        <label class="f">Maximum bid ($)<input type="text" inputmode="decimal"></label>
+        <label class="f">Main reason<textarea></textarea></label>
+      </div>
+
+      <h3>Property snapshot</h3>
+      <div class="snap">
+        <label class="f">County<input type="text"></label>
+        <label class="f">Auction date<input type="text"></label>
+        <label class="f">Tax deed / case number<input type="text"></label>
+        <label class="f">Parcel ID<input type="text"></label>
+        <label class="f">Address<input type="text"></label>
+        <label class="f">Property type<input type="text"></label>
+        <label class="f">Owner of record<input type="text"></label>
+        <label class="f">Opening bid ($)<input type="text"></label>
+        <label class="f">Assessed / market value ($)<input type="text"></label>
+        <label class="f">Occupancy<input type="text"></label>
+      </div>
+
+      <h3>Liens and encumbrances found</h3>
+      <div class="table-wrap liens">
+        <table>
+          <thead><tr><th>#</th><th>Type</th><th>Holder</th><th>Recorded</th><th>Ref</th><th>Amount</th><th>Survives? Y/N/Check</th><th>Basis</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td><input type="text" aria-label="Lien 1 type"></td><td><input type="text" aria-label="Lien 1 holder"></td><td><input type="text" aria-label="Lien 1 recorded"></td><td><input type="text" aria-label="Lien 1 reference"></td><td><input type="text" aria-label="Lien 1 amount"></td><td><input type="text" aria-label="Lien 1 survives"></td><td><input type="text" aria-label="Lien 1 basis"></td></tr>
+            <tr><td>2</td><td><input type="text" aria-label="Lien 2 type"></td><td><input type="text" aria-label="Lien 2 holder"></td><td><input type="text" aria-label="Lien 2 recorded"></td><td><input type="text" aria-label="Lien 2 reference"></td><td><input type="text" aria-label="Lien 2 amount"></td><td><input type="text" aria-label="Lien 2 survives"></td><td><input type="text" aria-label="Lien 2 basis"></td></tr>
+            <tr><td>3</td><td><input type="text" aria-label="Lien 3 type"></td><td><input type="text" aria-label="Lien 3 holder"></td><td><input type="text" aria-label="Lien 3 recorded"></td><td><input type="text" aria-label="Lien 3 reference"></td><td><input type="text" aria-label="Lien 3 amount"></td><td><input type="text" aria-label="Lien 3 survives"></td><td><input type="text" aria-label="Lien 3 basis"></td></tr>
+            <tr><td>4</td><td><input type="text" aria-label="Lien 4 type"></td><td><input type="text" aria-label="Lien 4 holder"></td><td><input type="text" aria-label="Lien 4 recorded"></td><td><input type="text" aria-label="Lien 4 reference"></td><td><input type="text" aria-label="Lien 4 amount"></td><td><input type="text" aria-label="Lien 4 survives"></td><td><input type="text" aria-label="Lien 4 basis"></td></tr>
+            <tr><td>5</td><td><input type="text" aria-label="Lien 5 type"></td><td><input type="text" aria-label="Lien 5 holder"></td><td><input type="text" aria-label="Lien 5 recorded"></td><td><input type="text" aria-label="Lien 5 reference"></td><td><input type="text" aria-label="Lien 5 amount"></td><td><input type="text" aria-label="Lien 5 survives"></td><td><input type="text" aria-label="Lien 5 basis"></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="snap" style="margin-top:1rem">
+        <label class="f">Estimated cost to clear surviving liens ($)<input type="text"></label>
+        <label class="f">Other items (easements, HOA/condo, permits, lis pendens, bankruptcy)<input type="text"></label>
+      </div>
+
+      <h3>Maximum bid</h3>
+      <div class="table-wrap bid">
+        <table>
+          <thead><tr><th scope="col">Line</th><th scope="col">Amount ($)</th></tr></thead>
+          <tbody>
+            <tr><td>Estimated after-repair value (ARV)</td><td><input type="text" aria-label="ARV"></td></tr>
+            <tr><td>× Target purchase percentage</td><td><input type="text" aria-label="Target percentage"></td></tr>
+            <tr><td>= Target all-in cost</td><td><input type="text" aria-label="Target all-in cost"></td></tr>
+            <tr><td>− Repairs estimate</td><td><input type="text" aria-label="Repairs"></td></tr>
+            <tr><td>− Surviving liens to clear</td><td><input type="text" aria-label="Surviving liens"></td></tr>
+            <tr><td>− Quiet title action</td><td><input type="text" aria-label="Quiet title"></td></tr>
+            <tr><td>− Closing, recording and doc stamp costs</td><td><input type="text" aria-label="Closing costs"></td></tr>
+            <tr><td>− Holding costs (taxes, insurance, utilities)</td><td><input type="text" aria-label="Holding costs"></td></tr>
+            <tr><td>− Eviction or cash-for-keys, if occupied</td><td><input type="text" aria-label="Eviction costs"></td></tr>
+            <tr class="total"><td>= Maximum bid</td><td><input type="text" aria-label="Maximum bid total"></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="snap" style="margin-top:1rem">
+        <label class="f">Value basis (comps: address, date, price)<textarea></textarea></label>
+        <label class="f">Repairs basis (photos, street view, listing history)<textarea></textarea></label>
+      </div>
+
+      <h3>Red flags</h3>
+      <ul class="checks">
+        <li><label><input type="checkbox"> Federal (IRS) tax lien recorded</label></li>
+        <li><label><input type="checkbox"> Lienholder possibly not noticed by the county</label></li>
+        <li><label><input type="checkbox"> Owner in active bankruptcy (PACER)</label></li>
+        <li><label><input type="checkbox"> Owner deceased or estate in probate</label></li>
+        <li><label><input type="checkbox"> Large or growing code enforcement fines</label></li>
+        <li><label><input type="checkbox"> Unpermitted work or open permits</label></li>
+        <li><label><input type="checkbox"> Landlocked, unusable lot or environmental concern</label></li>
+        <li><label><input type="checkbox"> Condo or HOA with large unpaid assessments</label></li>
+      </ul>
+
+      <h3>Sources checked</h3>
+      <ul class="checks">
+        <li><label><input type="checkbox"> Clerk of court official records</label></li>
+        <li><label><input type="checkbox"> County tax deed file and any lien report included</label></li>
+        <li><label><input type="checkbox"> Property appraiser</label></li>
+        <li><label><input type="checkbox"> Tax collector</label></li>
+        <li><label><input type="checkbox"> City and county code enforcement lien search</label></li>
+        <li><label><input type="checkbox"> Sunbiz (if owner is a company)</label></li>
+        <li><label><input type="checkbox"> PACER (bankruptcy)</label></li>
+        <li><label><input type="checkbox"> Probate records (if owner deceased)</label></li>
+        <li><label><input type="checkbox"> Street view and listing history</label></li>
+      </ul>
+
+      <div class="disclaimer">
+        <p>This report is research based on public records available on the date checked. It is not legal advice, a title opinion, an abstract of title or title insurance. Records may be incomplete or change after the date checked. Confirm all findings with a Florida attorney or licensed title agent before bidding.</p>
+        <div class="snap">
+          <label class="f">Date records checked<input type="text"></label>
+          <label class="f">Prepared by<input type="text"></label>
+          <label class="f">Contact<input type="text"></label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Links added from general knowledge; confirm each site before relying on it.</p>
+  </footer>
+</main>
+</body>
+</html>
