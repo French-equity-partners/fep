@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Foreclosure Options Guide | French Equity Partners (internal)</title>
+<link rel="icon" href="favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F1ECDD; --cream-card:#FAF7EE; --cream-line:#E1D8BF;
+    --navy:#1B3143; --navy-deep:#0F2029; --navy-soft:#445A6B;
+    --gold:#A9803F; --gold-deep:#8A6A34; --gold-light:#D9C08B; --gold-pale:#F3E9CE;
+    --risk:#8A3B2E; --risk-bg:#F4E4DF;
+    --display:'Cormorant Garamond', Georgia, serif;
+    --body:'EB Garamond', Georgia, serif;
+    --utility:'Inter', 'Segoe UI', Arial, sans-serif;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; scroll-padding-top:130px; }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+  body{ background:var(--cream); color:var(--navy); font-family:var(--body); font-size:18px; line-height:1.6; -webkit-font-smoothing:antialiased; }
+  a{ color:var(--gold-deep); }
+  :focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+
+  header{ background:var(--navy-deep); border-bottom:1px solid var(--gold-deep); position:sticky; top:0; z-index:10; }
+  .bar{ max-width:1040px; margin:0 auto; padding:12px 28px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .brand{ display:flex; align-items:center; gap:12px; color:#fff; font-family:var(--display); font-size:21px; text-decoration:none; }
+  .brand img{ width:40px; height:40px; background:var(--cream); border-radius:50%; padding:4px; object-fit:contain; }
+  .btn{ font-family:var(--utility); font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; padding:9px 16px; border-radius:2px; border:1px solid var(--gold); background:var(--gold); color:var(--navy-deep); cursor:pointer; }
+  .btn:hover{ background:var(--gold-deep); }
+  nav.toc{ border-top:1px solid rgba(217,192,139,0.25); }
+  nav.toc .inner{ max-width:1040px; margin:0 auto; padding:8px 28px; display:flex; gap:18px; overflow-x:auto; font-family:var(--utility); font-size:12.5px; white-space:nowrap; }
+  nav.toc a{ color:var(--gold-light); text-decoration:none; padding:4px 0; }
+  nav.toc a:hover{ color:#fff; }
+
+  main{ max-width:1040px; margin:0 auto; padding:52px 28px 80px; }
+  .intro{ text-align:center; margin-bottom:44px; }
+  .eyebrow{ font-family:var(--utility); font-size:12px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-deep); margin-bottom:12px; }
+  h1{ font-family:var(--display); font-weight:500; font-size:48px; line-height:1.1; margin-bottom:12px; }
+  .intro p{ color:var(--navy-soft); max-width:620px; margin:0 auto; }
+  .disclaimer{ font-family:var(--utility); font-size:13px; color:var(--navy-soft); background:var(--cream-card); border:1px solid var(--cream-line); padding:12px 16px; max-width:640px; margin:20px auto 0; }
+
+  section.part{ margin-top:64px; }
+  .part-head{ display:flex; align-items:baseline; gap:14px; border-bottom:1px solid var(--gold-deep); padding-bottom:10px; margin-bottom:24px; }
+  .part-num{ font-family:var(--display); font-size:40px; color:var(--gold-deep); line-height:1; }
+  h2{ font-family:var(--display); font-weight:500; font-size:34px; line-height:1.15; }
+  .lead{ color:var(--navy-soft); max-width:720px; margin-bottom:22px; }
+
+  .opts{ display:grid; grid-template-columns:repeat(2, 1fr); gap:18px; }
+  .opt{ background:var(--cream-card); border:1px solid var(--cream-line); padding:26px 28px; display:flex; flex-direction:column; }
+  .opt.goal{ border-top:3px solid var(--navy); }
+  .opt.sell{ border-top:3px solid var(--gold-deep); }
+  .opt.caution{ border-top:3px solid var(--risk); }
+  .tag{ font-family:var(--utility); font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--navy-soft); margin-bottom:4px; }
+  h3{ font-family:var(--display); font-weight:500; font-size:26px; line-height:1.2; margin-bottom:8px; }
+  h4{ font-family:var(--utility); font-size:11.5px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-deep); margin:14px 0 4px; }
+  .opt ul, .plain ul{ margin-left:20px; }
+  .opt li, .plain li{ margin-bottom:4px; }
+  .risk{ background:var(--risk-bg); color:var(--risk); font-family:var(--utility); font-size:13.5px; line-height:1.5; padding:10px 14px; margin-top:14px; }
+  .risk strong{ display:block; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:2px; }
+  .fl{ font-family:var(--utility); font-size:13.5px; line-height:1.5; background:var(--gold-pale); border-left:2px solid var(--gold-deep); padding:10px 14px; margin-top:12px; }
+  .fl strong{ font-weight:600; }
+
+  blockquote{ font-family:var(--display); font-style:italic; font-size:22px; line-height:1.45; border-left:2px solid var(--gold-light); padding:4px 0 4px 20px; margin:10px 0 16px; }
+  .obj{ background:var(--cream-card); border:1px solid var(--cream-line); padding:24px 28px; margin-bottom:14px; }
+  .obj h3{ font-size:24px; }
+  .note{ font-family:var(--utility); font-size:13.5px; color:var(--navy-soft); }
+
+  .qs{ columns:2; column-gap:40px; margin-left:20px; }
+  .qs li{ margin-bottom:10px; break-inside:avoid; }
+
+  .two{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .box{ background:var(--cream-card); border:1px solid var(--cream-line); padding:24px 28px; }
+
+  .math{ background:var(--navy); color:#E4E9EC; padding:28px 32px; margin:18px 0; }
+  .math h3{ color:#fff; }
+  .formula{ font-family:var(--utility); font-size:15px; color:var(--gold-light); margin:6px 0 16px; }
+  .outcomes{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .outcomes div{ border-top:1px solid var(--gold-light); padding-top:10px; font-size:16.5px; }
+  .outcomes strong{ display:block; color:#fff; font-family:var(--utility); font-size:13px; margin-bottom:4px; }
+
+  ol.steps{ list-style:none; counter-reset:s; }
+  ol.steps li{ counter-increment:s; position:relative; padding:18px 0 18px 64px; border-top:1px solid var(--cream-line); }
+  ol.steps li:last-child{ border-bottom:1px solid var(--cream-line); }
+  ol.steps li::before{ content:counter(s); position:absolute; left:0; top:14px; width:44px; height:44px; border:1px solid var(--gold-deep); border-radius:50%; display:grid; place-items:center; font-family:var(--display); font-size:22px; color:var(--gold-deep); }
+  ol.steps strong{ font-weight:500; font-size:20px; display:block; }
+  ol.steps blockquote{ font-size:19px; margin:6px 0 0; }
+
+  .foot{ text-align:center; margin-top:56px; font-family:var(--utility); font-size:13px; color:var(--navy-soft); }
+
+  @media (max-width:760px){
+    h1{ font-size:36px; }
+    .opts, .two, .outcomes{ grid-template-columns:1fr; }
+    .qs{ columns:1; }
+    .opt, .obj, .box{ padding:20px 18px; }
+    html{ scroll-padding-top:150px; }
+  }
+  @media print{
+    header{ position:static; } nav.toc, .btn{ display:none; }
+    body{ background:#fff; font-size:12px; }
+    h1{ font-size:30px; } h2{ font-size:22px; } h3{ font-size:17px; }
+    blockquote{ font-size:13.5px; }
+    section.part{ margin-top:22px; }
+    .opt, .obj, .box, .math{ break-inside:avoid; padding:12px; }
+    .math, .risk, .fl{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <a class="brand" href="index.html"><img src="FEP.png" alt="">French Equity Partners</a>
+    <button class="btn" type="button" onclick="window.print()">Print</button>
+  </div>
+  <nav class="toc" aria-label="Sections">
+    <div class="inner">
+      <a href="#options">1 · Options</a>
+      <a href="#objections">2 · Concerns</a>
+      <a href="#questions">3 · Key questions</a>
+      <a href="#time">4 · Why it takes time</a>
+      <a href="#situation">5 · The situation</a>
+      <a href="#solution">6 · The solution</a>
+      <a href="#next">7 · Next steps</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div class="intro">
+    <div class="eyebrow">Internal · Training reference</div>
+    <h1>Foreclosure Options Guide</h1>
+    <p>How to walk a homeowner through every path, ask the right questions, and put a backup plan in place early, honestly and without pressure.</p>
+    <p class="disclaimer">A conversation framework, not legal, tax, bankruptcy, or lending advice. Anything legal goes to an attorney. Anything about the loan goes to a HUD counselor (800-569-4287) or the lender.</p>
+  </div>
+
+  <!-- 1 -->
+  <section class="part" id="options">
+    <div class="part-head"><span class="part-num">1</span><h2>The homeowner's options</h2></div>
+    <p class="lead">Start with their goal. If they want to keep the home, explore those options first, honestly. If none are realistic, move to the sale options and a backup plan.</p>
+
+    <div class="opts">
+      <article class="opt goal">
+        <div class="tag">Keep the home</div>
+        <h3>Reinstate the loan</h3>
+        <p>Pay everything past due in one lump sum: missed payments, interest, late fees, and the lender's legal costs. The loan goes back to normal.</p>
+        <h4>Where the money might come from</h4>
+        <ul>
+          <li>Savings</li>
+          <li>Help from family or friends</li>
+          <li>Selling another property or a high-value item</li>
+          <li>Retirement funds, but only after they speak with a financial advisor</li>
+        </ul>
+        <h4>Tell them</h4>
+        <p>Ask the lender for a written reinstatement quote. The amount grows every month.</p>
+        <div class="risk"><strong>Risks</strong>If future payments slip, the foreclosure can start again. Family loans can strain relationships. Early retirement withdrawals can trigger taxes and penalties.</div>
+      </article>
+
+      <article class="opt goal">
+        <div class="tag">Keep the home</div>
+        <h3>Loan modification, repayment plan, or forbearance</h3>
+        <p>The lender changes the terms, adds missed payments to the loan, spreads the catch-up over several months, or pauses payments for a while.</p>
+        <h4>Considerations</h4>
+        <ul>
+          <li>It usually needs steady, documented income that covers the new payment.</li>
+          <li>It can be slow. Apply early and make sure the application is complete, because federal rules give more protection when it is.</li>
+          <li>A HUD counselor can help with the paperwork for free.</li>
+          <li>Keep a backup plan in case it's denied or not finished in time.</li>
+        </ul>
+        <div class="risk"><strong>Risks</strong>There's no guarantee of approval, and some modifications raise the total cost over time.</div>
+      </article>
+
+      <article class="opt goal">
+        <div class="tag">Keep the home</div>
+        <h3>Bankruptcy</h3>
+        <p>Filing pauses the foreclosure automatically. <strong>Chapter 13</strong> lets them catch up missed payments over three to five years while keeping the home. <strong>Chapter 7</strong> clears many other debts, but on its own it doesn't catch up a mortgage.</p>
+        <h4>Considerations</h4>
+        <ul>
+          <li>Chapter 13 can genuinely save a home if income is steady.</li>
+          <li>It doesn't fix affordability if the payment itself is too high.</li>
+          <li>There are attorney fees and court-supervised payments.</li>
+          <li>It stays on a credit report for up to 7 years (Chapter 13) or 10 years (Chapter 7).</li>
+        </ul>
+        <div class="fl"><strong>Always:</strong> refer them to a Florida bankruptcy attorney. Many offer a free first consultation.</div>
+      </article>
+
+      <article class="opt goal">
+        <div class="tag">Keep the home</div>
+        <h3>Defend the foreclosure in court</h3>
+        <p>Florida foreclosures go through the courts, so a homeowner can respond to the lawsuit and raise defenses. This can sometimes buy time or lead to a settlement with the lender.</p>
+        <h4>Considerations</h4>
+        <ul>
+          <li>They generally have 20 days to respond after being served.</li>
+          <li>Attorney fees can be significant, and there's no guarantee of the result.</li>
+          <li>Interest, taxes, insurance, and legal costs keep adding up meanwhile.</li>
+        </ul>
+        <div class="fl"><strong>Always:</strong> a foreclosure defense attorney or legal aid only. Never advise on this yourself.</div>
+      </article>
+
+      <article class="opt sell">
+        <div class="tag">Sell</div>
+        <h3>Sell retail with an agent</h3>
+        <p>List on the MLS with a real estate agent.</p>
+        <h4>Considerations</h4>
+        <ul>
+          <li>It can take months from listing to closing.</li>
+          <li>The house may need to be in good condition.</li>
+          <li>Buyer financing, inspections, and repairs add uncertainty.</li>
+          <li>There must be enough time to <em>close</em> before the sale, not just to find a buyer.</li>
+        </ul>
+        <div class="fl"><strong>Be honest:</strong> this usually gets the highest price when there's equity and time. In Florida there often is time, especially early in the lawsuit.</div>
+      </article>
+
+      <article class="opt sell">
+        <div class="tag">Sell</div>
+        <h3>Short sale</h3>
+        <p>When they owe more than the house is worth, the lender may accept less than the full balance.</p>
+        <h4>Considerations</h4>
+        <ul>
+          <li>It needs lender approval and can be slow.</li>
+          <li>It works best with an agent experienced in short sales.</li>
+          <li>It's usually less damaging to credit than a completed foreclosure.</li>
+        </ul>
+      </article>
+
+      <article class="opt sell">
+        <div class="tag">Sell</div>
+        <h3>Sell to a cash buyer (us)</h3>
+        <p>Sell directly, as-is, with a short closing timeline.</p>
+        <h4>Process</h4>
+        <p>Written offer, then review time, then a signed agreement, then title and payoff work, then closing before the sale date.</p>
+        <h4>Pros</h4>
+        <ul>
+          <li>Fast and certain</li>
+          <li>No repairs, showings, or listing commissions</li>
+        </ul>
+        <div class="risk"><strong>Honest trade-off</strong>The price is below retail value. If they have plenty of equity and time, tell them an agent will likely get them more.</div>
+      </article>
+
+      <article class="opt sell">
+        <div class="tag">Sell</div>
+        <h3>Deed in lieu of foreclosure</h3>
+        <p>Hand the house back to the lender instead of going through foreclosure.</p>
+        <h4>Considerations</h4>
+        <ul>
+          <li>It's less damaging than a foreclosure.</li>
+          <li>They usually walk away with nothing.</li>
+          <li>The lender must agree, and there may be a deficiency question. They should ask an attorney.</li>
+        </ul>
+      </article>
+
+      <article class="opt caution" style="grid-column:1 / -1">
+        <div class="tag">Attorney first · not currently offered</div>
+        <h3>Sell with existing financing ("subject-to")</h3>
+        <p>An investor takes title, brings the loan current, and keeps paying the existing mortgage, often through a third-party servicer. The loan stays in the homeowner's name.</p>
+        <div class="two" style="margin-top:6px">
+          <div><h4>Possible upside</h4><p>It can resolve the arrears and prevent a completed foreclosure when structured and run properly.</p></div>
+          <div><h4>Real risks for the homeowner</h4><ul>
+            <li>If payments stop, their credit takes the damage.</li>
+            <li>Most mortgages have a due-on-sale clause.</li>
+            <li>Florida's foreclosure-rescue law (§501.1377) adds contract, disclosure, and cancellation requirements, and any buy-back or rent-back deal is presumed to be a loan.</li>
+          </ul></div>
+        </div>
+        <div class="fl"><strong>Rule:</strong> don't present this option until a Florida attorney has approved your contract and disclosures.</div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="part" id="objections">
+    <div class="part-head"><span class="part-num">2</span><h2>Responding to common concerns</h2></div>
+    <p class="lead">Never argue. Validate what they want, then help them think through what happens if their preferred plan doesn't work out.</p>
+
+    <div class="obj">
+      <h3>"We still want to keep the house."</h3>
+      <blockquote>"That makes complete sense, and if there's a way to keep it, I want you to find it. Can I ask: if the catch-up or the modification doesn't come through in time, what would you want to happen then?"</blockquote>
+      <p class="note">Then help with the keep-the-home options first. A backup plan sits alongside Plan A; it doesn't replace it.</p>
+    </div>
+
+    <div class="obj">
+      <h3>"I'm worried about losing my equity."</h3>
+      <blockquote>"The equity you've built is important. The goal is a plan that protects as much of it as possible, instead of the worst case at auction. If the foreclosure can't be stopped another way, you should walk away with something and have time to relocate."</blockquote>
+      <p class="note">If they have a lot of equity, say plainly that listing may protect more of it than selling to you.</p>
+    </div>
+
+    <div class="obj">
+      <h3>Use third-party stories, true ones only</h3>
+      <ul class="plain" style="margin-left:20px">
+        <li>Say how another homeowner benefited from putting a backup plan in place early.</li>
+        <li>Describe what they were worried about, what changed, and what the plan helped them avoid.</li>
+        <li>Only use real examples. Until you have your own, speak generally: <em>"Sometimes people wait until the last week, and by then there are very few options left."</em></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="part" id="questions">
+    <div class="part-head"><span class="part-num">3</span><h2>Key questions</h2></div>
+    <ul class="qs">
+      <li>What monthly payment could you realistically manage?</li>
+      <li>Are you working right now? What does household income look like?</li>
+      <li>If you can't catch up or get a modification, do you have a backup plan?</li>
+      <li>Do you know how the foreclosure process works in Florida, and where you are in it?</li>
+      <li>If you did need to move, what would you need in order to relocate comfortably?</li>
+      <li>Is there family or friends you could stay with if needed?</li>
+      <li>What matters most to you right now: time, money, credit, or where you'll go?</li>
+      <li>Have you spoken with a housing counselor or an attorney yet?</li>
+    </ul>
+  </section>
+
+  <!-- 4 -->
+  <section class="part" id="time">
+    <div class="part-head"><span class="part-num">4</span><h2>Why a plan needs time</h2></div>
+    <p class="lead">Create urgency about the process, not fear about the outcome. The urgency is real, so you don't need to exaggerate it.</p>
+    <blockquote>"I know this is a tough situation. I see people wait until a week or two before the sale, and sometimes that's too late to get everything done. I just want to make sure that doesn't happen to you."</blockquote>
+    <div class="box plain">
+      <h4 style="margin-top:0">What takes time, even for a cash sale</h4>
+      <ul>
+        <li>The title company has to order the mortgage payoff and foreclosure-related documents.</li>
+        <li>Liens, ownership questions, inheritance, or divorce can slow down clearing the title.</li>
+        <li>Everyone who owns the property has to be available to sign.</li>
+        <li>Starting early gives them more options if their preferred plan falls through.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="part" id="situation">
+    <div class="part-head"><span class="part-num">5</span><h2>Understand the situation</h2></div>
+    <div class="two">
+      <div class="box plain">
+        <h3>The deal and the timeline</h3>
+        <ul>
+          <li>What's the total mortgage payoff?</li>
+          <li>How far behind is the loan?</li>
+          <li>Where is the case: letters, lawsuit filed, judgment, or sale date set?</li>
+          <li>Any second mortgage, HOA dues, liens, or judgments?</li>
+          <li>Who is on title?</li>
+        </ul>
+      </div>
+      <div class="box plain">
+        <h3>Their biggest concern</h3>
+        <ul>
+          <li>Is the priority time, money, credit, or where they'll go?</li>
+          <li>Do they have somewhere to move to?</li>
+          <li>What problem must be solved for them to feel comfortable?</li>
+          <li>How much would they need to relocate comfortably?</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:18px"><strong>Bridge to the solution:</strong></p>
+    <blockquote>"If we can solve [their biggest concern] and avoid the foreclosure, it makes sense to at least start the backup plan now, so it's ready if you need it."</blockquote>
+  </section>
+
+  <!-- 6 -->
+  <section class="part" id="solution">
+    <div class="part-head"><span class="part-num">6</span><h2>Present what's realistic</h2></div>
+    <p class="lead">Show them what's genuinely possible based on the property, payoff, equity, timeline, and their biggest concern.</p>
+    <div class="math">
+      <h3>Check the numbers before you present anything</h3>
+      <p class="formula">Your maximum offer = ARV × 70% − repairs − your fee</p>
+      <div class="outcomes">
+        <div><strong>Payoff well below your offer</strong>A cash sale works, and they walk away with money. Present it.</div>
+        <div><strong>Payoff above your offer</strong>A cash sale can't work. Point them to a short sale, a modification, or an agent.</div>
+        <div><strong>Lots of equity and time</strong>Tell them listing will probably get them more. Offer yourself as the backup.</div>
+      </div>
+    </div>
+    <div class="box plain">
+      <ul>
+        <li><strong>Cash offer:</strong> when speed, certainty, and selling as-is are their priority.</li>
+        <li><strong>Other structures (subject-to, creative deals):</strong> only after a Florida attorney approves them, and only when they genuinely solve the homeowner's problem with full disclosure.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="part" id="next">
+    <div class="part-head"><span class="part-num">7</span><h2>Confirm the next steps</h2></div>
+    <p class="lead">Once the homeowner says the plan solves their problem, walk them through what happens next. They set the pace. You make it easy.</p>
+    <ol class="steps">
+      <li><strong>Send the written offer for review</strong>
+        <blockquote>"I'll email the agreement tonight. Please read it with family or an attorney, and I'll call you on [day] to answer any questions."</blockquote></li>
+      <li><strong>Explain their right to cancel</strong>Under Florida law, homeowners in foreclosure have cancellation rights. Point them out clearly in the agreement.</li>
+      <li><strong>Authorization and payoff</strong>Once they've signed, explain that the title company needs their signed authorization to request the mortgage payoff and confirm the foreclosure will be resolved at closing.</li>
+      <li><strong>Mortgage statement</strong>
+        <blockquote>"Do you have a recent mortgage statement? The title company needs the loan number and details."</blockquote></li>
+      <li><strong>Open title</strong>
+        <blockquote>"To make sure we're done on time, I'll send everything to the title company so they can start clearing the title."</blockquote></li>
+      <li><strong>Set expectations</strong>Let them know the title company will call and email, give them your direct number, and agree on the closing date, the move-out date, and any help with moving, in writing.</li>
+    </ol>
+  </section>
+
+  <p class="foot">Pairs with the <a href="call-checklist.html">call checklist</a> and the <a href="call-flow.html">call flow</a>. HUD housing counselors 800-569-4287 · Florida Bar Lawyer Referral 800-342-8011</p>
+</main>
+</body>
+</html>
