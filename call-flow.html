@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Pre-Foreclosure Call Flow | French Equity Partners (internal)</title>
+<link rel="icon" href="favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F1ECDD; --cream-card:#FAF7EE; --cream-line:#E1D8BF;
+    --navy:#1B3143; --navy-deep:#0F2029; --navy-soft:#445A6B;
+    --gold:#A9803F; --gold-deep:#8A6A34; --gold-light:#D9C08B; --gold-pale:#F3E9CE;
+    --display:'Cormorant Garamond', Georgia, serif;
+    --body:'EB Garamond', Georgia, serif;
+    --utility:'Inter', 'Segoe UI', Arial, sans-serif;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  body{ background:var(--cream); color:var(--navy); font-family:var(--body); font-size:18px; line-height:1.6; -webkit-font-smoothing:antialiased; }
+  a{ color:var(--gold-deep); }
+  :focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+  button{ font:inherit; }
+
+  header{ background:var(--navy-deep); border-bottom:1px solid var(--gold-deep); position:sticky; top:0; z-index:10; }
+  .bar{ max-width:1040px; margin:0 auto; padding:14px 28px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .brand{ display:flex; align-items:center; gap:12px; color:#fff; font-family:var(--display); font-size:21px; text-decoration:none; }
+  .brand img{ width:42px; height:42px; background:var(--cream); border-radius:50%; padding:4px; object-fit:contain; }
+  .tabs{ display:flex; gap:6px; }
+  .tab{ font-family:var(--utility); font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; padding:9px 16px; border-radius:2px; border:1px solid var(--gold-light); background:transparent; color:#fff; cursor:pointer; }
+  .tab[aria-selected="true"]{ background:var(--gold); border-color:var(--gold); color:var(--navy-deep); }
+
+  main{ max-width:1040px; margin:0 auto; padding:48px 28px 80px; }
+  .intro{ text-align:center; margin-bottom:36px; }
+  .eyebrow{ font-family:var(--utility); font-size:12px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-deep); margin-bottom:12px; }
+  h1{ font-family:var(--display); font-weight:500; font-size:46px; line-height:1.1; margin-bottom:10px; }
+  .intro p{ color:var(--navy-soft); max-width:600px; margin:0 auto; }
+
+  /* practice view */
+  .trail{ display:flex; flex-wrap:wrap; align-items:center; gap:6px; font-family:var(--utility); font-size:12.5px; color:var(--navy-soft); margin-bottom:16px; min-height:24px; }
+  .trail button{ background:none; border:0; color:var(--gold-deep); cursor:pointer; text-decoration:underline; text-underline-offset:2px; font-size:12.5px; font-family:var(--utility); }
+  .trail .sep{ color:var(--cream-line); }
+  .card{ background:var(--cream-card); border:1px solid var(--cream-line); border-top:3px solid var(--gold-deep); padding:36px 40px; }
+  .card.end{ border-top-color:var(--navy); }
+  .stage{ font-family:var(--utility); font-size:12px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold-deep); margin-bottom:8px; }
+  .card h2{ font-family:var(--display); font-weight:500; font-size:32px; line-height:1.2; margin-bottom:16px; }
+  .say-label{ font-family:var(--utility); font-size:12px; font-weight:600; color:var(--navy-soft); margin-bottom:4px; }
+  .say{ font-family:var(--display); font-style:italic; font-size:24px; line-height:1.45; border-left:2px solid var(--gold-light); padding:4px 0 4px 20px; margin-bottom:18px; }
+  .say + .say{ margin-top:-6px; }
+  .list{ margin:0 0 18px 22px; }
+  .list li{ margin-bottom:6px; }
+  .coach{ background:var(--gold-pale); border-left:2px solid var(--gold-deep); padding:14px 18px; font-family:var(--utility); font-size:14px; line-height:1.55; margin-bottom:26px; }
+  .coach strong{ display:block; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-deep); margin-bottom:3px; }
+  .they{ font-family:var(--utility); font-size:12px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--navy-soft); margin-bottom:10px; }
+  .choices{ display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:10px; }
+  .choice{ text-align:left; background:#fff; border:1px solid var(--cream-line); border-radius:2px; padding:14px 16px; cursor:pointer; color:var(--navy); font-family:var(--body); font-size:18px; line-height:1.35; transition:border-color .15s ease, background .15s ease; }
+  .choice:hover{ border-color:var(--gold-deep); background:var(--gold-pale); }
+  .choice.exit{ color:var(--navy-soft); font-style:italic; }
+  .controls{ display:flex; gap:10px; margin-top:22px; flex-wrap:wrap; }
+  .btn{ font-family:var(--utility); font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; padding:11px 20px; border-radius:2px; border:1px solid var(--gold-deep); background:transparent; color:var(--navy); cursor:pointer; }
+  .btn:hover{ background:var(--gold-pale); }
+  .btn-navy{ background:var(--navy); border-color:var(--navy); color:#fff; }
+  .btn-navy:hover{ background:var(--navy-deep); }
+  .btn:disabled{ opacity:.4; cursor:default; }
+
+  /* map view */
+  .map{ background:var(--cream-card); border:1px solid var(--cream-line); padding:28px 32px; font-family:var(--utility); font-size:14px; }
+  .map p.hint{ color:var(--navy-soft); margin-bottom:16px; }
+  .map ul{ list-style:none; margin-left:18px; border-left:1px solid var(--cream-line); padding-left:14px; }
+  .map > ul{ margin-left:0; border-left:0; padding-left:0; }
+  .map li{ margin:6px 0; }
+  .map .resp{ color:var(--navy-soft); font-style:italic; }
+  .map .node{ background:none; border:0; cursor:pointer; color:var(--navy); font-weight:600; font-family:var(--utility); font-size:14px; text-align:left; text-decoration:underline; text-decoration-color:var(--gold-light); text-underline-offset:3px; }
+  .map .node:hover{ color:var(--gold-deep); }
+  .map .loop{ color:var(--gold-deep); font-size:13px; }
+
+  .foot{ text-align:center; margin-top:28px; font-family:var(--utility); font-size:13px; color:var(--navy-soft); }
+
+  @media (max-width:640px){
+    h1{ font-size:34px; }
+    .card{ padding:24px 18px; }
+    .say{ font-size:20px; }
+    .map{ padding:20px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <a class="brand" href="index.html"><img src="FEP.png" alt="">French Equity Partners</a>
+    <div class="tabs" role="tablist" aria-label="View">
+      <button class="tab" role="tab" id="tab-practice" aria-selected="true" aria-controls="practice">Practice</button>
+      <button class="tab" role="tab" id="tab-map" aria-selected="false" aria-controls="map">Full map</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="intro">
+    <div class="eyebrow">Internal · Call guide</div>
+    <h1>Pre-Foreclosure Call Flow</h1>
+    <p>Pick what the homeowner just said, and see your next line. Use it to practise before calls, and keep it open during them.</p>
+  </div>
+
+  <section id="practice" role="tabpanel" aria-labelledby="tab-practice">
+    <nav class="trail" id="trail" aria-label="Call path"></nav>
+    <article class="card" id="card" aria-live="polite"></article>
+    <div class="controls">
+      <button class="btn" id="back" type="button">Back</button>
+      <button class="btn btn-navy" id="restart" type="button">Start a new call</button>
+    </div>
+  </section>
+
+  <section id="map" role="tabpanel" aria-labelledby="tab-map" hidden>
+    <div class="map">
+      <p class="hint">Every path in the call. Click any step to practise from there.</p>
+      <div id="tree"></div>
+    </div>
+  </section>
+
+  <p class="foot">Pairs with the <a href="call-checklist.html">call checklist</a>. HUD housing counselors 800-569-4287 · Florida Bar Lawyer Referral 800-342-8011</p>
+</main>
+
+<script>
+var N = {
+  start: {
+    stage: "Opener", title: "Introduce yourself and ask permission",
+    say: ["Hi, is this [Name]? My name's Julien, I'm with French Equity Partners here in Tampa. I'm calling about your home on [Street].",
+          "I saw [a foreclosure case was filed / a sale date was set] and wanted to see if it would help to talk through your options. No obligation at all. Is now an OK time?"],
+    coach: "Always give your name and company. Use the right wording for their stage: many Florida homeowners are at the lawsuit stage with no sale date yet. Only call numbers you've checked against Do Not Call lists, and only during permitted hours.",
+    next: [
+      ["\"Now's not a good time.\"", "callback"],
+      ["\"It's taken care of.\"", "handled"],
+      ["\"Nothing has worked.\" / \"We're struggling.\"", "story"],
+      ["\"What are you talking about?\"", "unaware"],
+      ["\"Why are you calling?\" / \"None of your business.\"", "guarded"],
+      ["\"Not interested.\" / \"Take me off your list.\"", "dnc", true]
+    ]
+  },
+  callback: {
+    stage: "Opener", title: "Respect their time",
+    say: ["No problem at all. When would be a better time for me to call back?"],
+    coach: "Book the exact day and time, and then call exactly then. Being reliable is your first proof that you're different.",
+    next: [["Agrees a time", "end_callback"], ["\"Don't call back.\"", "dnc", true]]
+  },
+  handled: {
+    stage: "Their situation", title: "It's taken care of",
+    say: ["That's great to hear. Can I ask how you resolved it? Did you catch up the payments, or work something out with the lender?"],
+    coach: "Be genuinely glad for them. If they're on a good path, your job is to wish them well, not to find holes in their plan.",
+    next: [
+      ["\"We caught up the payments.\"", "end_good"],
+      ["\"We're doing a loan modification.\"", "mod"],
+      ["\"We filed bankruptcy.\"", "bk"],
+      ["\"We're selling with an agent.\"", "agent"]
+    ]
+  },
+  mod: {
+    stage: "Their situation", title: "They're working on a modification",
+    say: ["Good, that's often the right move. Has the lender confirmed in writing that your application is complete? Sometimes the court case keeps moving while it's being reviewed, so it's worth double-checking."],
+    coach: "Don't talk down their choice. If it's going well, support it. If it's stalled, point them to a free counselor.",
+    next: [
+      ["\"Yes, it's approved or under review.\"", "end_good"],
+      ["\"Not sure, it's been slow.\"", "counselor"]
+    ]
+  },
+  counselor: {
+    stage: "Their situation", title: "Point them to free help",
+    say: ["A HUD-approved housing counselor can help you chase that up with the lender, for free. The number is 800-569-4287.",
+          "If it doesn't work out, I'm happy to talk through a backup plan. Would it help to hear what that might look like?"],
+    coach: "Giving them real help first is what makes them call you back later.",
+    next: [["\"Yes, what would a backup look like?\"", "discovery"], ["\"No thanks.\"", "soft_exit", true]]
+  },
+  bk: {
+    stage: "Their situation", title: "They've filed bankruptcy",
+    say: ["Understood. Your attorney is the right person to guide you through that, and I won't get in the way. If selling ever becomes part of the plan, I'm happy to give you a number to compare, with your attorney involved."],
+    coach: "Never advise on bankruptcy. Anything about selling during a bankruptcy goes through their attorney.",
+    next: [["End the call politely", "soft_exit", true]]
+  },
+  agent: {
+    stage: "Their situation", title: "They're selling with an agent",
+    say: ["That's a good route, especially if there's time. If the timing ever gets tight, I'm happy to be a backup cash buyer, and I'll work directly with your agent."],
+    coach: "Agents are partners, not competition. This is also how you get agent referrals.",
+    next: [["End the call politely", "soft_exit", true]]
+  },
+  unaware: {
+    stage: "Their situation", title: "They don't know what you mean",
+    say: ["Sorry, I should explain. Foreclosure filings are public record, and I saw one listed for [address]. Are you aware of any missed mortgage or HOA payments?"],
+    coach: "Stay calm and factual. Some people genuinely don't know, and some are in shock.",
+    next: [
+      ["\"Yes, we're behind.\"", "story"],
+      ["\"No, that can't be right.\"", "mistake"],
+      ["\"I'm not the owner.\" / \"I rent.\"", "wrong_person"]
+    ]
+  },
+  mistake: {
+    stage: "Their situation", title: "They think it's a mistake",
+    say: ["It's possible, and sometimes these relate to HOA dues rather than the mortgage. I'd suggest calling your lender or the Clerk of Court to check. And please don't ignore any court papers, because there are deadlines to respond.",
+          "Would it help if I texted you my number in case you have questions later?"],
+    coach: "Help them check. Don't argue about whether it's real.",
+    next: [["End the call politely", "soft_exit", true]]
+  },
+  wrong_person: {
+    stage: "Their situation", title: "Wrong person",
+    say: ["I'm sorry for the confusion, and thank you for letting me know. I'll update my records. Have a good day."],
+    coach: "Don't ask a tenant for the owner's details, and don't discuss the owner's situation. Remove the number from your list.",
+    next: [], end: true
+  },
+  guarded: {
+    stage: "Their situation", title: "They're guarded",
+    say: ["That's a fair question. Foreclosure filings are public, and I reach out because a lot of people don't know all the options they have, including ones that don't involve me at all. I'm a private buyer, not the bank.",
+          "Has anything worked so far to resolve it?"],
+    coach: "Being suspicious is reasonable. Scammers target people in foreclosure. Be transparent and don't push.",
+    next: [
+      ["\"Nothing has worked.\"", "story"],
+      ["\"It's handled.\"", "handled"],
+      ["\"Still not interested.\"", "soft_exit", true]
+    ]
+  },
+  story: {
+    stage: "Discovery", title: "Let them tell their story",
+    say: ["I'm sorry you're dealing with this. It happens to a lot of good people. Can I ask what's been going on, and how things got behind?"],
+    coach: "Listen more than you talk. Only tell true stories. For example: \"Sometimes people wait until the last week, and by then there are very few options left. I'd rather you know yours now.\"",
+    next: [["Shares their story", "discovery"], ["Doesn't want to share", "private"]]
+  },
+  private: {
+    stage: "Discovery", title: "They'd rather not share",
+    say: ["Totally fine, you don't owe me any details. Could I text you my number and a free housing counselor line, in case either is useful later?"],
+    coach: "Respect the boundary. Leave the door open.",
+    next: [["End the call politely", "soft_exit", true]]
+  },
+  discovery: {
+    stage: "Discovery", title: "Understand the full picture",
+    list: ["How far behind are you?", "What's the monthly payment?", "Has your income stabilized?", "How long have you owned the home?", "What condition is it in?"],
+    say: ["Thanks for sharing all that. So, what would you like to happen: keep the house, or are you open to selling?"],
+    coach: "Their goal decides the rest of the call. Ask directly and let them answer.",
+    next: [
+      ["\"We want to keep the house.\"", "keep"],
+      ["\"We're open to selling.\"", "sell"],
+      ["\"I'm not sure.\"", "keep"]
+    ]
+  },
+  keep: {
+    stage: "Options", title: "Options to keep the house",
+    list: ["Reinstatement: pay what's behind in one lump sum. Works if they can gather the money.",
+           "Loan modification or repayment plan: strong if income has stabilized. Apply early with a complete application.",
+           "Chapter 13 bankruptcy: can genuinely save a home. Refer them to a bankruptcy attorney.",
+           "Free HUD counselor: 800-569-4287."],
+    say: ["Do any of those feel realistic for you?"],
+    coach: "Give real pros and cons. Don't steer them away from options that could work. If one can, that's a good outcome.",
+    next: [["\"One of those could work.\"", "end_helped"], ["\"None of those are realistic.\"", "sell"]]
+  },
+  sell: {
+    stage: "Options", title: "Options to sell",
+    list: ["Listing with an agent: usually the most money if there's equity and time.",
+           "Short sale: if they owe more than the house is worth. Needs lender approval.",
+           "Cash sale to us: speed, as-is, and certainty of closing."],
+    say: ["Which of those sounds closest to what you need?"],
+    coach: "If they have lots of equity and time, say plainly that an agent will probably get them more.",
+    next: [
+      ["\"Listing sounds better.\"", "agent"],
+      ["\"We owe more than it's worth.\"", "short_sale"],
+      ["\"A cash sale sounds right.\"", "title"]
+    ]
+  },
+  short_sale: {
+    stage: "Options", title: "They're underwater",
+    say: ["Then a short sale may be the right fit. It needs lender approval, and it helps to have an agent who's done them before. I'm happy to point you to one."],
+    coach: "When the payoff is higher than your maximum offer, a cash deal can't work. Say so honestly.",
+    next: [["End the call politely", "soft_exit", true]]
+  },
+  title: {
+    stage: "Qualification", title: "Title, decision-makers and liens",
+    list: ["Who's on the title? Is there anyone else who'd need to sign: spouse, ex-spouse, heirs?",
+           "Any second mortgage, HOA dues, tax liens, judgments, or a solar loan?"],
+    say: ["With your OK, I'll send a short form so I can request the exact payoff from your lender. That way my numbers are accurate."],
+    coach: "Surprises here are what kill deals at closing. Ask now.",
+    next: [["Answers and agrees", "explain"]]
+  },
+  explain: {
+    stage: "The offer", title: "Explain how the offer is built",
+    say: ["Here's how I get to a number, so there are no surprises. I look at what similar homes nearby sold for once fixed up, subtract repairs, and leave room for the costs of reselling. I only offer a number I can actually close at, because a high number that falls apart right before your sale date is the worst thing that could happen to you.",
+          "Before I run the numbers: what are you hoping to walk away with, and what matters most, price, timing, or certainty?"],
+    coach: "Get their needs on the table before your number.",
+    next: [["Shares what they need", "numbers"]]
+  },
+  numbers: {
+    stage: "The offer", title: "Run the numbers properly",
+    say: ["Thank you, that really helps. Let me run the numbers properly, and I'll call you back within the hour."],
+    coach: "No fake holds and no \"underwriters.\" Work it out: ARV × 70% − repairs − your fee = your maximum offer. Compare it with their payoff.",
+    next: [["Call back with the offer", "offer"]]
+  },
+  offer: {
+    stage: "The offer", title: "Deliver the offer with your math",
+    say: ["Here's what I came to, and how. [Walk through ARV, repairs, costs, their payoff, and roughly what they'd walk away with.]",
+          "I'll email the written offer tonight. Please look it over with family or an attorney, and I'll call you on [day]."],
+    coach: "If listing would clearly net them more, say so. Never ask for a signature on the first call.",
+    next: [
+      ["\"That sounds fair.\"", "end_next"],
+      ["\"That's too low.\"", "too_low"],
+      ["\"I need to think about it.\"", "think"]
+    ]
+  },
+  too_low: {
+    stage: "The offer", title: "The price is the concern",
+    say: ["I understand. Can I ask what number would work for you, and what it needs to cover?"],
+    coach: "You can improve up to your maximum offer and no further.",
+    next: [["Their number fits your numbers", "end_next"], ["Their number is beyond your numbers", "honest_no"]]
+  },
+  honest_no: {
+    stage: "The offer", title: "Be honest that you can't get there",
+    say: ["I can't get to that number and still be sure I can close, and I don't want to promise something I can't deliver. Listing might work better for you. I'm happy to point you to a good agent."],
+    coach: "A respectful no builds your reputation. Some of these people call back, or refer friends.",
+    next: [["End the call politely", "soft_exit", true]]
+  },
+  think: {
+    stage: "The offer", title: "They need time",
+    say: ["Of course, it's a big decision. What would help most while you think it over? I'll call you on [day] to answer any questions."],
+    coach: "\"I need to think about it\" is a fair answer. Book the follow-up and keep it.",
+    next: [["Agrees a follow-up", "end_next"]]
+  },
+
+  soft_exit: {
+    stage: "Wrap-up", title: "Not interested",
+    say: ["Alright, I'm not here to twist your arm. If anything changes, I'm happy to help. Take care."],
+    coach: "Offer to text your number and the help page link only if they'd like it.",
+    next: [], end: true
+  },
+  dnc: {
+    stage: "Wrap-up", title: "Remove them from your list",
+    say: ["Of course. I'll remove your number right away. Sorry for the bother, and take care."],
+    coach: "Add the number to your internal Do Not Call list immediately. This is a legal requirement, not a courtesy.",
+    next: [], end: true
+  },
+  end_callback: {
+    stage: "Wrap-up", title: "Callback booked",
+    say: ["Perfect, I'll call you on [day] at [time]. Talk then."],
+    coach: "Log the exact time and set a reminder.",
+    next: [], end: true
+  },
+  end_good: {
+    stage: "Wrap-up", title: "They're on a good path",
+    say: ["That's wonderful. If anything ever changes, you have my number. All the best."],
+    coach: "This is a good call. Log it, and don't follow up unless they ask you to.",
+    next: [], end: true
+  },
+  end_helped: {
+    stage: "Wrap-up", title: "They have a plan to keep the house",
+    say: ["That's great. Here's the free counselor number again: 800-569-4287. I'll text you my number too. If it doesn't work out, call me and we'll look at a backup."],
+    coach: "You helped someone keep their home. That's the promise on your website, kept.",
+    next: [], end: true
+  },
+  end_next: {
+    stage: "Wrap-up", title: "Next step agreed",
+    say: ["Great. You'll have the written offer by email tonight, and I'll call you on [day]."],
+    coach: "Send the offer when you said you would. When they sign, point out their cancellation right under Florida law.",
+    next: [], end: true
+  }
+};
+
+var AFTER = ["Log your notes, their deadlines, and the follow-up date.",
+             "If they'd like it, text them the help page: frenchequitypartners.com/foreclosure-help.html",
+             "Follow up exactly when you said you would."];
+
+var path = ["start"], labels = [];
+var card = document.getElementById("card"), trail = document.getElementById("trail");
+
+function esc(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+function render(){
+  var id = path[path.length-1], n = N[id], h = "";
+  card.className = "card" + (n.end ? " end" : "");
+  h += "<div class='stage'>" + n.stage + "</div><h2>" + n.title + "</h2>";
+  if (n.list){ h += "<div class='say-label'>Ask or cover</div><ul class='list'>" + n.list.map(function(x){return "<li>"+esc(x)+"</li>";}).join("") + "</ul>"; }
+  if (n.say){ h += "<div class='say-label'>You say</div>" + n.say.map(function(x){return "<p class='say'>"+esc(x)+"</p>";}).join(""); }
+  if (n.coach){ h += "<div class='coach'><strong>Coach's note</strong>" + esc(n.coach) + "</div>"; }
+  if (n.end){
+    h += "<div class='they'>After the call</div><ul class='list'>" + AFTER.map(function(x){return "<li>"+esc(x)+"</li>";}).join("") + "</ul>";
+  } else {
+    h += "<div class='they'>They say</div><div class='choices'>";
+    n.next.forEach(function(c, i){ h += "<button type='button' class='choice" + (c[2] ? " exit" : "") + "' data-i='" + i + "'>" + esc(c[0]) + "</button>"; });
+    h += "</div>";
+  }
+  card.innerHTML = h;
+  card.querySelectorAll(".choice").forEach(function(b){
+    b.addEventListener("click", function(){
+      var c = n.next[+b.dataset.i]; labels.push(c[0]); path.push(c[1]); render();
+      card.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+    });
+  });
+  var t = "";
+  path.forEach(function(p, i){
+    if (i > 0) t += "<span class='sep'>›</span>";
+    t += i < path.length-1 ? "<button type='button' data-j='" + i + "'>" + esc(N[p].title) + "</button>" : "<span>" + esc(N[p].title) + "</span>";
+  });
+  trail.innerHTML = t;
+  trail.querySelectorAll("button").forEach(function(b){
+    b.addEventListener("click", function(){ var j = +b.dataset.j; path = path.slice(0, j+1); labels = labels.slice(0, j); render(); });
+  });
+  document.getElementById("back").disabled = path.length < 2;
+}
+
+document.getElementById("back").addEventListener("click", function(){ if (path.length > 1){ path.pop(); labels.pop(); render(); } });
+document.getElementById("restart").addEventListener("click", function(){ path = ["start"]; labels = []; render(); });
+
+function buildTree(){
+  var seen = {};
+  function node(id){
+    var n = N[id];
+    var h = "<button type='button' class='node' data-id='" + id + "'>" + esc(n.title) + "</button>";
+    if (seen[id]) return h + " <span class='loop'>(continues above)</span>";
+    seen[id] = true;
+    if (!n.next.length) return h;
+    h += "<ul>";
+    n.next.forEach(function(c){ h += "<li><span class='resp'>" + esc(c[0]) + "</span> → " + node(c[1]) + "</li>"; });
+    return h + "</ul>";
+  }
+  var tree = document.getElementById("tree");
+  tree.innerHTML = "<ul><li>" + node("start") + "</li></ul>";
+  tree.querySelectorAll(".node").forEach(function(b){
+    b.addEventListener("click", function(){ path = [b.dataset.id]; labels = []; show("practice"); render(); window.scrollTo(0,0); });
+  });
+}
+
+function show(v){
+  document.getElementById("practice").hidden = v !== "practice";
+  document.getElementById("map").hidden = v !== "map";
+  document.getElementById("tab-practice").setAttribute("aria-selected", v === "practice");
+  document.getElementById("tab-map").setAttribute("aria-selected", v === "map");
+}
+document.getElementById("tab-practice").addEventListener("click", function(){ show("practice"); });
+document.getElementById("tab-map").addEventListener("click", function(){ show("map"); });
+
+buildTree();
+render();
+</script>
+</body>
+</html>
