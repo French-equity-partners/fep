@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Pre-Foreclosure Call Checklist | French Equity Partners (internal)</title>
+<link rel="icon" href="favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F1ECDD; --cream-card:#FAF7EE; --cream-line:#E1D8BF;
+    --navy:#1B3143; --navy-deep:#0F2029; --navy-soft:#445A6B;
+    --gold:#A9803F; --gold-deep:#8A6A34; --gold-light:#D9C08B; --gold-pale:#F3E9CE;
+    --good:#2F5D46; --bad:#8A3B2E;
+    --display:'Cormorant Garamond', Georgia, serif;
+    --body:'EB Garamond', Georgia, serif;
+    --utility:'Inter', 'Segoe UI', Arial, sans-serif;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  body{ background:var(--cream); color:var(--navy); font-family:var(--body); font-size:18px; line-height:1.6; -webkit-font-smoothing:antialiased; }
+  a{ color:var(--gold-deep); }
+  :focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+
+  header{ background:var(--navy-deep); border-bottom:1px solid var(--gold-deep); position:sticky; top:0; z-index:10; }
+  .bar{ max-width:880px; margin:0 auto; padding:14px 28px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .brand{ display:flex; align-items:center; gap:12px; color:#fff; font-family:var(--display); font-size:21px; text-decoration:none; }
+  .brand img{ width:42px; height:42px; background:var(--cream); border-radius:50%; padding:4px; object-fit:contain; }
+  .tools{ display:flex; align-items:center; gap:14px; font-family:var(--utility); font-size:13px; color:var(--gold-light); }
+  .progress{ min-width:9ch; text-align:right; }
+  .btn{ font-family:var(--utility); font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; padding:9px 16px; border-radius:2px; border:1px solid var(--gold-light); background:transparent; color:#fff; cursor:pointer; }
+  .btn:hover{ background:rgba(255,255,255,0.08); }
+  .btn-gold{ background:var(--gold); border-color:var(--gold); color:var(--navy-deep); }
+  .btn-gold:hover{ background:var(--gold-deep); }
+
+  main{ max-width:880px; margin:0 auto; padding:56px 28px 80px; }
+  .intro{ text-align:center; margin-bottom:48px; }
+  .eyebrow{ font-family:var(--utility); font-size:12px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-deep); margin-bottom:14px; }
+  h1{ font-family:var(--display); font-weight:500; font-size:48px; line-height:1.1; margin-bottom:14px; }
+  .motto{ font-family:var(--display); font-style:italic; font-size:24px; color:var(--gold-deep); }
+  .intro p.sub{ color:var(--navy-soft); max-width:560px; margin:14px auto 0; }
+
+  .step{ background:var(--cream-card); border:1px solid var(--cream-line); border-left:3px solid var(--cream-line); padding:28px 32px; margin-bottom:18px; transition:border-color .2s ease; }
+  .step.done{ border-left-color:var(--gold-deep); }
+  .step-head{ display:flex; gap:16px; align-items:flex-start; cursor:pointer; }
+  .step-head input{ appearance:none; -webkit-appearance:none; flex:none; width:26px; height:26px; margin-top:6px; border:1.5px solid var(--gold-deep); border-radius:3px; background:#fff; cursor:pointer; display:grid; place-items:center; }
+  .step-head input:checked{ background:var(--navy); border-color:var(--navy); }
+  .step-head input:checked::after{ content:""; width:11px; height:6px; border-left:2px solid var(--gold-light); border-bottom:2px solid var(--gold-light); transform:rotate(-45deg) translate(1px,-1px); }
+  .num{ font-family:var(--display); font-size:22px; color:var(--gold-deep); margin-right:6px; }
+  h2{ font-family:var(--display); font-weight:500; font-size:28px; line-height:1.2; }
+  .step-body{ margin-left:42px; margin-top:10px; }
+  .step-body p{ margin-bottom:10px; }
+  .step-body ul{ margin:0 0 12px 20px; }
+  .step-body li{ margin-bottom:5px; }
+  .step-body h3{ font-family:var(--utility); font-size:12px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-deep); margin:16px 0 6px; }
+  blockquote{ font-family:var(--display); font-style:italic; font-size:21px; line-height:1.45; border-left:2px solid var(--gold-light); padding:4px 0 4px 18px; margin:12px 0 14px; color:var(--navy); }
+  .score{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:16px; font-family:var(--utility); font-size:13.5px; line-height:1.5; }
+  .score div{ padding:12px 14px; border-radius:2px; }
+  .hi{ background:#E6EEE8; color:var(--good); }
+  .lo{ background:#F4E4DF; color:var(--bad); }
+  .score strong{ display:block; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:3px; }
+
+  .never{ background:var(--navy); color:#E4E9EC; padding:32px 36px; margin-top:36px; }
+  .never h2{ color:#fff; margin-bottom:10px; }
+  .never ul{ list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:8px 28px; }
+  .never li{ padding-left:22px; position:relative; }
+  .never li::before{ content:"\00D7"; position:absolute; left:0; top:-1px; color:var(--gold-light); font-size:20px; }
+
+  .ref{ margin-top:18px; font-family:var(--utility); font-size:13px; color:var(--navy-soft); text-align:center; }
+
+  @media (max-width:640px){
+    h1{ font-size:36px; }
+    .step{ padding:22px 18px; }
+    .step-body{ margin-left:0; }
+    .score, .never ul{ grid-template-columns:1fr; }
+    .never{ padding:26px 20px; }
+  }
+  @media print{
+    header{ position:static; }
+    .tools{ display:none; }
+    body{ background:#fff; font-size:12.5px; }
+    main{ padding:20px 0; }
+    h1{ font-size:30px; }
+    h2{ font-size:19px; }
+    blockquote{ font-size:14px; }
+    .step{ padding:12px 14px; margin-bottom:8px; break-inside:avoid; }
+    .score{ font-size:10.5px; }
+    .never{ break-inside:avoid; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    .hi, .lo{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  }
+  @media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <a class="brand" href="index.html"><img src="FEP.png" alt="">French Equity Partners</a>
+    <div class="tools">
+      <span class="progress" id="progress" aria-live="polite">0 of 12</span>
+      <button class="btn" id="reset" type="button">New call</button>
+      <button class="btn btn-gold" type="button" onclick="window.print()">Print</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="intro">
+    <div class="eyebrow">Internal · Call guide</div>
+    <h1>Pre-Foreclosure Call Checklist</h1>
+    <p class="motto">Help first. Be honest. The deal follows the trust.</p>
+    <p class="sub">Matches the promises on our website: no pressure, every option explained, everything in writing.</p>
+  </div>
+
+  <section class="step">
+    <label class="step-head"><input type="checkbox"><h2><span class="num">1.</span>Open warmly and ask permission</h2></label>
+    <div class="step-body">
+      <p>Give your name, say why you're calling, and ask if now is a good time. Make it clear this is a conversation, not a pitch.</p>
+      <blockquote>"Hi, is this Maria? My name's Julien, I'm with French Equity Partners here in Tampa. I saw there's a foreclosure filing on your home, and I'm calling to see if it would help to talk through your options. No obligation at all. Is now an OK time?"</blockquote>
+      <div class="score"><div class="hi"><strong>Higher</strong>Calm and friendly, clear about who you are, easy for them to say "not now."</div><div class="lo"><strong>Lower</strong>Vague about who you are, rushing, homeowner feels ambushed.</div></div>
+    </div>
+  </section>
+
+  <section class="step">
+    <label class="step-head"><input type="checkbox"><h2><span class="num">2.</span>Build rapport and take the shame out of it</h2></label>
+    <div class="step-body">
+      <p>Ask something simple and personal, like how long they've lived there. Match their energy. Normalize their situation:</p>
+      <blockquote>"A lot of people I speak with got here through a job change or a medical bill. It happens to good people."</blockquote>
+      <p>Only tell stories that are true. Until you have your own, speak generally rather than inventing a case.</p>
+      <div class="score"><div class="hi"><strong>Higher</strong>Genuine connection, homeowner relaxes.</div><div class="lo"><strong>Lower</strong>Jumping straight to business, or telling a made-up story.</div></div>
+    </div>
+  </section>
+
+  <section class="step">
+    <label class="step-head"><input type="checkbox"><h2><span class="num">3.</span>Be clear about who you are and what you'll do</h2></label>
+    <div class="step-body">
+      <h3>Your role</h3>
+      <blockquote>"I'm a private buyer. I'm not an agent, lender, or attorney."</blockquote>
+      <h3>What the call is for</h3>
+      <blockquote>"I'll go through every option you have, including the ones that don't involve me. If buying your house doesn't make sense, I'll tell you and point you to someone who can help."</blockquote>
+      <h3>The timeline, gently</h3>
+      <blockquote>"The court process does have deadlines, so it's worth understanding your options now, while you have the most of them."</blockquote>
+      <div class="score"><div class="hi"><strong>Higher</strong>Honest framing, urgency grounded in their real timeline, guard comes down.</div><div class="lo"><strong>Lower</strong>Mentioning "underwriters" or "programs," or creating fear.</div></div>
+    </div>
+  </section>
+
+  <section class="step">
+    <label class="step-head"><input type="checkbox"><h2><span class="num">4.</span>Check title, decision-makers, and liens early</h2></label>
+    <div class="step-body">
+      <ul>
+        <li>Who is on title, and who needs to sign: spouse, ex-spouse, heirs?</li>
+        <li>Any second mortgage, HOA debt, tax liens, judgments, or solar loans?</li>
+        <li>If they're open to it, ask permission to request a payoff statement from their lender. They'll need to sign an authorization form.</li>
+      </ul>
+      <div class="score"><div class="hi"><strong>Higher</strong>Full picture, no surprises at closing.</div><div class="lo"><strong>Lower</strong>Discovering a co-owner or a lien at the end.</div></div>
+    </div>
+  </section>
+
+  <section class="step">
+    <label class="step-head"><input type="checkbox"><h2><span class="num">5.</span>Discover their goal and their story</h2></label>
+    <div class="step-body">
+      <blockquote>"What would you like to happen? Keep the house, or are you open to selling?"</blockquote>
+      <p>Then listen. Find out:</p>
+      <ul>
+        <li>how they fell behind and how far behind they are</li>
+        <li>what the monthly payment is</li>
+        <li>whether their income has stabilized</li>
+        <li>how long they've owned the home</li>
+        <li>what condition it's in</li>
+      </ul>
+      <div class="score"><div class="hi"><strong>Higher</strong>You talk less than they do, and their real goal is clear before you present anything.</div><div class="lo"><strong>Lower</strong>Assuming they want to sell, or skipping the money questions.</div></div>
+    </div>
+  </section>
+
+  <section class="step">
+    <label class="step-head"><input type="checkbox"><h2><span class="num">6.</span>Present options based on their goal, honestly</h2></label>
+    <div class="step-body">
+      <h3>If they want to keep the house</h3>
+      <ul>
+        <li><strong>Reinstatement:</strong> works if they can gather the lump sum.</li>
+        <li><strong>Loan modification or repayment plan:</strong> strong if their income has stabilized. Apply early with a complete application.</li>
+        <li><strong>Bankruptcy:</strong> Chapter 13 can genuinely save a home. Refer them to an attorney.</li>
+        <li>Give them the free HUD counselor number: <strong>800-569-4287</strong>.</li>
+      </ul>
+      <p>The goal is for them to understand their situation, not to steer them toward selling.</p>
+      <h3>If they want or need to sell</h3>
+      <ul>
+        <li><strong>Listing with an agent:</strong> usually the most money if they have equity and time.</li>
+        <li><strong>Short sale:</strong> if they owe more than the house is worth.</li>
+        <li><strong>Cash sale to us:</strong> speed, as-is, and certainty of closing.</li>
+      </ul>
+      <div class="score"><div class="hi"><strong>Higher</strong>They make an informed choice, and you'd be comfortable with them repeating everything you said to an attorney.</div><div class="lo"><strong>Lower</strong>Downplaying options that don't benefit you.</div></div>
+    </div>
+  </section>
+
+  <section class="step">
+    <label class="step-head"><input type="checkbox"><h2><span class="num">7.</span>Explain how an offer is built, before any number</h2></label>
+    <div class="step-body">
+      <blockquote>"Here's how I get to a number, so there are no surprises. I look at what similar homes nearby sold for once fixed up, subtract repairs, and leave room for the costs of reselling. I only offer a number I can actually close at, because a high number that falls apart right before your sale date is the worst thing that could happen to you."</blockquote>
+      <div class="score"><div class="hi"><strong>Higher</strong>The process is transparent, and the offer will land with credibility.</div><div class="lo"><strong>Lower</strong>Throwing out a number with no explanation.</div></div>
+    </div>
+  </section>
+
+  <section class="step">
+    <label class="step-head"><input type="checkbox"><h2><span class="num">8.</span>Ask what they need before you give a number</h2></label>
+    <div class="step-body">
+      <ul>
+        <li>What are they hoping to walk away with?</li>
+        <li>What matters most: price, timing, or certainty?</li>
+        <li>Do they need help with the move, or extra time before moving out?</li>
+      </ul>
+      <blockquote>"Before I run the numbers, I want to know what you actually need, so I can see whether I can get there."</blockquote>
+      <div class="score"><div class="hi"><strong>Higher</strong>Their needs are on the table first.</div><div class="lo"><strong>Lower</strong>Anchoring them with your number first.</div></div>
+    </div>
+  </section>
+
+  <section class="step">
+    <label class="step-head"><input type="checkbox"><h2><span class="num">9.</span>Run the numbers, then deliver the offer with your math</h2></label>
+    <div class="step-body">
+      <ul>
+        <li>Don't invent a hold. Say: <em>"Let me run the numbers properly. I'll call you back within the hour."</em> Then actually call back.</li>
+        <li>Walk them through the math: after-repair value, repairs, costs, their payoff, and roughly what they'd walk away with.</li>
+        <li>If listing would clearly net them more, say so.</li>
+        <li>Agree on a next step: <em>"I'll email the written offer tonight. Please look it over with family or an attorney, and I'll call you Thursday."</em></li>
+        <li><strong>Never ask for a signature on the first call.</strong> When they do sign, point out their cancellation right under Florida law.</li>
+      </ul>
+      <div class="score"><div class="hi"><strong>Higher</strong>Clear offer, math shown, next step agreed, no pressure.</div><div class="lo"><strong>Lower</strong>Fake urgency, pushing for a signature today.</div></div>
+    </div>
+  </section>
+
+  <section class="step">
+    <label class="step-head"><input type="checkbox"><h2><span class="num">10.</span>If they say no</h2></label>
+    <div class="step-body">
+      <p>Find out why: the price, the timing, or trust.</p>
+      <ul>
+        <li><strong>If it's the price</strong> and your numbers allow it, improve the offer, up to your maximum offer and no further.</li>
+        <li><strong>If you still can't meet their needs,</strong> point them to the better path: a good local agent, a short sale, or legal aid.</li>
+      </ul>
+      <blockquote>"If anything changes, call me. I'm happy to help either way."</blockquote>
+      <div class="score"><div class="hi"><strong>Higher</strong>They end the call feeling helped, even with no deal. Those people come back and refer others.</div><div class="lo"><strong>Lower</strong>Arguing, going above your numbers, or burning the relationship.</div></div>
+    </div>
+  </section>
+
+  <section class="step">
+    <label class="step-head"><input type="checkbox"><h2><span class="num">11.</span>Handle concerns with Acknowledge → Understand → Help</h2></label>
+    <div class="step-body">
+      <ul>
+        <li><strong>Acknowledge:</strong> <em>"That makes complete sense."</em></li>
+        <li><strong>Understand:</strong> <em>"Can I ask what's making you hesitate?"</em></li>
+        <li><strong>Help:</strong> answer honestly, then suggest a next step.</li>
+      </ul>
+      <p>"I need to think about it" is a fair answer. Book a follow-up call rather than pushing through it. A helpful question:</p>
+      <blockquote>"What would you like things to look like 60 days from now?"</blockquote>
+      <div class="score"><div class="hi"><strong>Higher</strong>They feel heard, and the conversation keeps moving respectfully.</div><div class="lo"><strong>Lower</strong>"Overcoming" people, or treating hesitation as something to beat.</div></div>
+    </div>
+  </section>
+
+  <section class="step">
+    <label class="step-head"><input type="checkbox"><h2><span class="num">12.</span>After the call</h2></label>
+    <div class="step-body">
+      <ul>
+        <li>Log your notes, their deadlines, and the follow-up date.</li>
+        <li>Text or email them the help page, <a href="foreclosure-help.html">frenchequitypartners.com/foreclosure-help.html</a>, and the counselor number.</li>
+        <li>Follow up when you said you would.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="never">
+    <h2>Never say</h2>
+    <ul>
+      <li>"My underwriters" or "our programs"</li>
+      <li>"I'm not sure you'll qualify"</li>
+      <li>"I can stop your foreclosure"</li>
+      <li>"You need to sign today"</li>
+      <li>Anything that requires them to pay you</li>
+    </ul>
+  </section>
+
+  <p class="ref">HUD housing counselors 800-569-4287 · Florida Bar Lawyer Referral 800-342-8011 · Hillsborough Bar Lawyer Referral: hillsbarlrs.com</p>
+</main>
+
+<script>
+  (function(){
+    var boxes = Array.prototype.slice.call(document.querySelectorAll('.step-head input'));
+    var out = document.getElementById('progress');
+    function update(){
+      var n = 0;
+      boxes.forEach(function(b){ b.closest('.step').classList.toggle('done', b.checked); if(b.checked) n++; });
+      out.textContent = n + ' of ' + boxes.length;
+    }
+    boxes.forEach(function(b){ b.addEventListener('change', update); });
+    document.getElementById('reset').addEventListener('click', function(){
+      boxes.forEach(function(b){ b.checked = false; }); update(); window.scrollTo(0,0);
+    });
+    update();
+  })();
+</script>
+</body>
+</html>
