@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Behind on Your Mortgage? Your Options in Tampa Bay | French Equity Partners</title>
+<meta name="description" content="A plain-English guide for Tampa Bay homeowners behind on their mortgage: reinstatement, loan modification, bankruptcy, selling, and free help. No pressure, no fees.">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --cream:        #F1ECDD;
+    --cream-card:   #FAF7EE;
+    --cream-line:   #E1D8BF;
+    --navy:         #1B3143;
+    --navy-deep:    #0F2029;
+    --navy-soft:    #445A6B;
+    --gold:         #A9803F;
+    --gold-deep:    #8A6A34;
+    --gold-light:   #D9C08B;
+    --gold-pale:    #F3E9CE;
+
+    --display: 'Cormorant Garamond', serif;
+    --body:    'EB Garamond', serif;
+    --utility: 'Inter', sans-serif;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--cream);
+    color:var(--navy);
+    font-family:var(--body);
+    font-size:18px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+
+  img{ max-width:100%; display:block; }
+
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* -------- ornament divider (signature element) -------- */
+  .ornament{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+    margin:0 auto;
+  }
+  .ornament .line{
+    height:1px;
+    width:64px;
+    background:linear-gradient(90deg, transparent, var(--gold-deep));
+  }
+  .ornament .line.right{
+    background:linear-gradient(90deg, var(--gold-deep), transparent);
+  }
+  .ornament svg{ width:26px; height:26px; flex-shrink:0; }
+
+  /* -------- header -------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(15,32,41,0.96);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--gold-deep);
+  }
+  .header-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 32px;
+    max-width:1120px;
+    margin:0 auto;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .brand img{
+    height:52px;
+    width:52px;
+    object-fit:contain;
+    background:var(--cream);
+    border-radius:50%;
+    padding:5px;
+  }
+  .brand-name{
+    font-family:var(--display);
+    font-size:22px;
+    letter-spacing:0.02em;
+    color:#fff;
+  }
+  .header-right{
+    display:flex;
+    align-items:center;
+    gap:28px;
+  }
+  .investors-link{
+    font-family:var(--utility);
+    font-size:13px;
+    font-weight:500;
+    color:var(--gold-light);
+    letter-spacing:0.02em;
+  }
+  .investors-link:hover{
+    color:#fff;
+  }
+  .header-phone{
+    font-family:var(--utility);
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:0.02em;
+    color:#fff;
+  }
+  .header-phone span{
+    display:block;
+    font-size:11px;
+    font-weight:500;
+    color:var(--gold-light);
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+  .btn{
+    font-family:var(--utility);
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    padding:13px 26px;
+    border-radius:2px;
+    border:1px solid var(--gold-deep);
+    background:var(--navy);
+    color:var(--cream-pale, #F7F2E4);
+    cursor:pointer;
+    transition:background 0.2s ease, transform 0.2s ease;
+    white-space:nowrap;
+  }
+  .btn:hover{ background:var(--navy-deep); transform:translateY(-1px); }
+  .btn-gold{
+    background:var(--gold);
+    border-color:var(--gold);
+    color:var(--navy-deep);
+  }
+  .btn-gold:hover{ background:var(--gold-deep); }
+  @media (max-width:700px){
+    .header-phone{ display:none; }
+  }
+  @media (max-width:760px){
+    .nav-extra{ display:none; }
+  }
+  @media (max-width:520px){
+    .investors-link{ display:none; }
+  }
+
+  /* -------- hero -------- */
+  .hero{
+    padding:88px 0 96px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    top:-200px; right:-160px;
+    width:520px; height:520px;
+    border:1px solid var(--gold-light);
+    border-radius:50%;
+    opacity:0.35;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    top:-120px; right:-80px;
+    width:520px; height:520px;
+    border:1px solid var(--gold-light);
+    border-radius:50%;
+    opacity:0.25;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:64px;
+    align-items:center;
+    position:relative;
+  }
+  .eyebrow{
+    font-family:var(--utility);
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--gold-deep);
+    margin-bottom:18px;
+  }
+  h1{
+    font-family:var(--display);
+    font-weight:500;
+    font-size:56px;
+    line-height:1.08;
+    letter-spacing:0.005em;
+    color:var(--navy);
+    margin-bottom:24px;
+  }
+  h1 em{
+    font-style:italic;
+    color:var(--gold-deep);
+  }
+  .hero-sub{
+    font-size:19px;
+    color:var(--navy-soft);
+    max-width:480px;
+    margin-bottom:36px;
+  }
+  .hero-actions{
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+    margin-bottom:28px;
+  }
+  .trust-row{
+    display:flex;
+    gap:28px;
+    flex-wrap:wrap;
+    font-family:var(--utility);
+    font-size:13px;
+    color:var(--navy-soft);
+  }
+  .trust-row span{
+    display:flex;
+    align-items:center;
+    gap:7px;
+  }
+  .trust-row svg{ width:14px; height:14px; color:var(--gold-deep); flex-shrink:0; }
+
+  /* -------- offer card -------- */
+  .offer-card{
+    background:var(--cream-card);
+    border:1px solid var(--cream-line);
+    border-radius:4px;
+    padding:40px 36px;
+    box-shadow:0 24px 60px -30px rgba(15,32,41,0.35);
+    position:relative;
+  }
+  .offer-card::before{
+    content:"";
+    position:absolute;
+    top:8px; left:8px; right:8px; bottom:8px;
+    border:1px solid var(--gold-light);
+    border-radius:2px;
+    pointer-events:none;
+  }
+  .offer-title{
+    font-family:var(--display);
+    font-size:26px;
+    color:var(--navy);
+    margin-bottom:6px;
+  }
+  .offer-sub{
+    font-family:var(--utility);
+    font-size:13px;
+    color:var(--navy-soft);
+    margin-bottom:26px;
+  }
+  .field{
+    margin-bottom:16px;
+  }
+  .field label{
+    display:block;
+    font-family:var(--utility);
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--navy-soft);
+    margin-bottom:7px;
+  }
+  .field input, .field select{
+    width:100%;
+    font-family:var(--utility);
+    font-size:15px;
+    padding:12px 14px;
+    border:1px solid var(--cream-line);
+    background:#fff;
+    border-radius:2px;
+    color:var(--navy);
+  }
+  .field input:focus, .field select:focus{
+    outline:2px solid var(--gold);
+    outline-offset:1px;
+    border-color:var(--gold);
+  }
+  .offer-card .btn{
+    width:100%;
+    padding:15px;
+    margin-top:6px;
+  }
+  .offer-disclaimer{
+    font-family:var(--utility);
+    font-size:11.5px;
+    color:var(--navy-soft);
+    margin-top:14px;
+    text-align:center;
+  }
+
+  @media (max-width:860px){
+    .hero-grid{ grid-template-columns:1fr; }
+    h1{ font-size:40px; }
+    .hero{ padding:56px 0 64px; }
+  }
+
+  /* -------- section shared -------- */
+  section{ padding:96px 0; }
+  .section-head{
+    text-align:center;
+    max-width:640px;
+    margin:0 auto 56px;
+  }
+  .section-eyebrow{
+    font-family:var(--utility);
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--gold-deep);
+    margin-bottom:14px;
+  }
+  h2{
+    font-family:var(--display);
+    font-weight:500;
+    font-size:38px;
+    color:var(--navy);
+    margin-bottom:14px;
+  }
+  .section-sub{
+    color:var(--navy-soft);
+    font-size:18px;
+  }
+
+  /* -------- pillars (why) -------- */
+  .pillars{
+    background:var(--navy);
+    color:var(--cream);
+  }
+  .pillars .section-eyebrow{ color:var(--gold-light); }
+  .pillars h2{ color:#fff; }
+  .pillars .section-sub{ color:#C7D2D9; }
+  .pillar-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:40px;
+  }
+  .pillar{
+    text-align:center;
+    padding:0 12px;
+  }
+  .pillar-icon{
+    width:56px; height:56px;
+    margin:0 auto 22px;
+    border:1px solid var(--gold-light);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .pillar-icon svg{ width:24px; height:24px; color:var(--gold-light); }
+  .pillar h3{
+    font-family:var(--display);
+    font-size:24px;
+    font-weight:500;
+    margin-bottom:10px;
+    color:#fff;
+  }
+  .pillar p{
+    font-size:16px;
+    color:#B9C6CE;
+  }
+  @media (max-width:800px){
+    .pillar-grid{ grid-template-columns:1fr; gap:48px; }
+  }
+
+  /* -------- process -------- */
+  .process-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:0;
+    position:relative;
+  }
+  .process-grid::before{
+    content:"";
+    position:absolute;
+    top:26px; left:12%; right:12%;
+    height:1px;
+    background:var(--gold-light);
+  }
+  .step{
+    text-align:center;
+    padding:0 24px;
+    position:relative;
+  }
+  .step-num{
+    width:52px; height:52px;
+    margin:0 auto 24px;
+    background:var(--cream);
+    border:1px solid var(--gold-deep);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:var(--display);
+    font-size:22px;
+    color:var(--gold-deep);
+    position:relative;
+    z-index:1;
+  }
+  .step h3{
+    font-family:var(--display);
+    font-size:23px;
+    font-weight:500;
+    margin-bottom:10px;
+  }
+  .step p{ color:var(--navy-soft); font-size:16px; }
+  @media (max-width:800px){
+    .process-grid{ grid-template-columns:1fr; gap:44px; }
+    .process-grid::before{ display:none; }
+  }
+
+  /* -------- for whom strip -------- */
+  .situations{
+    background:var(--gold-pale);
+    border-top:1px solid var(--cream-line);
+    border-bottom:1px solid var(--cream-line);
+  }
+  .situations .wrap{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:14px;
+  }
+  .chip{
+    font-family:var(--utility);
+    font-size:13.5px;
+    font-weight:500;
+    color:var(--navy);
+    background:var(--cream-card);
+    border:1px solid var(--gold-light);
+    padding:10px 20px;
+    border-radius:999px;
+  }
+
+  /* -------- FAQ -------- */
+  .faq-item{
+    border-bottom:1px solid var(--cream-line);
+  }
+  .faq-item:first-child{ border-top:1px solid var(--cream-line); }
+  .faq-q{
+    width:100%;
+    text-align:left;
+    background:none;
+    border:none;
+    padding:22px 4px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    cursor:pointer;
+    font-family:var(--display);
+    font-size:20px;
+    color:var(--navy);
+  }
+  .faq-q .plus{
+    font-family:var(--utility);
+    font-size:20px;
+    color:var(--gold-deep);
+    transition:transform 0.25s ease;
+    flex-shrink:0;
+    margin-left:20px;
+  }
+  .faq-item.open .plus{ transform:rotate(45deg); }
+  .faq-a{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height 0.3s ease;
+  }
+  .faq-a p{
+    padding:0 4px 24px;
+    color:var(--navy-soft);
+    max-width:680px;
+  }
+  .faq-wrap{ max-width:760px; margin:0 auto; }
+
+  /* -------- final CTA -------- */
+  .final-cta{
+    background:var(--navy-deep);
+    color:#fff;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .final-cta .ornament .line{ background:linear-gradient(90deg, transparent, var(--gold-light)); }
+  .final-cta .ornament .line.right{ background:linear-gradient(90deg, var(--gold-light), transparent); }
+  .final-cta h2{ color:#fff; margin-top:22px; }
+  .final-cta p{ color:#B9C6CE; max-width:520px; margin:0 auto 36px; font-size:18px; }
+  .final-cta .btn-row{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+
+  /* -------- footer -------- */
+  footer{
+    background:var(--navy);
+    color:#C7D2D9;
+    padding:64px 0 32px;
+  }
+  .footer-grid{
+    display:grid;
+    grid-template-columns:1.3fr 1fr 1fr;
+    gap:48px;
+    margin-bottom:48px;
+  }
+  .footer-brand{ display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+  .footer-brand img{ height:52px; width:52px; object-fit:contain; }
+  .footer-brand-name{ font-family:var(--display); font-size:22px; color:#fff; }
+  .footer-desc{ font-size:15px; color:#9BAAB4; max-width:280px; }
+  .footer-col h4{
+    font-family:var(--utility);
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--gold-light);
+    margin-bottom:18px;
+  }
+  .footer-col p, .footer-col a{
+    display:block;
+    font-size:15px;
+    color:#C7D2D9;
+    margin-bottom:10px;
+  }
+  .footer-col a:hover{ color:var(--gold-light); }
+  .footer-bottom{
+    border-top:1px solid rgba(255,255,255,0.1);
+    padding-top:24px;
+    font-family:var(--utility);
+    font-size:12.5px;
+    color:#7E8E97;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .footer-bottom .row{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .footer-legal{
+    font-size:12px;
+    color:#6B7B84;
+    line-height:1.5;
+    max-width:920px;
+  }
+  @media (max-width:760px){
+    .footer-grid{ grid-template-columns:1fr; gap:36px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ scroll-behavior:auto !important; transition:none !important; }
+  }
+
+  /* ================= Foreclosure help page ================= */
+  a:focus-visible, button:focus-visible, summary:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+  .brand{ color:inherit; }
+  .fh-hero{ padding:88px 0 72px; text-align:center; border-bottom:1px solid var(--cream-line); }
+  .fh-hero h1{ max-width:820px; margin:18px auto 22px; }
+  .fh-hero .lede{ font-size:20px; color:var(--navy-soft); max-width:660px; margin:0 auto; }
+  .fh-hero .btn-row{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin:36px 0 44px; }
+  .btn-ghost{ background:transparent; color:var(--navy); }
+  .btn-ghost:hover{ background:var(--gold-pale); }
+  .signed{ font-family:var(--display); font-style:italic; font-size:22px; line-height:1.45; color:var(--navy); max-width:640px; margin:0 auto; }
+  .signed cite{ display:block; margin-top:10px; font-family:var(--utility); font-style:normal; font-size:13px; color:var(--gold-deep); letter-spacing:0.02em; }
+
+  .alt{ background:var(--cream-card); border-top:1px solid var(--cream-line); border-bottom:1px solid var(--cream-line); }
+  .week{ display:grid; grid-template-columns:repeat(3,1fr); gap:40px; }
+  .week h3, .res h3{ font-family:var(--display); font-weight:500; font-size:26px; margin-bottom:8px; line-height:1.2; }
+  .week p, .res p{ color:var(--navy-soft); font-size:17px; }
+  .week div, .res div{ border-top:1px solid var(--gold-deep); padding-top:20px; }
+
+  /* timeline */
+  .stages{ list-style:none; display:grid; grid-template-columns:repeat(5,1fr); position:relative; }
+  .stages::before{ content:""; position:absolute; left:10%; right:10%; top:25px; height:1px; background:var(--gold-deep); }
+  .stages li{ text-align:center; position:relative; }
+  .stage-btn{ background:none; border:0; cursor:pointer; font:inherit; color:var(--navy); display:flex; flex-direction:column; align-items:center; gap:12px; width:100%; padding:0 6px 6px; }
+  .dot{ width:52px; height:52px; border-radius:50%; background:var(--cream); border:1px solid var(--gold-deep); display:grid; place-items:center; font-family:var(--display); font-size:24px; color:var(--gold-deep); position:relative; z-index:1; transition:background .2s ease; }
+  .stage-text{ display:flex; flex-direction:column; gap:2px; }
+  .stage-name{ font-family:var(--utility); font-size:14px; font-weight:600; }
+  .stage-when{ font-family:var(--utility); font-size:12.5px; color:var(--navy-soft); }
+  .stage-btn:hover .dot{ background:var(--gold-pale); }
+  .stage-btn[aria-selected="true"] .dot{ background:var(--navy); border-color:var(--navy); color:var(--gold-light); }
+  .stage-panel{ margin-top:40px; background:var(--cream-card); border:1px solid var(--cream-line); border-top:2px solid var(--gold-deep); padding:36px 40px; }
+  .stage-panel h3{ font-family:var(--display); font-weight:500; font-size:30px; margin-bottom:6px; }
+  .stage-panel > p{ color:var(--navy-soft); max-width:680px; }
+  .avail{ list-style:none; margin-top:22px; }
+  .avail li{ display:grid; grid-template-columns:170px 1fr; gap:20px; padding:14px 0; border-top:1px solid var(--cream-line); align-items:baseline; }
+  .status{ font-family:var(--utility); font-size:12px; font-weight:600; letter-spacing:0.04em; display:inline-flex; align-items:center; gap:8px; }
+  .status::before{ content:""; width:9px; height:9px; border-radius:50%; flex:none; }
+  .s-open::before{ background:var(--navy); }
+  .s-hard::before{ background:var(--gold); }
+  .s-closed{ color:var(--navy-soft); }
+  .s-closed::before{ background:var(--cream-line); border:1px solid var(--navy-soft); }
+  .avail strong{ display:block; font-weight:500; font-size:19px; }
+  .avail .note{ color:var(--navy-soft); font-size:16.5px; }
+  .fine{ text-align:center; font-family:var(--utility); font-size:12.5px; color:var(--navy-soft); margin-top:18px; }
+
+  /* options */
+  .option{ display:grid; grid-template-columns:280px 1fr; gap:48px; padding:44px 0; border-top:1px solid var(--cream-line); }
+  .option h3{ font-family:var(--display); font-weight:500; font-size:32px; line-height:1.15; }
+  .option .aim{ font-family:var(--display); font-style:italic; font-size:20px; color:var(--gold-deep); margin-top:6px; }
+  .option dt{ font-family:var(--utility); font-size:12px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-deep); margin-top:20px; }
+  .option dt:first-child{ margin-top:0; }
+  .option dd{ margin-top:4px; }
+  .option ul{ margin-top:6px; padding-left:20px; }
+  .option ul li{ margin-bottom:6px; }
+  .option.ours{ background:var(--navy); color:#E4E9EC; border:0; padding:48px; margin-top:12px; }
+  .option.ours h3{ color:#fff; }
+  .option.ours .aim, .option.ours dt{ color:var(--gold-light); }
+  .honest{ border-left:2px solid var(--gold-light); padding-left:18px; }
+
+  /* promise */
+  .promise{ list-style:none; display:grid; grid-template-columns:repeat(3,1fr); gap:32px 40px; max-width:1000px; margin:0 auto; }
+  .promise li{ padding-left:30px; position:relative; font-size:18px; }
+  .promise li::before{ content:""; position:absolute; left:0; top:9px; width:14px; height:7px; border-left:1.5px solid var(--gold-deep); border-bottom:1.5px solid var(--gold-deep); transform:rotate(-45deg); }
+
+  .warn{ max-width:820px; margin:0 auto; background:var(--gold-pale); border:1px solid var(--gold-light); padding:44px 48px; }
+  .warn h2{ font-size:32px; }
+  .warn ul{ margin:10px 0 18px 20px; }
+  .warn .small{ font-family:var(--utility); font-size:13.5px; color:var(--navy-soft); }
+
+  .res{ display:grid; grid-template-columns:repeat(3,1fr); gap:40px; }
+
+  /* faq */
+  .fh-faq details{ border-bottom:1px solid var(--cream-line); }
+  .fh-faq details:first-of-type{ border-top:1px solid var(--cream-line); }
+  .fh-faq summary{ cursor:pointer; list-style:none; display:flex; justify-content:space-between; gap:20px; padding:22px 4px; font-family:var(--display); font-size:23px; font-weight:500; }
+  .fh-faq summary::-webkit-details-marker{ display:none; }
+  .fh-faq summary::after{ content:"+"; color:var(--gold-deep); font-size:26px; line-height:1; }
+  .fh-faq details[open] summary::after{ content:"\2212"; }
+  .fh-faq details p{ padding:0 4px 24px; color:var(--navy-soft); max-width:680px; }
+
+  @media (max-width:860px){
+    .week, .res, .promise{ grid-template-columns:1fr; gap:28px; }
+    .option{ grid-template-columns:1fr; gap:14px; }
+    .option.ours{ padding:32px 24px; }
+    .warn{ padding:32px 24px; }
+    .stages{ grid-template-columns:1fr; gap:4px; }
+    .stages::before{ left:25px; right:auto; top:12px; bottom:12px; width:1px; height:auto; }
+    .stage-btn{ flex-direction:row; text-align:left; gap:16px; padding:5px 0; }
+    .stage-panel{ padding:26px 20px; }
+    .avail li{ grid-template-columns:1fr; gap:4px; }
+    .fh-hero{ padding:56px 0 48px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <img src="FEP.png" alt="French Equity Partners crest">
+      <span class="brand-name">French Equity Partners</span>
+    </a>
+    <div class="header-right">
+      <a href="investors.html" class="investors-link">Investors</a>
+      <a href="tel:+18133214497" class="header-phone">
+        <span>Call for an offer</span>
+        (813) 321-4497
+      </a>
+      <a href="index.html#offer" class="btn btn-gold">Get My Offer</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="fh-hero">
+    <div class="wrap">
+      <div class="eyebrow">Tampa Bay homeowners</div>
+      <h1>Behind on your mortgage? You have more options than you think.</h1>
+      <p class="lede">Falling behind happens to good people: a job loss, a medical bill, a divorce, a loved one passing. It's stressful, and it can feel like everyone wants something from you. This page lays out every realistic option, including the ones that don't involve us. If keeping your home is possible, we want you to keep it.</p>
+      <div class="btn-row">
+        <a href="tel:+18133214497" class="btn btn-gold">Talk it through with Julien</a>
+        <a href="#timeline" class="btn btn-ghost">See where you stand</a>
+      </div>
+      <div class="ornament"><span class="line"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" style="color:var(--gold-deep);"><path d="M12 2l2.5 6.5L21 11l-6.5 2.5L12 20l-2.5-6.5L3 11l6.5-2.5L12 2z"/></svg><span class="line right"></span></div>
+      <p class="signed" style="margin-top:28px">"You won't get a sales pitch from me. If the right answer is 'keep your house and call a housing counselor,' that's what I'll tell you."<cite>Julien Kabongo, French Equity Partners</cite></p>
+    </div>
+  </section>
+
+  <section class="alt" aria-labelledby="week-h">
+    <div class="wrap">
+      <div class="section-head"><div class="section-eyebrow">Start here</div><h2><span id="week-h">Three things to do this week</span></h2></div>
+      <div class="week">
+        <div><h3>Don't ignore court papers</h3><p>If you're served with a foreclosure lawsuit in Florida, you generally have 20 days to file a response. Missing that deadline can cost you options.</p></div>
+        <div><h3>Call a free housing counselor</h3><p>HUD-approved counselors help at no cost and can speak with your lender for you. Call 800-569-4287.</p></div>
+        <div><h3>Open every letter</h3><p>Deadlines hide in lender mail. Open everything, keep copies, and write down who you spoke to and when.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="timeline" aria-labelledby="tl-h">
+    <div class="wrap">
+      <div class="section-head"><div class="section-eyebrow">Where you stand</div><h2><span id="tl-h">What happens in a Florida foreclosure</span></h2><p class="section-sub">Florida foreclosures go through the courts, which usually takes many months. Many homeowners have more time than they realize. Choose the stage you're at to see which options are usually still open.</p></div>
+      <ol class="stages" role="tablist" aria-label="Foreclosure stages"></ol>
+      <div class="stage-panel" role="tabpanel" id="stage-panel" aria-live="polite"></div>
+      <noscript><p>Stages: missed payments, formal notices, lawsuit filed, final judgment, auction. Most options are open early and narrow as the sale date approaches.</p></noscript>
+      <p class="fine">Timelines vary by lender and court. This is general information, not legal advice.</p>
+    </div>
+  </section>
+
+  <section id="options" class="alt" aria-labelledby="opt-h">
+    <div class="wrap">
+      <div class="section-head"><div class="section-eyebrow">Your options</div><h2><span id="opt-h">Your options, explained honestly</span></h2><p class="section-sub">Every situation is different. Here's what each option involves, who it tends to suit, and what to watch out for.</p></div>
+
+      <article class="option">
+        <div><h3>Reinstatement</h3><p class="aim">Catch up and keep your home</p></div>
+        <dl>
+          <dt>What it is</dt><dd>You pay all missed payments plus late fees and costs in one lump sum, and your loan goes back to normal.</dd>
+          <dt>Often suits you if</dt><dd>The hardship was temporary and you can access the money through savings, family, or a new job.</dd>
+          <dt>Worth knowing</dt><dd>Ask your lender for a written reinstatement quote. The amount grows every month, so the sooner the better.</dd>
+        </dl>
+      </article>
+
+      <article class="option">
+        <div><h3>Loan modification or repayment plan</h3><p class="aim">Change the terms so the payment fits</p></div>
+        <dl>
+          <dt>What it is</dt><dd>Your lender may lower your payment, extend your term, add missed payments to the end of the loan, or let you catch up over a few months.</dd>
+          <dt>Often suits you if</dt><dd>Your income has steadied, but the old payment no longer fits your budget.</dd>
+          <dt>Worth knowing</dt><dd><ul>
+            <li>Apply early and send a complete application. Federal rules give you extra protections when you do.</li>
+            <li>Approval isn't guaranteed, and some modifications raise the total you pay over time. Read the terms carefully.</li>
+            <li>A housing counselor can help you prepare the paperwork for free. Never pay anyone upfront to "get you a modification."</li>
+          </ul></dd>
+        </dl>
+      </article>
+
+      <article class="option">
+        <div><h3>Bankruptcy</h3><p class="aim">Chapter 13 or Chapter 7</p></div>
+        <dl>
+          <dt>What it is</dt><dd>Filing puts an automatic, temporary pause on the foreclosure. Chapter 13 lets you catch up missed payments over three to five years while keeping your home. Chapter 7 clears many other debts, which can free up money, but on its own it doesn't catch up a mortgage.</dd>
+          <dt>Often suits you if</dt><dd>You have steady income but too much other debt (Chapter 13), or your other debts are overwhelming (Chapter 7).</dd>
+          <dt>Worth knowing</dt><dd>Bankruptcy stays on a credit report for up to 7 years (Chapter 13) or 10 years (Chapter 7). Speak with a Florida bankruptcy attorney before deciding. Many offer a free first consultation.</dd>
+        </dl>
+      </article>
+
+      <article class="option">
+        <div><h3>Selling the house</h3><p class="aim">The options and the realities</p></div>
+        <dl>
+          <dt>Listing with an agent</dt><dd>Often gets the highest price if you have equity, time, and a house in good shape. Expect commissions, possibly repairs, and showings. In Florida there's often enough time to list, especially early on.</dd>
+          <dt>Short sale</dt><dd>If you owe more than the house is worth, your lender may accept less than the full balance. It needs lender approval and patience.</dd>
+          <dt>Deed in lieu of foreclosure</dt><dd>You hand the house back to the lender instead of going through foreclosure. It's less damaging than a foreclosure, but you usually walk away with nothing.</dd>
+        </dl>
+      </article>
+
+      <article class="option ours">
+        <div><h3>A direct cash sale to us</h3><p class="aim">Fast, as-is, on your timeline</p></div>
+        <dl>
+          <dt>What it is</dt><dd>We buy the house as it is, with no repairs, no cleaning, and no showings. We can close in as little as 14 days through a licensed title company, or on a later date that suits you.</dd>
+          <dt>Often suits you if</dt><dd>Time is short, the house needs work you can't afford, or you simply need this to be over.</dd>
+          <dt>The honest part</dt><dd class="honest">Our offer will be below full retail value. That's the trade-off for speed and certainty. If you have plenty of equity and time to list, an agent will likely get you more money, and we'll tell you so. We'll always show you how we reached our number.</dd>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="promise-h">
+    <div class="wrap">
+      <div class="section-head"><div class="section-eyebrow">Our word</div><h2><span id="promise-h">Our promise to you</span></h2></div>
+      <ul class="promise">
+        <li>We never charge homeowners a fee, now or later.</li>
+        <li>We'll talk through every option on this page, not just the one that helps us.</li>
+        <li>No pressure, ever. Take any offer to an attorney, a counselor, or your family first.</li>
+        <li>Everything is in writing, including your right to cancel under Florida law.</li>
+        <li>If selling is the right choice, we'll work with you on timing so your move is as calm as possible.</li>
+        <li>If we can't help, we'll point you to someone who can.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section aria-labelledby="scam-h" style="padding-top:0">
+    <div class="wrap">
+      <div class="warn">
+        <h2 id="scam-h">How to spot a foreclosure scam</h2>
+        <p>Be careful with anyone, including us, who:</p>
+        <ul>
+          <li>asks you for money upfront to "save" your home</li>
+          <li>guarantees they can stop your foreclosure</li>
+          <li>tells you to stop talking to your lender or your attorney</li>
+          <li>asks you to sign over your deed so you can "rent it back"</li>
+          <li>pushes you to sign today</li>
+        </ul>
+        <p class="small">You can report suspected foreclosure fraud to the Florida Attorney General at 866-966-7226.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="help" class="alt" aria-labelledby="help-h">
+    <div class="wrap">
+      <div class="section-head"><div class="section-eyebrow">Free help</div><h2><span id="help-h">Free and low-cost help in Tampa Bay</span></h2></div>
+      <div class="res">
+        <div><h3>HUD-approved housing counselors</h3><p>Free advice on budgeting, modifications, and talking to your lender. Call 800-569-4287.</p></div>
+        <div><h3>Bay Area Legal Services</h3><p>Free civil legal help for eligible residents of Hillsborough and nearby counties, including foreclosure defense.</p></div>
+        <div><h3>The Florida Bar Lawyer Referral Service</h3><p>Connects you with a Florida attorney for an initial consultation at a reduced fee. Call 800-342-8011.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fh-faq" aria-labelledby="faq-h">
+    <div class="wrap faq-wrap">
+      <div class="section-head"><div class="section-eyebrow">Questions</div><h2><span id="faq-h">Questions homeowners ask</span></h2></div>
+      <details><summary>Will talking to you commit me to anything?</summary><p>No. A conversation is just a conversation. There's no cost, no obligation, and nothing to sign unless you decide selling to us is right for you.</p></details>
+      <details><summary>Can you stop my foreclosure?</summary><p>No, and be wary of anyone who promises that. Only paying what's owed, a lender agreement, a court, or a sale can resolve a foreclosure. What we can do is buy the house before the sale date if that's the best path for you.</p></details>
+      <details><summary>Can I stay in the house after I sell to you?</summary><p>We don't offer sell-and-rent-back or buy-back arrangements. Those deals often go badly for homeowners. If you sell to us, we'll agree a moving date with you in writing, with as much time as we can give.</p></details>
+      <details><summary>What if the house is sold at auction for more than I owe?</summary><p>You may be entitled to the surplus. You can claim it through the Clerk of Court in the county where the sale happened. A legal aid office or attorney can help you file.</p></details>
+      <details><summary>I'm already working with an agent or attorney. Can you still help?</summary><p>Yes. We're happy to coordinate directly with them.</p></details>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="ornament"><span class="line"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" style="color:var(--gold-light);"><path d="M12 2l2.5 6.5L21 11l-6.5 2.5L12 20l-2.5-6.5L3 11l6.5-2.5L12 2z"/></svg><span class="line right"></span></div>
+      <h2>You don't have to figure this out alone.</h2>
+      <p>Call Julien directly. It's a conversation, not a pitch. Even if the answer is "keep your house and call this counselor," that's a good call.</p>
+      <div class="btn-row">
+        <a href="tel:+18133214497" class="btn btn-gold">Call (813) 321-4497</a>
+        <a href="index.html#offer" class="btn" style="background:transparent; border-color:var(--gold-light); color:#fff;">Request a no-obligation offer</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="FEP.png" alt="French Equity Partners crest">
+          <span class="footer-brand-name">French Equity Partners</span>
+        </div>
+        <p class="footer-desc">A private buyer of houses across Tampa Bay. Direct offers, discreet process, certain closings — and a resource for agents whose clients need an as-is option.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+18133214497">(813) 321-4497</a>
+        <a href="mailto:julien@frenchequitypartners.com">julien@frenchequitypartners.com</a>
+        <p>Tampa Bay, Florida</p>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="index.html#process">How It Works</a>
+        <a href="index.html#offer">Request an Offer</a>
+        <a href="index.html#agents">For Agents</a>
+        <a href="foreclosure-help.html">Foreclosure Help</a>
+        <a href="investors.html">Investors &amp; Cash Buyers</a>
+        <a href="mailto:julien@frenchequitypartners.com">Contact Us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="row">
+        <span>© 2026 French Equity Partners. All rights reserved.</span>
+      </div>
+      <p class="footer-legal">The information on this page is general information, not legal, financial, or tax advice. French Equity Partners is not a law firm, credit counselor, or foreclosure-rescue consultant and does not negotiate with lenders on homeowners' behalf. Please consult a HUD-approved housing counselor or a Florida-licensed attorney about your situation.</p>
+      <p class="footer-legal">French Equity Partners does not list, broker, or sell real estate on behalf of others. French Equity Partners is not a licensed real estate broker or sales associate in the State of Florida. All real estate is purchased directly and for the account of French Equity Partners (or assigned via our contractual rights under a purchase agreement) under the private-purchaser exemption in Florida Statute §475.011. This website does not constitute an offer to purchase any specific property and does not constitute legal, financial, or real estate advice. Sellers are encouraged to consult an independent Florida-licensed real estate attorney or agent before entering into any agreement.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var O = ["Reinstatement", "Loan modification", "Bankruptcy", "Listing or short sale", "Cash sale to us"];
+  var stages = [
+    { name: "Missed payments", when: "1–3 months behind",
+      title: "You've missed one or more payments",
+      text: "Your lender will call and send letters. This is the stage with the most options, and the best time to reach out for help.",
+      a: [["open","Usually the simplest fix if you can gather the money."],["open","The best time to apply."],["open","Available if needed, but other options may be gentler."],["open","You have the most time to get full value."],["open","Available, though you may not need it."]] },
+    { name: "Formal notices", when: "Around 4 months behind",
+      title: "You're receiving formal default notices",
+      text: "Federal rules generally stop a lender from filing for foreclosure until you're more than 120 days behind. Use this time well.",
+      a: [["open","Ask for a written reinstatement quote."],["open","Send a complete application as soon as you can."],["open","Talk to a bankruptcy attorney if debts are overwhelming."],["open","There's usually still time to list."],["open","Available on your timeline."]] },
+    { name: "Lawsuit filed", when: "You've been served",
+      title: "A foreclosure lawsuit has been filed",
+      text: "You generally have 20 days to respond to the court. Speak with an attorney or legal aid right away.",
+      a: [["open","Still possible, but costs now include legal fees."],["open","Still possible. Keep your application complete."],["open","Filing pauses the case automatically."],["hard","Possible, but time is getting tighter."],["open","Available, with closing timed before any sale date."]] },
+    { name: "Final judgment", when: "Sale date is set",
+      title: "The judge has entered a final judgment",
+      text: "A sale date is set, often a few weeks out. Options narrow quickly, so act now.",
+      a: [["hard","Usually means paying the full judgment amount before the sale."],["hard","Difficult this late, but ask your lender."],["open","Still possible before the sale."],["hard","Usually too little time, unless the lender postpones."],["hard","Possible if we can close before the sale date."]] },
+    { name: "Auction", when: "The sale has happened",
+      title: "The house has been sold at auction",
+      text: "Most options have closed. If the house sold for more than you owed, you may be entitled to surplus funds, which you can claim through the Clerk of Court.",
+      a: [["closed","No longer available."],["closed","No longer available."],["closed","Speak with an attorney about your situation."],["closed","No longer available."],["closed","No longer available."]] }
+  ];
+  var label = { open: "Usually open", hard: "Harder now", closed: "Closed" };
+  var list = document.querySelector(".stages");
+  var panel = document.getElementById("stage-panel");
+  var btns = [];
+
+  function show(i) {
+    btns.forEach(function (b, j) {
+      b.setAttribute("aria-selected", j === i ? "true" : "false");
+      b.tabIndex = j === i ? 0 : -1;
+    });
+    var s = stages[i], html = "<h3>" + s.title + "</h3><p>" + s.text + "</p><ul class='avail'>";
+    s.a.forEach(function (x, k) {
+      html += "<li><span class='status s-" + x[0] + "'>" + label[x[0]] + "</span><div><strong>" + O[k] + "</strong><span class='note'>" + x[1] + "</span></div></li>";
+    });
+    panel.innerHTML = html + "</ul>";
+    panel.setAttribute("aria-labelledby", "stage-" + i);
+  }
+
+  stages.forEach(function (s, i) {
+    var li = document.createElement("li");
+    li.setAttribute("role", "presentation");
+    var b = document.createElement("button");
+    b.className = "stage-btn"; b.id = "stage-" + i;
+    b.setAttribute("role", "tab"); b.setAttribute("aria-controls", "stage-panel");
+    b.innerHTML = "<span class='dot'>" + (i + 1) + "</span><span class='stage-text'><span class='stage-name'>" + s.name + "</span><span class='stage-when'>" + s.when + "</span></span>";
+    b.addEventListener("click", function () { show(i); });
+    b.addEventListener("keydown", function (e) {
+      var n = null;
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") n = (i + 1) % stages.length;
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") n = (i - 1 + stages.length) % stages.length;
+      if (n !== null) { e.preventDefault(); show(n); btns[n].focus(); }
+    });
+    btns.push(b); li.appendChild(b); list.appendChild(li);
+  });
+  show(0);
+})();
+</script>
+</body>
+</html>
