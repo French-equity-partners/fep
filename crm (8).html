@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FEP CRM</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="favicon-32x32.png">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<style>
+:root{
+  --cream:#F1ECDD; --card:#FAF7EE; --line:#E1D8BF; --navy:#1B3143; --navy-deep:#0F2029; --soft:#445A6B;
+  --gold:#A9803F; --gold-deep:#8A6A34; --ok:#3E7A4E; --err:#B23B3B; --warn:#B7791F;
+  --display:'Cormorant Garamond',serif; --ui:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--navy);font-family:var(--ui);font-size:14px;line-height:1.45}
+a{color:var(--gold-deep)}
+button{font-family:var(--ui);cursor:pointer}
+.hidden{display:none!important}
+header{background:var(--navy);color:#fff;padding:12px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;position:sticky;top:0;z-index:5}
+header h1{font-family:var(--display);font-size:24px;margin:0;font-weight:700;letter-spacing:.3px}
+header .sp{flex:1}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav button{background:transparent;border:1px solid transparent;color:#d9dfe4;padding:7px 12px;border-radius:4px;font-weight:600;font-size:13px}
+nav button.on{background:var(--gold);color:#fff}
+header .who{font-size:12px;color:#c9d1d8}
+header .out{background:transparent;border:1px solid #5a6f80;color:#fff;border-radius:4px;padding:5px 10px;font-size:12px}
+main{max-width:1150px;margin:0 auto;padding:18px 16px 60px}
+h2{font-family:var(--display);font-size:26px;margin:6px 0 12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--soft);margin:0 0 4px}
+input,select,textarea{width:100%;font-family:var(--ui);font-size:14px;padding:8px 10px;border:1px solid var(--line);border-radius:4px;background:#fff;color:var(--navy)}
+textarea{min-height:64px;resize:vertical}
+.btn{background:var(--navy);color:#fff;border:none;border-radius:4px;padding:9px 14px;font-weight:600;font-size:13px}
+.btn:hover{background:var(--navy-deep)}
+.btn.gold{background:var(--gold)} .btn.gold:hover{background:var(--gold-deep)}
+.btn.ghost{background:transparent;color:var(--navy);border:1px solid var(--line)}
+.btn.sm{padding:5px 9px;font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px}
+.stat b{display:block;font-family:var(--display);font-size:30px;line-height:1}
+.stat span{font-size:12px;color:var(--soft)}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--soft);background:#f5f0e2}
+tr.click{cursor:pointer} tr.click:hover td{background:#fff}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;background:#e9e2cf;color:var(--navy)}
+.pill.due{background:#f6dcc2;color:#8a4b12} .pill.ok{background:#d7e9dc;color:var(--ok)}
+.muted{color:var(--soft);font-size:12px}
+.overlay{position:fixed;inset:0;background:rgba(15,32,41,.45);z-index:20;display:flex;justify-content:flex-end}
+.panel{width:min(620px,100%);height:100%;overflow:auto;background:var(--cream);padding:18px 18px 60px;box-shadow:-6px 0 24px rgba(0,0,0,.2)}
+.panel h3{font-family:var(--display);font-size:26px;margin:0 0 4px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:-4px 0 10px}
+.chips button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 10px;font-size:12px;color:var(--navy)}
+.tl{list-style:none;padding:0;margin:0}
+.tl li{border-left:3px solid var(--gold);background:var(--card);padding:8px 10px;margin:0 0 8px;border-radius:0 4px 4px 0}
+.tl .meta{font-size:11px;color:var(--soft);text-transform:uppercase;letter-spacing:.03em}
+.msg{margin-top:8px;font-size:13px} .msg.ok{color:var(--ok)} .msg.err{color:var(--err)}
+.login{max-width:380px;margin:12vh auto;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:26px}
+.login h1{font-family:var(--display);margin:0 0 4px}
+.pipe{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.col{background:#ece5d2;border-radius:6px;padding:8px;min-height:80px}
+.col h4{margin:0 0 6px;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--soft)}
+.dcard{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:8px;margin-bottom:6px;cursor:pointer;font-size:13px}
+.dcard b{display:block}
+.pager{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:10px}
+@media (max-width:640px){ th.hm,td.hm{display:none} header h1{font-size:20px} }
+</style>
+</head>
+<body>
+
+<div id="loginView" class="login hidden">
+  <h1>FEP CRM</h1>
+  <div class="muted" style="margin-bottom:16px">French Equity Partners · private</div>
+  <label>Email</label><input id="le" type="email" autocomplete="username">
+  <div style="height:10px"></div>
+  <div id="pwBox">
+    <label>Password</label><input id="lp" type="password" autocomplete="current-password">
+    <div style="height:14px"></div>
+    <button class="btn" style="width:100%" id="loginBtn">Sign in</button>
+  </div>
+  <div id="codeBox" class="hidden">
+    <button class="btn" style="width:100%" id="sendCodeBtn">Email me a sign-in code</button>
+    <div id="codeEntry" class="hidden" style="margin-top:12px">
+      <label>Code from the email</label><input id="lcode" inputmode="numeric" autocomplete="one-time-code" maxlength="10" placeholder="123456">
+      <div style="height:10px"></div>
+      <button class="btn gold" style="width:100%" id="verifyCodeBtn">Verify and sign in</button>
+    </div>
+  </div>
+  <div id="resetBox" class="hidden">
+    <label>New password</label><input id="np1" type="password" autocomplete="new-password">
+    <div style="height:8px"></div>
+    <label>Confirm new password</label><input id="np2" type="password" autocomplete="new-password">
+    <div style="height:14px"></div>
+    <button class="btn" style="width:100%" id="setPwBtn">Save new password</button>
+  </div>
+  <div class="row" id="loginLinks" style="justify-content:space-between;margin-top:12px;font-size:13px">
+    <a href="#" id="toggleCode">Sign in with a one-time code</a>
+    <a href="#" id="forgotPw">Forgot password?</a>
+  </div>
+  <div id="loginMsg" class="msg"></div>
+</div>
+
+<div id="app" class="hidden">
+<header>
+  <h1>FEP CRM</h1>
+  <nav id="nav">
+    <button data-v="today" class="on">Today</button>
+    <button data-v="agents">Agents</button>
+    <button data-v="deals">Deals</button>
+    <button data-v="buyers">Buyers</button>
+    <button data-v="docs">Documents</button>
+    <button data-v="import">Import</button>
+  </nav>
+  <div class="sp"></div>
+  <span class="who" id="who"></span>
+  <button class="out" id="logout">Sign out</button>
+</header>
+
+<main>
+  <!-- TODAY -->
+  <section id="v-today">
+    <div class="stats" id="stats"></div>
+    <h2>Due today</h2>
+    <div id="dueList"></div>
+  </section>
+
+  <!-- AGENTS -->
+  <section id="v-agents" class="hidden">
+    <div class="row" style="justify-content:space-between;margin-bottom:10px">
+      <h2 style="margin:0">Agents &amp; partners</h2>
+      <button class="btn gold" id="addAgentBtn">+ Add contact</button>
+    </div>
+    <div class="card" style="margin-bottom:12px">
+      <div class="grid">
+        <div><label>Search</label><input id="aq" placeholder="Name, brokerage or city"></div>
+        <div><label>County</label><select id="acounty"><option value="">All counties</option></select></div>
+        <div><label>Stage</label><select id="astage"><option value="">All stages</option></select></div>
+        <div><label>Type</label><select id="atype"><option value="">All contacts</option></select></div>
+        <div><label>Sort</label><select id="asort"><option value="next">Next action</option><option value="touch">Last touch</option><option value="name">Name</option></select></div>
+      </div>
+    </div>
+    <div id="agentTable"></div>
+    <div class="pager"><span class="muted" id="apageInfo"></span><button class="btn ghost sm" id="aprev">‹ Prev</button><button class="btn ghost sm" id="anext">Next ›</button></div>
+  </section>
+
+  <!-- DEALS -->
+  <section id="v-deals" class="hidden">
+    <div class="row" style="justify-content:space-between;margin-bottom:10px">
+      <h2 style="margin:0">Deal pipeline</h2>
+      <button class="btn gold" id="addDealBtn">+ New deal</button>
+    </div>
+    <div class="pipe" id="pipe"></div>
+  </section>
+
+  <!-- BUYERS -->
+  <section id="v-buyers" class="hidden">
+    <div class="row" style="justify-content:space-between;margin-bottom:10px">
+      <h2 style="margin:0">Cash buyers</h2>
+      <input id="bq" placeholder="Search name, ZIP or type" style="max-width:280px">
+    </div>
+    <div id="buyerTable"></div>
+  </section>
+
+  <!-- DOCUMENTS -->
+  <section id="v-docs" class="hidden">
+    <div class="row" style="justify-content:space-between;margin-bottom:10px">
+      <h2 style="margin:0">Document templates</h2>
+      <button class="btn gold" id="newTplBtn">+ New template</button>
+    </div>
+    <div class="card" style="margin-bottom:12px;font-size:13px">
+      <b>How it works:</b> write a template once, using fields like <code>{{buyer_name}}</code>. On any deal, open <i>Documents</i>, pick a template and click <b>Generate</b>. The fields fill in from the deal, you can edit the wording, then save, print or "Save as PDF".
+      <div class="muted" style="margin-top:6px">Fields: {{date}} {{assignor}} {{seller_name}} {{buyer_name}} {{property_address}} {{city}} {{zip}} {{county}} {{contract_price}} {{contract_date}} {{closing_date}} {{assignment_fee}} {{end_buyer_deposit}} {{emd_amount}} {{title_company}} {{title_file_no}}</div>
+      <details style="margin-top:8px"><summary><b>FR/BAR "AS IS" contract: the assignability option</b></summary>
+        <p style="margin:6px 0">The FR/BAR contract is a Florida Realtors form supplied by the listing agent, so it isn't stored here. When you make an offer:</p>
+        <ol style="margin:0 0 6px 18px;padding:0">
+          <li>Buyer name: <b>French Equity Partners LLC and/or assigns</b>.</li>
+          <li>In <b>Section 7 (Assignability)</b>, tick <b>"may assign and thereby be released from any further liability"</b> (or "may assign but not be released", if the seller insists). Never leave "may not assign" ticked if you plan to assign.</li>
+          <li>Tell the agent in writing: "Buyer is an investor and may assign this contract or close simultaneously."</li>
+          <li>Upload the signed contract as a photo/PDF note on the deal, and tick "Contract signed" in the checklist.</li>
+        </ol>
+        <div class="muted">If the seller won't allow assignment, use a <b>double close</b> instead (agreed with Nicholas). Each deal with Nicholas gets its own property-specific JV agreement; save it on the deal.</div>
+      </details>
+    </div>
+    <div id="tplList"></div>
+  </section>
+
+  <!-- IMPORT -->
+  <section id="v-import" class="hidden">
+    <h2>Import Florida agents (DBPR)</h2>
+    <div class="card">
+      <p style="margin-top:0">1. Download the region files from the <a href="https://www2.myfloridalicense.com/real-estate-commission/public-records/" target="_blank" rel="noopener">DBPR public records page</a> (Licensee Files → Region 1–10 and Orange). <b>Skip Hillsborough (Region 13)</b>.</p>
+      <p>2. Choose the files below. Only <b>active sales associates and brokers</b> are imported, and Hillsborough is always skipped. Re-importing updates licence details without touching your notes or stages.</p>
+      <input type="file" id="csvFiles" accept=".csv,text/csv" multiple>
+      <div style="height:10px"></div>
+      <button class="btn" id="importBtn">Import</button>
+      <div id="importLog" class="msg"></div>
+    </div>
+  </section>
+</main>
+</div>
+
+<div id="overlay" class="overlay hidden"><div class="panel" id="panel"></div></div>
+
+<script>
+const SB = supabase.createClient(
+  'https://wvuaqdoijqdyxncpviet.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind2dWFxZG9panFkeXhuY3B2aWV0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQzMDE2MjcsImV4cCI6MjA5OTg3NzYyN30.nCQlBMrtkoWRCiXJZUAsTgX2meXXaLOatayPjIem0Dg'
+);
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money = n => (n === null || n === undefined || n === '') ? '—' : '$' + Number(n).toLocaleString('en-US', {maximumFractionDigits:0});
+const iso = d => { const z = new Date(d.getTime() - d.getTimezoneOffset()*60000); return z.toISOString().slice(0,10); };
+const today = () => iso(new Date());
+function addWeekdays(n){ const d = new Date(); let k = 0; while (k < n){ d.setDate(d.getDate()+1); if (d.getDay() !== 0 && d.getDay() !== 6) k++; } return iso(d); }
+function addDays(n){ const d = new Date(); d.setDate(d.getDate()+n); return iso(d); }
+const fmtDate = s => s ? new Date(s + (s.length === 10 ? 'T12:00:00' : '')).toLocaleDateString('en-GB', {day:'numeric', month:'short'}) : '—';
+const ago = s => { if (!s) return 'never'; const d = Math.floor((Date.now() - new Date(s)) / 86400000); return d <= 0 ? 'today' : d === 1 ? 'yesterday' : d + ' days ago'; };
+
+const AGENT_STAGES = [['new','New'],['contacted','Contacted'],['conversation','Conversation'],['active','Active relationship'],['sends_deals','Sends deals'],['dormant','Dormant'],['out','Out']];
+const DEAL_STAGES = [['received','Received'],['analysed','Analysed'],['offer_made','Offer made'],['accepted','Accepted'],['under_contract','Under contract'],['assigned','Assigned to buyer'],['closed','Closed'],['dead','Dead']];
+const stageLabel = (list, v) => (list.find(x => x[0] === v) || [v, v])[1];
+const CHECKLIST = [
+  ['contract_signed','Purchase contract signed, buyer named "and/or assigns"'],
+  ['sent_to_title','Contract sent to title company, file opened'],
+  ['emd_sent','Earnest money (EMD) sent and receipt confirmed'],
+  ['title_clear','Title search back, no blocking liens'],
+  ['buyer_found','End buyer found (within 10 miles)'],
+  ['assignment_signed','Assignment agreement signed by buyer'],
+  ['buyer_deposit','Buyer\'s non-refundable deposit received by title'],
+  ['settlement_ok','Settlement statement checked (assignment fee + 50/50 split)'],
+  ['closed_paid','Closed and fee paid out'],
+];
+const FLAGS = [ // green: signs the seller is motivated [key, label, weight]
+  ['pre_foreclosure','Pre-foreclosure',3], ['tax_delinquent','Tax delinquent',3], ['probate','Probate / inherited',3], ['fire_damage','Fire damage',3],
+  ['liens','Liens / judgments',2], ['code_violations','Code violations',2], ['vacant_overgrown','Vacant / overgrown',2], ['water_shutoff','Water shut off',2],
+  ['eviction','Eviction / tired landlord',2], ['divorce','Divorce',2], ['expired_listing','Expired listing',2], ['slow_to_sell','On market 60+ days',2],
+  ['auction','Heading to auction',2], ['needs_repairs','Major repairs needed',2], ['price_drops','Price reductions',1], ['fsbo','For sale by owner',1],
+  ['for_rent','For rent (tired landlord)',1], ['quit_claim','Recent quit claim deed',1], ['out_of_state','Owner out of state',1], ['owner_legal','Owner legal trouble',1],
+];
+const RISKS = [ // red: deal risks
+  ['no_assign','Seller won\'t allow assignment'], ['over_mao','Asking $50k+ over calculator'], ['title_issues','Serious title issues'], ['structural','Structural / foundation'],
+  ['flood_zone','Flood zone / insurance'], ['hoa','HOA limits investors'], ['tenant','Difficult tenant in place'], ['no_access','No access to inspect'], ['condo','Condo (financing limits)'],
+];
+const LEAD_SOURCES = ['Agent','Expired listing (agent)','Pre-realtor lead','Property manager','General contractor','Handyman','Estate sale company','Title company','Hard money lender',
+  'JV partner','REIA meeting','Driving for dollars','Door knocking','Bandit sign','Virtual bandit sign','Bandit sign comments','Zillow FSBO','For-rent listing','Garage sale',
+  'Local auction','Pawn shop','Word of mouth','Public records list','Other'];
+const CONTACT_TYPES = [['agent','Agent / broker'],['property_manager','Property manager'],['contractor','General contractor'],['handyman','Handyman'],['estate_sale','Estate sale company'],
+  ['title_company','Title company'],['hard_money','Hard money lender'],['jv_partner','JV partner / wholesaler'],['other','Other']];
+function calcGap(d){ const ask = Number(d.list_price || d.contract_price || 0), c = Number(d.calc_price || 0);
+  if (!ask || !c) return null; const gap = ask - c;
+  return { gap, label: gap <= 30000 ? 'Send' : gap <= 50000 ? 'Underwrite' : 'Too high', cls: gap <= 30000 ? 'ok' : gap <= 50000 ? '' : 'due' }; }
+function gapPill(d){ const g = calcGap(d); return g ? `<span class="pill ${g.cls}" title="Asking ${g.gap >= 0 ? '+' : ''}${money(g.gap)} vs calculator">${g.label}</span>` : ''; }
+function dealScore(d){
+  const g = (d.flags || []).reduce((s, k) => s + ((FLAGS.find(f => f[0] === k) || [0,0,0])[2]), 0);
+  const r = (d.risks || []).length;
+  const score = g - 3 * r;
+  return { score, g, r, label: r && score < 3 ? 'Risky' : score >= 6 ? 'Hot' : score >= 3 ? 'Warm' : 'Cold' };
+}
+function scorePill(d){
+  const s = dealScore(d); const cls = s.label === 'Hot' ? 'ok' : s.label === 'Risky' ? 'due' : '';
+  return `<span class="pill ${cls}" title="Motivation ${s.g}, risks ${s.r}">${s.label} ${s.score}</span>`;
+}
+const CHANNELS = [['call','Call'],['voicemail','Voicemail'],['text','Text'],['email','Email'],['meeting','Meeting'],['note','Note']];
+
+/* ---------- auth ---------- */
+async function boot(){
+  const { data:{ session } } = await SB.auth.getSession();
+  if (!session){ $('loginView').classList.remove('hidden'); $('app').classList.add('hidden'); return; }
+  const { data: ok } = await SB.rpc('is_fep_admin');
+  if (!ok){ await SB.auth.signOut(); $('loginMsg').textContent = 'This account does not have FEP access.'; $('loginMsg').className = 'msg err'; $('loginView').classList.remove('hidden'); return; }
+  $('who').textContent = session.user.email;
+  $('loginView').classList.add('hidden'); $('app').classList.remove('hidden');
+  initFilters(); show(location.hash.slice(1) || 'today');
+}
+$('loginBtn').onclick = async () => {
+  $('loginMsg').textContent = 'Signing in…'; $('loginMsg').className = 'msg';
+  const { error } = await SB.auth.signInWithPassword({ email: $('le').value.trim(), password: $('lp').value });
+  if (error){ $('loginMsg').textContent = error.message; $('loginMsg').className = 'msg err'; return; }
+  boot();
+};
+$('lp').addEventListener('keydown', e => { if (e.key === 'Enter') $('loginBtn').click(); });
+const lmsg = (t, cls = '') => { $('loginMsg').textContent = t; $('loginMsg').className = 'msg ' + cls; };
+const REDIRECT = location.origin + location.pathname;
+let codeMode = false, recovering = false;
+$('toggleCode').onclick = e => {
+  e.preventDefault(); codeMode = !codeMode;
+  $('pwBox').classList.toggle('hidden', codeMode); $('codeBox').classList.toggle('hidden', !codeMode);
+  $('toggleCode').textContent = codeMode ? 'Sign in with password' : 'Sign in with a one-time code'; lmsg('');
+};
+$('sendCodeBtn').onclick = async () => {
+  const email = $('le').value.trim(); if (!email) return lmsg('Enter your email first.', 'err');
+  lmsg('Sending…');
+  const { error } = await SB.auth.signInWithOtp({ email, options: { shouldCreateUser: false, emailRedirectTo: REDIRECT } });
+  if (error) return lmsg(error.message, 'err');
+  $('codeEntry').classList.remove('hidden'); $('lcode').focus();
+  lmsg('Check your inbox. Enter the code, or just tap the link in the email.', 'ok');
+};
+$('verifyCodeBtn').onclick = async () => {
+  const email = $('le').value.trim(), token = $('lcode').value.trim();
+  if (!email || !token) return lmsg('Enter your email and the code.', 'err');
+  lmsg('Checking…');
+  const { error } = await SB.auth.verifyOtp({ email, token, type: 'email' });
+  if (error) return lmsg(error.message, 'err');
+  boot();
+};
+$('lcode').addEventListener('keydown', e => { if (e.key === 'Enter') $('verifyCodeBtn').click(); });
+$('forgotPw').onclick = async e => {
+  e.preventDefault();
+  const email = $('le').value.trim(); if (!email) return lmsg('Enter your email above, then tap "Forgot password?" again.', 'err');
+  lmsg('Sending reset link…');
+  const { error } = await SB.auth.resetPasswordForEmail(email, { redirectTo: REDIRECT });
+  if (error) return lmsg(error.message, 'err');
+  lmsg('Reset link sent. Open it on this device to choose a new password.', 'ok');
+};
+function showReset(){
+  $('loginView').classList.remove('hidden'); $('app').classList.add('hidden');
+  ['pwBox','codeBox','loginLinks'].forEach(id => $(id).classList.add('hidden')); $('resetBox').classList.remove('hidden');
+  $('le').parentElement && ($('le').disabled = true); lmsg('Choose a new password.');
+}
+$('setPwBtn').onclick = async () => {
+  const a = $('np1').value, b = $('np2').value;
+  if (a.length < 8) return lmsg('Use at least 8 characters.', 'err');
+  if (a !== b) return lmsg('The two passwords don\'t match.', 'err');
+  const { error } = await SB.auth.updateUser({ password: a });
+  if (error) return lmsg(error.message, 'err');
+  recovering = false; $('resetBox').classList.add('hidden'); ['pwBox','loginLinks'].forEach(id => $(id).classList.remove('hidden')); $('le').disabled = false;
+  lmsg('Password updated.', 'ok'); history.replaceState(null, '', location.pathname); boot();
+};
+$('logout').onclick = async () => { await SB.auth.signOut(); location.hash = ''; location.reload(); };
+
+/* ---------- navigation ---------- */
+const VIEWS = ['today','agents','deals','buyers','docs','import'];
+function show(v){
+  if (!VIEWS.includes(v)) v = 'today';
+  VIEWS.forEach(x => $('v-' + x).classList.toggle('hidden', x !== v));
+  document.querySelectorAll('#nav button').forEach(b => b.classList.toggle('on', b.dataset.v === v));
+  if (location.hash.slice(1) !== v) history.replaceState(null, '', '#' + v);
+  ({today:loadToday, agents:loadAgents, deals:loadDeals, buyers:loadBuyers, docs:loadTemplates, import:()=>{}})[v]();
+}
+document.querySelectorAll('#nav button').forEach(b => b.onclick = () => show(b.dataset.v));
+
+/* ---------- today ---------- */
+async function loadToday(){
+  const t = today();
+  const [ag, ad, deals, buyers, dueA, dueD] = await Promise.all([
+    SB.from('fep_agents').select('id', {count:'exact', head:true}),
+    SB.from('fep_agents').select('id', {count:'exact', head:true}).in('stage', ['conversation','active','sends_deals']),
+    SB.from('fep_deals').select('stage'),
+    SB.from('fep_buyers').select('id', {count:'exact', head:true}),
+    SB.from('fep_agents').select('id,name,employer_name,city,county,phone,stage,next_action,next_action_on').lte('next_action_on', t).not('stage','eq','out').order('next_action_on').limit(100),
+    SB.from('fep_deals').select('id,address,city,zip,stage,next_action,next_action_on').lte('next_action_on', t).not('stage','in','(closed,dead)').order('next_action_on').limit(100),
+  ]);
+  const d = deals.data || [];
+  const uc = d.filter(x => x.stage === 'under_contract').length;
+  const open = d.filter(x => !['closed','dead'].includes(x.stage)).length;
+  $('stats').innerHTML = [
+    [ag.count ?? 0, 'Agents loaded'], [ad.count ?? 0, 'Warm agents'], [open, 'Open deals'], [uc, 'Under contract'], [buyers.count ?? 0, 'Cash buyers'],
+  ].map(([n,l]) => `<div class="stat"><b>${Number(n).toLocaleString()}</b><span>${l}</span></div>`).join('');
+  const rows = [];
+  (dueD.data || []).forEach(x => rows.push(`<tr class="click" data-deal="${x.id}"><td><span class="pill">Deal</span></td><td><b>${esc(x.address)}</b><div class="muted">${esc([x.city, x.zip].filter(Boolean).join(' '))} · ${esc(stageLabel(DEAL_STAGES, x.stage))}</div></td><td>${esc(x.next_action || '')}</td><td><span class="pill ${x.next_action_on < t ? 'due' : ''}">${fmtDate(x.next_action_on)}</span></td></tr>`));
+  (dueA.data || []).forEach(x => rows.push(`<tr class="click" data-agent="${x.id}"><td><span class="pill">Agent</span></td><td><b>${esc(x.name)}</b><div class="muted">${esc(x.employer_name || '')} · ${esc(x.city || '')}</div></td><td>${esc(x.next_action || '')}</td><td><span class="pill ${x.next_action_on < t ? 'due' : ''}">${fmtDate(x.next_action_on)}</span></td></tr>`));
+  $('dueList').innerHTML = rows.length
+    ? `<table><thead><tr><th>Type</th><th>Who / what</th><th class="hm">Next step</th><th>Due</th></tr></thead><tbody>${rows.join('')}</tbody></table>`
+    : `<div class="card">Nothing due. Pick a county in <a href="#agents" onclick="show('agents');return false">Agents</a> and start calling.</div>`;
+  $('dueList').querySelectorAll('tr[data-agent]').forEach(r => r.onclick = () => openAgent(r.dataset.agent));
+  $('dueList').querySelectorAll('tr[data-deal]').forEach(r => r.onclick = () => openDeal(r.dataset.deal));
+}
+
+/* ---------- agents ---------- */
+let aPage = 0; const PAGE = 50; let filtersReady = false;
+async function initFilters(){
+  if (filtersReady) return; filtersReady = true;
+  $('astage').innerHTML = '<option value="">All stages</option>' + AGENT_STAGES.map(([v,l]) => `<option value="${v}">${l}</option>`).join('');
+  const { data } = await SB.rpc('fep_agent_counties');
+  $('acounty').innerHTML = '<option value="">All counties</option>' + (data || []).filter(r => r.county).map(r => `<option value="${esc(r.county)}">${esc(r.county)} (${Number(r.n).toLocaleString()})</option>`).join('');
+  let tmr; $('aq').oninput = () => { clearTimeout(tmr); tmr = setTimeout(() => { aPage = 0; loadAgents(); }, 300); };
+  $('atype').innerHTML = '<option value="">All contacts</option>' + CONTACT_TYPES.map(([v,l]) => `<option value="${v}">${l}</option>`).join('');
+  ['acounty','astage','asort','atype'].forEach(id => $(id).onchange = () => { aPage = 0; loadAgents(); });
+  $('aprev').onclick = () => { if (aPage > 0){ aPage--; loadAgents(); } };
+  $('anext').onclick = () => { aPage++; loadAgents(); };
+  $('addAgentBtn').onclick = () => openAgent(null);
+  $('addDealBtn').onclick = () => openDeal(null);
+  let btm; $('bq').oninput = () => { clearTimeout(btm); btm = setTimeout(loadBuyers, 250); };
+}
+async function loadAgents(){
+  let q = SB.from('fep_agents').select('id,name,employer_name,city,county,phone,email,stage,next_action_on,last_touch_at', {count:'exact'});
+  const s = $('aq').value.trim().replace(/[,()%*]/g, ' ').trim();
+  if (s) q = q.or(`name.ilike.%${s}%,employer_name.ilike.%${s}%,city.ilike.%${s}%`);
+  if ($('acounty').value) q = q.eq('county', $('acounty').value);
+  if ($('astage').value) q = q.eq('stage', $('astage').value);
+  if ($('atype').value) q = q.eq('contact_type', $('atype').value);
+  const sort = $('asort').value;
+  if (sort === 'next') q = q.order('next_action_on', {ascending:true, nullsFirst:false}).order('name');
+  else if (sort === 'touch') q = q.order('last_touch_at', {ascending:false, nullsFirst:false});
+  else q = q.order('name');
+  const { data, count, error } = await q.range(aPage*PAGE, aPage*PAGE + PAGE - 1);
+  if (error){ $('agentTable').innerHTML = `<div class="card msg err">${esc(error.message)}</div>`; return; }
+  const t = today();
+  $('agentTable').innerHTML = (data || []).length ? `<table><thead><tr><th>Agent</th><th class="hm">Brokerage</th><th class="hm">City / county</th><th>Stage</th><th>Next</th></tr></thead><tbody>${
+    data.map(a => `<tr class="click" data-id="${a.id}"><td><b>${esc(a.name)}</b><div class="muted">${a.phone ? esc(a.phone) : '<i>no phone yet</i>'} · touched ${ago(a.last_touch_at)}</div></td><td class="hm">${esc(a.employer_name || '—')}</td><td class="hm">${esc(a.city || '')}<div class="muted">${esc(a.county || '')}</div></td><td><span class="pill">${esc(stageLabel(AGENT_STAGES, a.stage))}</span></td><td>${a.next_action_on ? `<span class="pill ${a.next_action_on <= t ? 'due' : ''}">${fmtDate(a.next_action_on)}</span>` : '<span class="muted">—</span>'}</td></tr>`).join('')
+  }</tbody></table>` : `<div class="card">No agents found. ${count === 0 && !s ? 'Load them in <a href="#import" onclick="show(\'import\');return false">Import</a>.' : ''}</div>`;
+  $('agentTable').querySelectorAll('tr[data-id]').forEach(r => r.onclick = () => openAgent(r.dataset.id));
+  const from = count ? aPage*PAGE + 1 : 0, to = Math.min((aPage+1)*PAGE, count || 0);
+  $('apageInfo').textContent = `${from.toLocaleString()}–${to.toLocaleString()} of ${(count || 0).toLocaleString()}`;
+  $('aprev').disabled = aPage === 0; $('anext').disabled = to >= (count || 0);
+}
+
+/* ---------- shared panel helpers ---------- */
+function openPanel(html){ $('panel').innerHTML = html; $('overlay').classList.remove('hidden'); $('panel').scrollTop = 0; }
+function closePanel(){
+  try { if (recorder && recorder.state === 'recording') recorder.stop(); } catch {}
+  try { if (recognition) recognition.stop(); } catch {}
+  $('overlay').classList.add('hidden');
+}
+$('overlay').addEventListener('click', e => { if (e.target.id === 'overlay') closePanel(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
+const field = (id, label, val = '', type = 'text', extra = '') => `<div><label>${label}</label><input id="${id}" type="${type}" value="${esc(val ?? '')}" ${extra}></div>`;
+const selectField = (id, label, opts, val) => `<div><label>${label}</label><select id="${id}">${opts.map(([v,l]) => `<option value="${v}" ${v === val ? 'selected' : ''}>${l}</option>`).join('')}</select></div>`;
+const chips = target => `<div class="chips">${[['Today',0],['2 days',2],['1 week',5],['2 weeks',10]].map(([l,n]) => `<button type="button" data-t="${target}" data-n="${n}">${l}</button>`).join('')}</div>`;
+function wireChips(){ $('panel').querySelectorAll('.chips button').forEach(b => b.onclick = () => { $(b.dataset.t).value = +b.dataset.n === 0 ? today() : addWeekdays(+b.dataset.n); }); }
+function readChecklist(prev){
+  const out = {};
+  document.querySelectorAll('#cklist input[data-ck]').forEach(c => { if (c.checked) out[c.dataset.ck] = prev[c.dataset.ck] || new Date().toISOString(); });
+  return out;
+}
+function numOrNull(id){ const v = $(id).value.trim().replace(/[$,]/g, ''); return v === '' ? null : Number(v); }
+function valOrNull(id){ const v = $(id).value.trim(); return v === '' ? null : v; }
+
+async function timeline(filter){
+  const { data } = await SB.from('fep_touches').select('at,channel,direction,summary,media_path,media_type').match(filter).order('at', {ascending:false}).limit(50);
+  const paths = (data || []).map(t => t.media_path).filter(Boolean);
+  const urls = {};
+  if (paths.length){
+    const { data: signed } = await SB.storage.from('fep-media').createSignedUrls(paths, 3600);
+    (signed || []).forEach(s => { if (s.signedUrl) urls[s.path] = s.signedUrl; });
+  }
+  const media = t => {
+    const u = urls[t.media_path]; if (!u) return '';
+    return (t.media_type || '').startsWith('audio')
+      ? `<audio controls preload="none" src="${esc(u)}" style="width:100%;margin-top:6px"></audio>`
+      : `<img src="${esc(u)}" alt="" style="max-width:100%;max-height:260px;border-radius:4px;margin-top:6px;cursor:zoom-in" onclick="window.open(this.src,'_blank')">`;
+  };
+  return (data || []).length ? `<ul class="tl">${data.map(t => `<li><div class="meta">${new Date(t.at).toLocaleString('en-GB', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})} · ${esc(stageLabel(CHANNELS, t.channel))} ${t.direction === 'in' ? '(in)' : ''}</div>${esc(t.summary || '')}${media(t)}</li>`).join('')}</ul>` : '<div class="muted">No activity yet.</div>';
+}
+
+/* ---------- voice + photo for activity ---------- */
+const setTxt = (id, t) => { const el = $(id); if (el) el.textContent = t; };
+let pending = null;            // { blob, type, ext }
+let recorder = null, recChunks = [], recognition = null;
+function setMedia(blob, type, ext){
+  pending = blob ? { blob, type, ext } : null;
+  const box = $('mediaPreview'); if (!box) return;
+  if (!pending){ box.innerHTML = ''; setTxt('mediaState', ''); return; }
+  const url = URL.createObjectURL(blob);
+  box.innerHTML = (type.startsWith('audio') ? `<audio controls src="${url}" style="width:100%"></audio>` : `<img src="${url}" style="max-height:120px;border-radius:4px">`)
+    + ` <a href="#" id="clearMedia" style="font-size:12px">Remove</a>`;
+  $('clearMedia').onclick = e => { e.preventDefault(); setMedia(null); };
+}
+async function shrinkImage(file){
+  try {
+    const img = await createImageBitmap(file); const max = 1600; const s = Math.min(1, max / Math.max(img.width, img.height));
+    const c = document.createElement('canvas'); c.width = Math.round(img.width*s); c.height = Math.round(img.height*s);
+    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+    return await new Promise(r => c.toBlob(r, 'image/jpeg', 0.82));
+  } catch { return file; }
+}
+function wireMedia(){
+  pending = null; recorder = null; recognition = null;
+  $('tphoto').onchange = async e => { const f = e.target.files[0]; if (!f) return; const b = await shrinkImage(f); setMedia(b, 'image/jpeg', 'jpg'); e.target.value = ''; };
+  // Dictation (speech to text)
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) $('dictBtn').title = 'Dictation not supported in this browser (try Chrome or Safari)';
+  $('dictBtn').onclick = () => {
+    if (!SR){ $('mediaState').textContent = 'Dictation isn\'t supported in this browser. Use your keyboard\'s mic button instead.'; return; }
+    if (recognition){ recognition.stop(); return; }
+    recognition = new SR(); recognition.lang = 'en-GB'; recognition.continuous = true; recognition.interimResults = true;
+    const base = $('tsum').value ? $('tsum').value.trim() + ' ' : '';
+    let finalText = '';
+    recognition.onresult = ev => {
+      let interim = '';
+      for (let i = ev.resultIndex; i < ev.results.length; i++){
+        const r = ev.results[i]; if (r.isFinal) finalText += r[0].transcript.trim() + ' '; else interim += r[0].transcript;
+      }
+      if ($('tsum')) $('tsum').value = base + finalText + interim;
+    };
+    recognition.onend = () => { recognition = null; setTxt('dictBtn', '🎤 Dictate'); setTxt('mediaState', ''); };
+    recognition.onerror = ev => { setTxt('mediaState', 'Dictation stopped: ' + ev.error); };
+    recognition.start(); $('dictBtn').textContent = '⏹ Stop dictating'; $('mediaState').textContent = 'Listening…';
+  };
+  // Voice note (audio clip)
+  $('recBtn').onclick = async () => {
+    if (recorder && recorder.state === 'recording'){ recorder.stop(); return; }
+    if (!navigator.mediaDevices || !window.MediaRecorder){ $('mediaState').textContent = 'Recording isn\'t supported in this browser.'; return; }
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mime = ['audio/webm', 'audio/mp4', 'audio/ogg'].find(m => MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(m)) || '';
+      recorder = new MediaRecorder(stream, mime ? { mimeType: mime } : undefined); recChunks = [];
+      recorder.ondataavailable = e => { if (e.data.size) recChunks.push(e.data); };
+      recorder.onstop = () => {
+        stream.getTracks().forEach(t => t.stop());
+        const type = (recorder.mimeType || mime || 'audio/webm').split(';')[0];
+        const ext = type.includes('mp4') ? 'm4a' : type.includes('ogg') ? 'ogg' : 'webm';
+        if ($('mediaPreview')) setMedia(new Blob(recChunks, { type }), type, ext);
+        setTxt('recBtn', '🎙 Voice note');
+      };
+      recorder.start(); $('recBtn').textContent = '⏹ Stop recording'; $('mediaState').textContent = 'Recording…';
+    } catch (err){ $('mediaState').textContent = 'Microphone blocked: allow mic access for this site.'; }
+  };
+}
+async function insertTouch(rec){
+  try { if (recognition) recognition.stop(); } catch {}
+  if (pending){
+    const folder = rec.deal_id || rec.agent_id || 'misc';
+    const path = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2,7)}.${pending.ext}`;
+    const { error: upErr } = await SB.storage.from('fep-media').upload(path, pending.blob, { contentType: pending.type });
+    if (upErr) return { error: upErr };
+    rec.media_path = path; rec.media_type = pending.type;
+    if (!rec.summary) rec.summary = pending.type.startsWith('audio') ? 'Voice note' : 'Photo';
+  }
+  const res = await SB.from('fep_touches').insert(rec);
+  if (!res.error) setMedia(null);
+  return res;
+}
+const logBox = `<div class="card" style="margin:14px 0">
+  <h4 style="margin:0 0 8px">Log activity</h4>
+  <div class="grid">${selectField('tch','Channel',CHANNELS,'call')}${selectField('tdir','Direction',[['out','Outgoing'],['in','Incoming']],'out')}</div>
+  <div style="height:8px"></div><label>What happened</label><textarea id="tsum" placeholder="e.g. Spoke to her, has 2 stale listings in Lakeland, sending details by email"></textarea>
+  <div class="row" style="margin-top:8px">
+    <button type="button" class="btn ghost sm" id="dictBtn">🎤 Dictate</button>
+    <button type="button" class="btn ghost sm" id="recBtn">🎙 Voice note</button>
+    <label class="btn ghost sm" style="margin:0;text-transform:none;letter-spacing:0;font-weight:600;color:var(--navy)">📷 Photo<input type="file" id="tphoto" accept="image/*" style="display:none"></label>
+    <span class="muted" id="mediaState"></span>
+  </div>
+  <div id="mediaPreview" style="margin-top:6px"></div>
+  <div style="height:8px"></div><button class="btn" id="tsave">Save activity</button><span class="muted" style="margin-left:8px">Sets a follow-up in 3 working days if none is set.</span>
+  <div class="msg" id="tmsg"></div></div>`;
+
+/* ---------- agent panel ---------- */
+async function openAgent(id){
+  let a = { stage:'new' };
+  if (id){ const { data } = await SB.from('fep_agents').select('*').eq('id', id).single(); a = data || a; }
+  openPanel(`
+    <div class="row" style="justify-content:space-between"><h3>${id ? esc(a.name) : 'New agent'}</h3><button class="btn ghost sm" onclick="closePanel()">Close</button></div>
+    ${id ? `<div class="muted" style="margin-bottom:10px">${esc(a.rank || '')} · licence ${esc(a.license_number || '—')}${a.license_expires ? ' · expires ' + fmtDate(a.license_expires) : ''}<br>${esc([a.address1, a.address2, a.city, a.zip].filter(Boolean).join(', '))}${a.county ? ' · ' + esc(a.county) + ' County' : ''}</div>` : ''}
+    <div class="row" style="margin-bottom:12px">${a.phone ? `<a class="btn sm" href="tel:${esc(a.phone)}">Call</a><a class="btn ghost sm" href="sms:${esc(a.phone)}">Text</a>` : ''}${a.email ? `<a class="btn ghost sm" href="mailto:${esc(a.email)}">Email</a>` : ''}${!a.phone && id ? `<a class="btn ghost sm" target="_blank" rel="noopener" href="https://www.google.com/search?q=${encodeURIComponent([a.employer_name || a.name, a.city, 'FL', 'phone'].filter(Boolean).join(' '))}">🔎 Find phone</a>` : ''}${id ? `<button class="btn gold sm" id="dealFromAgent">+ Deal from this agent</button>` : ''}</div>
+    <div class="grid">
+      ${id ? '' : field('fname','Name',a.name)}
+      ${field('fphone','Phone',a.phone,'tel')}${field('femail','Email',a.email,'email')}
+      ${field('femp','Brokerage',a.employer_name)}${id ? '' : field('fcity','City',a.city) + field('fcounty','County',a.county)}
+      ${selectField('ftype','Contact type',CONTACT_TYPES,a.contact_type || 'agent')}${selectField('fstage','Stage',AGENT_STAGES,a.stage)}${field('ftier','Tier (A/B/C)',a.tier)}
+    </div>
+    <div style="height:8px"></div>
+    <div class="grid">${field('fnext','Next action',a.next_action)}${field('fnexton','Next action date',a.next_action_on,'date')}</div>
+    ${chips('fnexton')}
+    <label>Notes</label><textarea id="fnotes">${esc(a.notes || '')}</textarea>
+    <div style="height:10px"></div><button class="btn" id="asave">${id ? 'Save changes' : 'Add agent'}</button><div class="msg" id="amsg"></div>
+    ${id ? logBox + '<h4>Activity</h4><div id="atl">Loading…</div>' : ''}
+  `);
+  wireChips();
+  $('asave').onclick = async () => {
+    const rec = { phone: valOrNull('fphone'), email: valOrNull('femail'), employer_name: valOrNull('femp'), stage: $('fstage').value, tier: valOrNull('ftier'), contact_type: $('ftype').value,
+      next_action: valOrNull('fnext'), next_action_on: valOrNull('fnexton'), notes: valOrNull('fnotes'), updated_at: new Date().toISOString() };
+    let res;
+    if (id) res = await SB.from('fep_agents').update(rec).eq('id', id);
+    else {
+      if (!$('fname').value.trim()){ $('amsg').textContent = 'Name is required.'; $('amsg').className = 'msg err'; return; }
+      Object.assign(rec, { name: $('fname').value.trim(), city: valOrNull('fcity'), county: valOrNull('fcounty') ? $('fcounty').value.trim().toUpperCase() : null, source: 'manual' });
+      res = await SB.from('fep_agents').insert(rec).select('id').single();
+    }
+    if (res.error){ $('amsg').textContent = res.error.message; $('amsg').className = 'msg err'; return; }
+    $('amsg').textContent = 'Saved.'; $('amsg').className = 'msg ok';
+    if (!id && res.data) openAgent(res.data.id); refreshCurrent();
+  };
+  if (!id) return;
+  $('dealFromAgent').onclick = () => openDeal(null, { agent_id: id, agent_name: a.name });
+  wireMedia();
+  $('tsave').onclick = async () => {
+    const summary = $('tsum').value.trim();
+    if (!summary && !pending){ $('tmsg').textContent = 'Write, dictate or record what happened first.'; $('tmsg').className = 'msg err'; return; }
+    $('tmsg').textContent = 'Saving…'; $('tmsg').className = 'msg';
+    const { error } = await insertTouch({ agent_id: id, channel: $('tch').value, direction: $('tdir').value, summary });
+    if (error){ $('tmsg').textContent = error.message; $('tmsg').className = 'msg err'; return; }
+    const nextOn = $('fnexton').value;
+    if (!nextOn || nextOn <= today()){
+      const d = addWeekdays(3); $('fnexton').value = d;
+      if (!$('fnext').value.trim()) $('fnext').value = 'Follow up';
+      await SB.from('fep_agents').update({ next_action_on: d, next_action: $('fnext').value.trim(), updated_at: new Date().toISOString() }).eq('id', id);
+    }
+    $('tsum').value = ''; $('tmsg').textContent = 'Logged.'; $('tmsg').className = 'msg ok';
+    $('atl').innerHTML = await timeline({ agent_id: id }); refreshCurrent();
+  };
+  $('atl').innerHTML = await timeline({ agent_id: id });
+}
+
+/* ---------- deals ---------- */
+async function loadDeals(){
+  const { data, error } = await SB.from('fep_deals').select('id,address,city,zip,stage,status,list_price,contract_price,assignment_fee,next_action_on,flags,risks').order('updated_at', {ascending:false});
+  if (error){ $('pipe').innerHTML = `<div class="card msg err">${esc(error.message)}</div>`; return; }
+  const t = today();
+  $('pipe').innerHTML = DEAL_STAGES.map(([v,l]) => {
+    const items = (data || []).filter(d => d.stage === v);
+    return `<div class="col"><h4>${l} · ${items.length}</h4>${items.map(d => `<div class="dcard" data-id="${d.id}"><b>${esc(d.address)}</b><span class="muted">${esc([d.city, d.zip].filter(Boolean).join(' '))}</span><div class="muted">${d.contract_price ? 'Contract ' + money(d.contract_price) : d.list_price ? 'List ' + money(d.list_price) : ''}${d.assignment_fee ? ' · fee ' + money(d.assignment_fee) : ''}</div>${d.next_action_on ? `<span class="pill ${d.next_action_on <= t ? 'due' : ''}">${fmtDate(d.next_action_on)}</span>` : ''} ${d.status === 'available' ? '<span class="pill ok">On website</span>' : ''} ${scorePill(d)} ${gapPill(d)}</div>`).join('')}</div>`;
+  }).join('');
+  $('pipe').querySelectorAll('.dcard').forEach(c => c.onclick = () => openDeal(c.dataset.id));
+}
+async function openDeal(id, preset = {}){
+  let d = { stage:'received', status:'draft', property_type:'Single Family', agent_id: preset.agent_id || null };
+  let agentName = preset.agent_name || '';
+  if (id){
+    const { data } = await SB.from('fep_deals').select('*').eq('id', id).single(); d = data || d;
+    if (d.agent_id){ const { data: ag } = await SB.from('fep_agents').select('name').eq('id', d.agent_id).single(); agentName = ag?.name || ''; }
+  }
+  const spread = (d.arv && d.contract_price) ? Number(d.arv) - Number(d.contract_price) - Number(d.repair_estimate || 0) : null;
+  openPanel(`
+    <div class="row" style="justify-content:space-between"><h3>${id ? esc(d.address) : 'New deal'}</h3><button class="btn ghost sm" onclick="closePanel()">Close</button></div>
+    ${agentName ? `<div class="muted" style="margin-bottom:10px">From agent: <a href="#" id="toAgent">${esc(agentName)}</a></div>` : ''}
+    <div class="grid">
+      <div style="grid-column:1/-1">${field('daddr','Address',d.address)}</div>
+      ${field('dcity','City',d.city)}${field('dzip','ZIP',d.zip)}${field('dcounty','County',d.county)}
+      ${selectField('dtype','Property type',[['Single Family','Single Family'],['Townhome','Townhome'],['Condo','Condo'],['Multi-Family','Multi-Family'],['Land','Land']],d.property_type)}
+      ${field('dbeds','Beds',d.beds,'number','step="0.5"')}${field('dbaths','Baths',d.baths,'number','step="0.5"')}${field('dsqft','Sq ft',d.sqft,'number')}
+    </div>
+    <h4 style="margin:14px 0 6px">Numbers</h4>
+    <div class="grid">
+      ${field('dlist','List price',d.list_price,'number')}${field('doffer','Our offer',d.offer_price,'number')}${field('dcontract','Contract price',d.contract_price,'number')}
+      ${field('darv','ARV',d.arv,'number')}${field('drepair','Repairs',d.repair_estimate,'number')}${field('dfee','Assignment fee',d.assignment_fee,'number')}
+      ${field('dask','Price to buyers',d.asking_price,'number')}${field('dcalc','Calculator price',d.calc_price,'number')}
+    </div>
+    <div class="muted" style="margin-top:6px">Calculator price = <a href="https://freeoffercalculator.com" target="_blank" rel="noopener">Jerry Norton Quick Offer Calculator</a> exit price. Compared with the list price: <b>Send</b> up to $30k above · <b>Underwrite</b> $30–50k above · <b>Too high</b> over $50k. <span id="gapNow"></span></div>
+    ${spread !== null ? `<div class="muted" style="margin-top:6px">ARV − contract − repairs = <b>${money(spread)}</b></div>` : ''}
+    <h4 style="margin:14px 0 6px">Seller motivation <span class="pill ok">green flags</span> <span id="scoreNow"></span></h4>
+    <div class="card" id="flagBox" style="padding:8px 12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:2px 10px">${FLAGS.map(([k,l]) => `<label style="display:flex;gap:6px;align-items:center;text-transform:none;letter-spacing:0;font-size:13px;font-weight:500;color:var(--navy);margin:3px 0"><input type="checkbox" data-flag="${k}" style="width:auto;margin:0" ${(d.flags || []).includes(k) ? 'checked' : ''}> ${l}</label>`).join('')}</div>
+    <h4 style="margin:14px 0 6px">Deal risks <span class="pill due">red flags</span></h4>
+    <div class="card" id="riskBox" style="padding:8px 12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:2px 10px">${RISKS.map(([k,l]) => `<label style="display:flex;gap:6px;align-items:center;text-transform:none;letter-spacing:0;font-size:13px;font-weight:500;color:var(--navy);margin:3px 0"><input type="checkbox" data-risk="${k}" style="width:auto;margin:0" ${(d.risks || []).includes(k) ? 'checked' : ''}> ${l}</label>`).join('')}</div>
+    <div class="grid" style="margin-top:8px">
+      ${selectField('dsource','Lead source',[['',''],...LEAD_SOURCES.map(s => [s,s])],d.lead_source || (d.agent_id ? 'Agent' : ''))}
+      ${field('ddom','Days on market',d.days_on_market,'number')}
+    </div>
+    <h4 style="margin:14px 0 6px">Parties</h4>
+    <div class="grid">
+      ${field('dseller','Seller name',d.seller_name)}${field('dbuyer','End buyer (assignee)',d.end_buyer_name,'text','list="buyerNames"')}${field('dbdep','End buyer deposit',d.end_buyer_deposit,'number')}
+    </div>
+    <datalist id="buyerNames"></datalist>
+    <h4 style="margin:14px 0 6px">Title company</h4>
+    <div class="grid">
+      ${field('ttco','Company',d.title_company ?? (id ? '' : 'Title America (Jacksonville)'))}${field('ttcontact','Contact',d.title_contact)}
+      ${field('ttemail','Email',d.title_email,'email')}${field('ttphone','Phone',d.title_phone,'tel')}${field('ttfile','File no.',d.title_file_no)}
+      ${field('temd','EMD amount',d.emd_amount,'number')}${field('temddue','EMD due',d.emd_due,'date')}${field('tinsp','Inspection ends',d.inspection_ends,'date')}
+    </div>
+    <h4 style="margin:14px 0 6px">Closing checklist <span class="muted" id="ckcount"></span></h4>
+    <div class="card" id="cklist" style="padding:8px 12px">${CHECKLIST.map(([k,l]) => `<label style="display:flex;gap:8px;align-items:flex-start;text-transform:none;letter-spacing:0;font-size:13px;font-weight:500;color:var(--navy);margin:6px 0"><input type="checkbox" data-ck="${k}" style="width:auto;margin-top:2px" ${(d.checklist || {})[k] ? 'checked' : ''}> <span>${l}${(d.checklist || {})[k] ? ` <span class="muted">· ${fmtDate(String((d.checklist || {})[k]).slice(0,10))}</span>` : ''}</span></label>`).join('')}</div>
+    <h4 style="margin:14px 0 6px">Status</h4>
+    <div class="grid">
+      ${selectField('dstage','Stage',DEAL_STAGES,d.stage)}
+      ${selectField('dstatus','Show on website',[['draft','No (private)'],['available','Yes, list it'],['pending','Pending'],['sold','Sold']],d.status)}
+      ${field('dcdate','Contract date',d.contract_date,'date')}${field('dclose','Closing date',d.close_date,'date')}
+    </div>
+    <div style="height:8px"></div>
+    <div class="grid">${field('dnext','Next action',d.next_action)}${field('dnexton','Next action date',d.next_action_on,'date')}</div>
+    ${chips('dnexton')}
+    <label>Notes</label><textarea id="dnotes">${esc(d.notes || '')}</textarea>
+    <div style="height:10px"></div><button class="btn" id="dsave">${id ? 'Save deal' : 'Create deal'}</button><div class="msg" id="dmsg"></div>
+    ${id ? `<div class="card" style="margin-top:14px"><h4 style="margin:0 0 8px">Documents</h4><div class="row"><select id="tplPick" style="flex:1;min-width:180px"></select><button class="btn gold sm" id="genDoc">Generate</button></div><div class="muted" style="margin-top:4px">Save the deal first so the latest details fill in.</div><div id="docList" style="margin-top:8px"></div></div>` : ''}
+    ${id ? `<div class="card" style="margin-top:14px"><div class="row" style="justify-content:space-between"><h4 style="margin:0">Cash buyers nearby</h4><div class="row"><select id="miles" style="width:auto"><option>5</option><option selected>10</option><option>20</option><option>40</option></select><button class="btn gold sm" id="findBuyers">Find buyers</button></div></div><div id="nearList" class="muted" style="margin-top:8px">Matches buyers whose ZIPs are within the radius of this deal's ZIP.</div></div>` + logBox + '<h4>Activity</h4><div id="dtl">Loading…</div>' : ''}
+  `);
+  wireChips();
+  const ckCount = () => { const n = $('cklist').querySelectorAll('input:checked').length; $('ckcount').textContent = `· ${n} of ${CHECKLIST.length}`; };
+  $('cklist').querySelectorAll('input').forEach(c => c.onchange = ckCount); ckCount();
+  const liveScore = () => { $('scoreNow').innerHTML = scorePill({ flags: [...document.querySelectorAll('#flagBox input:checked')].map(c => c.dataset.flag), risks: [...document.querySelectorAll('#riskBox input:checked')].map(c => c.dataset.risk) }); };
+  document.querySelectorAll('#flagBox input, #riskBox input').forEach(c => c.onchange = liveScore); liveScore();
+  const liveGap = () => { const g = calcGap({ list_price: numOrNull('dlist'), contract_price: numOrNull('dcontract'), calc_price: numOrNull('dcalc') });
+    $('gapNow').innerHTML = g ? `Gap <b>${g.gap >= 0 ? '+' : ''}${money(g.gap)}</b> ${gapPill({ list_price: numOrNull('dlist'), contract_price: numOrNull('dcontract'), calc_price: numOrNull('dcalc') })}` : '';
+    const box = document.querySelector('#riskBox input[data-risk="over_mao"]'); if (g && box){ box.checked = g.gap > 50000; liveScore(); } };
+  ['dlist','dcontract','dcalc'].forEach(k => $(k).addEventListener('input', liveGap)); liveGap();
+  $('ddom').oninput = () => { const n = Number($('ddom').value); const box = document.querySelector('#flagBox input[data-flag="slow_to_sell"]'); if (box && n >= 60) { box.checked = true; liveScore(); } };
+  if ($('toAgent')) $('toAgent').onclick = e => { e.preventDefault(); openAgent(d.agent_id); };
+  $('dsave').onclick = async () => {
+    if (!$('daddr').value.trim() || !$('dzip').value.trim()){ $('dmsg').textContent = 'Address and ZIP are required.'; $('dmsg').className = 'msg err'; return; }
+    const rec = { address: $('daddr').value.trim(), city: valOrNull('dcity'), zip: $('dzip').value.trim().slice(0,5), county: valOrNull('dcounty'), property_type: $('dtype').value,
+      beds: numOrNull('dbeds'), baths: numOrNull('dbaths'), sqft: numOrNull('dsqft'), list_price: numOrNull('dlist'), offer_price: numOrNull('doffer'), contract_price: numOrNull('dcontract'),
+      arv: numOrNull('darv'), repair_estimate: numOrNull('drepair'), assignment_fee: numOrNull('dfee'), asking_price: numOrNull('dask') ?? numOrNull('dcontract') ?? numOrNull('dlist') ?? 0,
+      stage: $('dstage').value, status: $('dstatus').value, contract_date: valOrNull('dcdate'), close_date: valOrNull('dclose'),
+      next_action: valOrNull('dnext'), next_action_on: valOrNull('dnexton'), notes: valOrNull('dnotes'), agent_id: d.agent_id || null, updated_at: new Date().toISOString(),
+      title_company: valOrNull('ttco'), title_contact: valOrNull('ttcontact'), title_email: valOrNull('ttemail'), title_phone: valOrNull('ttphone'), title_file_no: valOrNull('ttfile'),
+      emd_amount: numOrNull('temd'), emd_due: valOrNull('temddue'), inspection_ends: valOrNull('tinsp'), checklist: readChecklist(d.checklist || {}),
+      seller_name: valOrNull('dseller'), end_buyer_name: valOrNull('dbuyer'), end_buyer_deposit: numOrNull('dbdep'),
+      flags: [...document.querySelectorAll('#flagBox input:checked')].map(c => c.dataset.flag),
+      risks: [...document.querySelectorAll('#riskBox input:checked')].map(c => c.dataset.risk),
+      lead_source: valOrNull('dsource'), days_on_market: numOrNull('ddom'), calc_price: numOrNull('dcalc') };
+    const res = id ? await SB.from('fep_deals').update(rec).eq('id', id) : await SB.from('fep_deals').insert(rec).select('id').single();
+    if (res.error){ $('dmsg').textContent = res.error.message; $('dmsg').className = 'msg err'; return; }
+    if (!id && d.agent_id) await SB.from('fep_agents').update({ stage: 'sends_deals' }).eq('id', d.agent_id).in('stage', ['new','contacted','conversation','active']);
+    $('dmsg').textContent = 'Saved.'; $('dmsg').className = 'msg ok';
+    if (!id && res.data) openDeal(res.data.id); refreshCurrent();
+  };
+  if (!id) return;
+  wireMedia(); wireDealDocs(id);
+  $('findBuyers').onclick = async () => {
+    $('nearList').textContent = 'Searching…';
+    const { data, error } = await SB.rpc('fep_buyers_near', { p_deal: id, p_miles: Number($('miles').value) });
+    if (error){ $('nearList').innerHTML = `<span class="msg err">${esc(error.message)}</span>`; return; }
+    $('nearList').innerHTML = (data || []).length ? `<table style="margin-top:6px"><thead><tr><th>Buyer</th><th>Miles</th><th>Budget</th><th></th></tr></thead><tbody>${data.map(b => `<tr><td><b>${esc(b.name)}</b><div class="muted">${esc(b.property_types || '')} · ZIPs ${esc(b.zips || '')}</div></td><td>${b.miles}</td><td class="muted">${money(b.min_price)}–${money(b.max_price)}</td><td>${b.phone ? `<a href="tel:${esc(b.phone)}">Call</a> ` : ''}${b.email ? `<a href="mailto:${esc(b.email)}?subject=${encodeURIComponent('Off-market deal: ' + d.address)}">Email</a>` : ''}</td></tr>`).join('')}</tbody></table>` : 'No buyers within that radius yet. Try a wider radius, or add buyers in this area.';
+  };
+  $('tsave').onclick = async () => {
+    const summary = $('tsum').value.trim();
+    if (!summary && !pending){ $('tmsg').textContent = 'Write, dictate or record what happened first.'; $('tmsg').className = 'msg err'; return; }
+    $('tmsg').textContent = 'Saving…'; $('tmsg').className = 'msg';
+    const { error } = await insertTouch({ deal_id: id, agent_id: d.agent_id || null, channel: $('tch').value, direction: $('tdir').value, summary });
+    if (error){ $('tmsg').textContent = error.message; $('tmsg').className = 'msg err'; return; }
+    if (!$('dnexton').value || $('dnexton').value <= today()){
+      const nd = addWeekdays(3); $('dnexton').value = nd;
+      if (!$('dnext').value.trim()) $('dnext').value = 'Follow up';
+      await SB.from('fep_deals').update({ next_action_on: nd, next_action: $('dnext').value.trim(), updated_at: new Date().toISOString() }).eq('id', id);
+    }
+    $('tsum').value = ''; $('tmsg').textContent = 'Logged.'; $('tmsg').className = 'msg ok';
+    $('dtl').innerHTML = await timeline({ deal_id: id });
+  };
+  $('dtl').innerHTML = await timeline({ deal_id: id });
+}
+
+/* ---------- buyers ---------- */
+async function loadBuyers(){
+  let q = SB.from('fep_buyers').select('id,name,email,phone,zips,min_price,max_price,property_types,status,last_contacted_at,created_at').order('created_at', {ascending:false});
+  const s = $('bq').value.trim().replace(/[,()%*]/g, ' ').trim();
+  if (s) q = q.or(`name.ilike.%${s}%,zips.ilike.%${s}%,property_types.ilike.%${s}%`);
+  const { data, error } = await q.limit(500);
+  if (error){ $('buyerTable').innerHTML = `<div class="card msg err">${esc(error.message)}</div>`; return; }
+  $('buyerTable').innerHTML = (data || []).length ? `<table><thead><tr><th>Buyer</th><th>ZIPs</th><th class="hm">Budget</th><th class="hm">Types</th><th>Contact</th></tr></thead><tbody>${data.map(b => `<tr><td><b>${esc(b.name)}</b><div class="muted">added ${fmtDate(b.created_at)}${b.last_contacted_at ? ' · contacted ' + ago(b.last_contacted_at) : ''}</div></td><td>${esc(b.zips || '')}</td><td class="hm">${money(b.min_price)}–${money(b.max_price)}</td><td class="hm">${esc(b.property_types || '')}</td><td>${b.phone ? `<a href="tel:${esc(b.phone)}">${esc(b.phone)}</a><br>` : ''}${b.email ? `<a href="mailto:${esc(b.email)}">${esc(b.email)}</a>` : ''}</td></tr>`).join('')}</tbody></table>` : '<div class="card">No buyers match.</div>';
+}
+
+/* ---------- DBPR import (runs in the browser; DBPR blocks server downloads) ---------- */
+function parseCSVLine(line){
+  const out = []; let cur = '', q = false;
+  for (let i = 0; i < line.length; i++){
+    const c = line[i];
+    if (q){ if (c === '"'){ if (line[i+1] === '"'){ cur += '"'; i++; } else q = false; } else cur += c; }
+    else if (c === '"') q = true; else if (c === ','){ out.push(cur); cur = ''; } else cur += c;
+  }
+  out.push(cur); return out.map(s => s.trim());
+}
+function usDate(s){ const m = (s || '').match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/); return m ? `${m[3]}-${m[1].padStart(2,'0')}-${m[2].padStart(2,'0')}` : null; }
+// Layout: 0 board, 1 occupation, 2 name, 3 dba, 4 rank, 5-7 address, 8 city, 9 state, 10 zip, 11 county code, 12 county,
+//         13 licence no., 14 primary status, 15 secondary status, 16 original date, 17 effective date, 18 expiry, 19 alt licence, 20 self-proprietor, 21 employer, 22 employer licence
+$('importBtn').onclick = async () => {
+  const files = [...$('csvFiles').files]; const log = $('importLog');
+  if (!files.length){ log.textContent = 'Choose at least one CSV file.'; log.className = 'msg err'; return; }
+  $('importBtn').disabled = true; log.className = 'msg'; let total = 0; const lines = [];
+  for (const file of files){
+    const text = await file.text();
+    const rows = text.split(/\r?\n/); let kept = 0, skippedTampa = 0; const batch = [];
+    for (const line of rows){
+      if (!line.trim()) continue;
+      const f = parseCSVLine(line);
+      if (f.length < 15 || !/^2501/.test(f[1] || '')) continue;               // individual licensees only (not corporations)
+      if (!/^(SL|BK)/.test(f[4] || '')) continue;                             // sales associates + brokers
+      if (!/^current/i.test(f[14] || '') || !/^active/i.test(f[15] || '')) continue; // current & active only
+      const county = (f[12] || '').toUpperCase();
+      if (county === 'HILLSBOROUGH'){ skippedTampa++; continue; }
+      kept++;
+      batch.push({ license_number: f[19] || f[13], name: f[2] || '(unknown)', dba: f[3] || null, rank: (f[4] || '').startsWith('BK') ? 'Broker' : 'Sales associate',
+        address1: f[5] || null, address2: [f[6], f[7]].filter(Boolean).join(' ') || null, city: f[8] || null, state: f[9] || null, zip: (f[10] || '').slice(0,5) || null,
+        county: county || null, primary_status: f[14] || null, secondary_status: f[15] || null, license_expires: usDate(f[18]),
+        employer_name: f[21] || null, employer_license: f[22] || null, source: 'dbpr', updated_at: new Date().toISOString() });
+    }
+    // Same licensee can appear on several lines (e.g. more than one employer): keep one row per licence
+    const uniq = new Map(); batch.forEach(r => uniq.set(r.license_number, r));
+    batch.length = 0; uniq.forEach(r => batch.push(r));
+    let saved = 0;
+    for (let i = 0; i < batch.length; i += 500){
+      const { error } = await SB.from('fep_agents').upsert(batch.slice(i, i + 500), { onConflict: 'license_number' });
+      if (error){ log.textContent = `${file.name}: ${error.message}`; log.className = 'msg err'; $('importBtn').disabled = false; return; }
+      saved += Math.min(500, batch.length - i);
+      log.textContent = `${file.name}: saved ${saved.toLocaleString()} of ${batch.length.toLocaleString()}…`;
+    }
+    total += saved;
+    lines.push(`${file.name}: ${saved.toLocaleString()} agents${skippedTampa ? ` (skipped ${skippedTampa.toLocaleString()} in Hillsborough)` : ''}`);
+  }
+  log.innerHTML = lines.map(esc).join('<br>') + `<br><b>Done: ${total.toLocaleString()} agents imported.</b>`; log.className = 'msg ok';
+  $('importBtn').disabled = false; filtersReady = false; initFilters();
+};
+
+/* ---------- documents ---------- */
+const longDate = s => s ? new Date(s + (String(s).length === 10 ? 'T12:00:00' : '')).toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'}) : '';
+function dealVars(d){
+  return {
+    date: longDate(today()), assignor: 'French Equity Partners LLC', seller_name: d.seller_name, buyer_name: d.end_buyer_name,
+    property_address: d.address, city: d.city, zip: d.zip, county: d.county,
+    contract_price: d.contract_price != null ? money(d.contract_price) : '', contract_date: longDate(d.contract_date), closing_date: longDate(d.close_date),
+    assignment_fee: d.assignment_fee != null ? money(d.assignment_fee) : '', end_buyer_deposit: d.end_buyer_deposit != null ? money(d.end_buyer_deposit) : '',
+    emd_amount: d.emd_amount != null ? money(d.emd_amount) : '', title_company: d.title_company, title_file_no: d.title_file_no,
+  };
+}
+function fillTemplate(body, vars){
+  const missing = new Set();
+  const out = body.replace(/\{\{\s*([a-z_]+)\s*\}\}/g, (m, k) => { const v = vars[k]; if (v === undefined) return m; if (v === null || v === '') { missing.add(k); return '__________'; } return String(v); });
+  return { text: out, missing: [...missing] };
+}
+function docHtml(title, body){
+  const blocks = String(body).split(/\n\s*\n/).map(b => {
+    const t = b.trim(); if (!t) return '';
+    if (t.startsWith('# ')) return `<h1>${esc(t.slice(2))}</h1>`;
+    return `<p>${esc(t).replace(/\n/g, '<br>')}</p>`;
+  }).join('');
+  return `<!doctype html><html><head><meta charset="utf-8"><title>${esc(title)}</title><style>
+    body{font-family:Georgia,'Times New Roman',serif;color:#111;max-width:720px;margin:40px auto;padding:0 24px;line-height:1.55;font-size:14.5px}
+    h1{font-size:20px;text-align:center;letter-spacing:.06em;margin:0 0 18px}
+    p{margin:0 0 12px} .bar{font-family:system-ui,sans-serif;background:#F1ECDD;border:1px solid #E1D8BF;padding:10px;border-radius:6px;margin-bottom:20px;font-size:13px}
+    @media print{.bar{display:none} body{margin:0}}
+  </style></head><body><div class="bar">Use your browser's Print → "Save as PDF" to create the PDF. <button onclick="print()">Print / Save as PDF</button></div>${blocks}</body></html>`;
+}
+function printDoc(title, body){
+  const w = window.open('', '_blank'); if (!w){ alert('Allow pop-ups for this site to print.'); return; }
+  w.document.open(); w.document.write(docHtml(title, body)); w.document.close();
+}
+async function loadTemplates(){
+  const { data, error } = await SB.from('fep_templates').select('id,name,updated_at').order('name');
+  if (error){ $('tplList').innerHTML = `<div class="card msg err">${esc(error.message)}</div>`; return; }
+  $('tplList').innerHTML = (data || []).length ? `<table><thead><tr><th>Template</th><th>Updated</th></tr></thead><tbody>${data.map(t => `<tr class="click" data-id="${t.id}"><td><b>${esc(t.name)}</b></td><td class="muted">${fmtDate(t.updated_at.slice(0,10))}</td></tr>`).join('')}</tbody></table>` : '<div class="card">No templates yet.</div>';
+  $('tplList').querySelectorAll('tr[data-id]').forEach(r => r.onclick = () => openTemplate(r.dataset.id));
+  $('newTplBtn').onclick = () => openTemplate(null);
+}
+async function openTemplate(id){
+  let t = { name: '', body: '# TITLE\n\nThis agreement is made on {{date}} between {{assignor}} and {{buyer_name}}…' };
+  if (id){ const { data } = await SB.from('fep_templates').select('*').eq('id', id).single(); t = data || t; }
+  openPanel(`
+    <div class="row" style="justify-content:space-between"><h3>${id ? 'Edit template' : 'New template'}</h3><button class="btn ghost sm" onclick="closePanel()">Close</button></div>
+    ${field('tname','Template name',t.name)}
+    <div style="height:8px"></div>
+    <label>Text</label>
+    <textarea id="tbody" style="min-height:420px;font-family:Georgia,serif;font-size:14px">${esc(t.body)}</textarea>
+    <div class="muted" style="margin:4px 0 10px">Start a line with "# " for a heading. Leave a blank line between paragraphs. Use {{fields}} from the list on the Documents page.</div>
+    <div class="row"><button class="btn" id="tsaveTpl">Save template</button><button class="btn ghost" id="tprev">Preview</button>${id ? '<button class="btn ghost" id="tdel" style="margin-left:auto;color:var(--err)">Delete</button>' : ''}</div>
+    <div class="msg" id="tplmsg"></div>`);
+  $('tprev').onclick = () => printDoc($('tname').value || 'Preview', $('tbody').value);
+  $('tsaveTpl').onclick = async () => {
+    if (!$('tname').value.trim()){ $('tplmsg').textContent = 'Give it a name.'; $('tplmsg').className = 'msg err'; return; }
+    const rec = { name: $('tname').value.trim(), body: $('tbody').value, updated_at: new Date().toISOString() };
+    const res = id ? await SB.from('fep_templates').update(rec).eq('id', id) : await SB.from('fep_templates').insert(rec).select('id').single();
+    if (res.error){ $('tplmsg').textContent = res.error.message; $('tplmsg').className = 'msg err'; return; }
+    $('tplmsg').textContent = 'Saved.'; $('tplmsg').className = 'msg ok'; if (!id && res.data) id = res.data.id; loadTemplates();
+  };
+  if ($('tdel')) $('tdel').onclick = async () => {
+    if (!confirm('Delete this template? Documents already generated from it are kept.')) return;
+    const { error } = await SB.from('fep_templates').delete().eq('id', id);
+    if (error){ $('tplmsg').textContent = error.message; $('tplmsg').className = 'msg err'; return; }
+    closePanel(); loadTemplates();
+  };
+}
+async function wireDealDocs(dealId){
+  const [{ data: tpls }, { data: buyers }] = await Promise.all([
+    SB.from('fep_templates').select('id,name').order('name'),
+    SB.from('fep_buyers').select('name').order('name').limit(500),
+  ]);
+  if ($('buyerNames')) $('buyerNames').innerHTML = (buyers || []).map(b => `<option value="${esc(b.name)}">`).join('');
+  if (!$('tplPick')) return;
+  $('tplPick').innerHTML = (tpls || []).map(t => `<option value="${t.id}">${esc(t.name)}</option>`).join('') || '<option value="">No templates yet</option>';
+  const listDocs = async () => {
+    const { data } = await SB.from('fep_documents').select('id,title,status,created_at').eq('deal_id', dealId).order('created_at', {ascending:false});
+    if (!$('docList')) return;
+    $('docList').innerHTML = (data || []).length ? data.map(x => `<div class="dcard" data-id="${x.id}"><b>${esc(x.title)}</b><span class="muted">${fmtDate(x.created_at.slice(0,10))}</span> <span class="pill ${x.status === 'signed' ? 'ok' : ''}">${esc(x.status)}</span></div>`).join('') : '<div class="muted">No documents yet.</div>';
+    $('docList').querySelectorAll('.dcard').forEach(c => c.onclick = () => openDocument(c.dataset.id, dealId));
+  };
+  $('genDoc').onclick = async () => {
+    const tid = $('tplPick').value; if (!tid) return;
+    const [{ data: t }, { data: d }] = await Promise.all([
+      SB.from('fep_templates').select('*').eq('id', tid).single(),
+      SB.from('fep_deals').select('*').eq('id', dealId).single(),
+    ]);
+    if (!t || !d) return;
+    const { text, missing } = fillTemplate(t.body, dealVars(d));
+    const { data: doc, error } = await SB.from('fep_documents').insert({ deal_id: dealId, template_id: tid, title: `${t.name} – ${d.address}`, body: text }).select('id').single();
+    if (error){ alert(error.message); return; }
+    openDocument(doc.id, dealId, missing);
+  };
+  listDocs();
+}
+async function openDocument(docId, dealId, missing = []){
+  const { data: x } = await SB.from('fep_documents').select('*').eq('id', docId).single();
+  if (!x) return;
+  openPanel(`
+    <div class="row" style="justify-content:space-between"><h3>Document</h3><div class="row"><button class="btn ghost sm" id="backDeal">‹ Back to deal</button><button class="btn ghost sm" onclick="closePanel()">Close</button></div></div>
+    ${missing.length ? `<div class="card" style="margin-bottom:10px;border-color:#e7b98b;background:#fbefe2;font-size:13px"><b>Blanks to fill:</b> ${missing.map(esc).join(', ')}. They show as "__________". Fill them on the deal and generate again, or type them in below.</div>` : ''}
+    <div class="grid">${field('xtitle','Title',x.title)}${selectField('xstatus','Status',[['draft','Draft'],['sent','Sent for signature'],['signed','Signed'],['void','Void']],x.status)}</div>
+    <div style="height:8px"></div>
+    <label>Text (editable)</label>
+    <textarea id="xbody" style="min-height:460px;font-family:Georgia,serif;font-size:14px">${esc(x.body)}</textarea>
+    <div class="row" style="margin-top:10px"><button class="btn" id="xsave">Save</button><button class="btn gold" id="xprint">Print / Save as PDF</button><button class="btn ghost" id="xdel" style="margin-left:auto;color:var(--err)">Delete</button></div>
+    <div class="msg" id="xmsg"></div>`);
+  $('backDeal').onclick = () => openDeal(dealId);
+  $('xprint').onclick = () => printDoc($('xtitle').value, $('xbody').value);
+  $('xsave').onclick = async () => {
+    const { error } = await SB.from('fep_documents').update({ title: $('xtitle').value.trim() || x.title, body: $('xbody').value, status: $('xstatus').value, updated_at: new Date().toISOString() }).eq('id', docId);
+    $('xmsg').textContent = error ? error.message : 'Saved.'; $('xmsg').className = 'msg ' + (error ? 'err' : 'ok');
+  };
+  $('xdel').onclick = async () => {
+    if (!confirm('Delete this document?')) return;
+    await SB.from('fep_documents').delete().eq('id', docId); openDeal(dealId);
+  };
+}
+
+function refreshCurrent(){ const v = location.hash.slice(1) || 'today'; if (v !== 'import') show(v); }
+SB.auth.onAuthStateChange(ev => {
+  if (ev === 'PASSWORD_RECOVERY'){ recovering = true; showReset(); }
+  else if (ev === 'SIGNED_IN' && !recovering && $('app').classList.contains('hidden')) boot();
+  else if (ev === 'SIGNED_OUT'){ $('app').classList.add('hidden'); $('loginView').classList.remove('hidden'); }
+});
+if (!/type=recovery/.test(location.hash)) boot();
+</script>
+</body>
+</html>
